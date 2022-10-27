@@ -30,27 +30,31 @@ function get_news_array():array{
     foreach ($filenames_array as $filename ) {
         $json_news = read_json("db_json/". $filename);//lee json y devuelve array asociativo
         extract($json_news);//extrae las keys del json a variables php con su value
-
+        $collapse     = ($id !== "One") ? "collapsed" : "";
+        $expanded     = ($id !== "One") ? "false" : "true";
+        $expanded_div = ($id !== "One") ? "" : "show";
+        
         $news_content = <<<END_OF_NEW
                 <div class="accordion-item">
-                <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-                    {$date}
-                </button>
-                </h2>
-                <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
-                <div class="accordion-body">
-                    <strong>{$title}</strong><br>
-                    {$content}
-                </div>
-                </div>
-                </div>            
+                    <h2 class="accordion-header" id="panelsStayOpen-heading{$id}">
+                        <button class="accordion-button {$collapse}" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse{$id}" aria-expanded="{$expanded}" aria-controls="panelsStayOpen-collapse{$id}">
+                            {$date}
+                        </button>
+                    </h2>
+
+                    <div id="panelsStayOpen-collapse{$id}" class="accordion-collapse collapse {$expanded_div}" aria-labelledby="panelsStayOpen-heading{$id}">
+                        <div class="accordion-body">
+                            <strong>{$title}</strong><br>
+                            {$content}
+                        </div>
+                    </div>
+                </div>           
                 END_OF_NEW;
 
                 array_push($news_array, $news_content);
     }    
 
-    rsort($news_array);// sort an array in descending
+    rsort($news_array);// sort an array in descending   
     return $news_array;
 }
 /**

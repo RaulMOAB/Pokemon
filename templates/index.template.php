@@ -29,7 +29,9 @@
     </nav>
       <!--Contents-->
       <div class="container ">
-      <div class="accordion" id="accordionExample">
+        <span class="logo"><img src="/img/pokemon-logo-png-1428.png" alt="logo-image"></span>
+        <h1 class="main-title">Entérate de las últimas notícias sobre Pokémon y Pokémon GO!</h1>
+      <div class="accordion mt-5" id="accordionExample">
         <?php
           foreach ($news_array as $new) {
             echo $new;
