@@ -1,7 +1,7 @@
 <?php
 
 declare(strict_types = 1);
-require_once(__DIR__ . '/utils.php');
+require_once(__DIR__ . '/src/lib/utils.php');
 
 //Functions here
 /**
@@ -10,7 +10,7 @@ require_once(__DIR__ . '/utils.php');
  * @param{$news array} array of news 
  */
 function make_index(string $index_template_filename, array $news_array):void{
-    $index_filename          = "public/index.html";
+    $index_filename          = "public/blog.html";
     $template_vars           = ['news_array' => $news_array];
     $make_index_html         = render_template($index_template_filename, $template_vars);
     file_put_contents($index_filename, $make_index_html);
@@ -72,7 +72,7 @@ function get_file_name(string $path):string{
  */
 function main(): void
 {
-    $index_filename_template = "templates/index.template.php";
+    $index_filename_template = "templates/blog.template.php";
     $news_array = get_news_array();
     make_index($index_filename_template,$news_array);
 }
