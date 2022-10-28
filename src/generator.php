@@ -1,7 +1,7 @@
 <?php
 
 declare(strict_types = 1);
-require_once(__DIR__ . '/src/lib/utils.php');
+require_once(__DIR__ . '/lib/utils.php');
 
 //Functions here
 /**
@@ -10,7 +10,7 @@ require_once(__DIR__ . '/src/lib/utils.php');
  * @param{$news array} array of news 
  */
 function make_index(string $index_template_filename, array $news_array):void{
-    $index_filename          = "public/blog.html";
+    $index_filename          = "../public/blog.html";
     $template_vars           = ['news_array' => $news_array];
     $make_index_html         = render_template($index_template_filename, $template_vars);
     file_put_contents($index_filename, $make_index_html);
@@ -23,12 +23,12 @@ function make_index(string $index_template_filename, array $news_array):void{
 function get_news_array():array{
 
     $news_array      = [];//array final a devolver despues del glob() y el basename()
-    $news_path_array = glob("db_json/*.json");// devuelve array con los nombres de las noticias
+    $news_path_array = glob("../db_json/*.json");// devuelve array con los nombres de las noticias
     $filenames_array = array_map('get_file_name', $news_path_array);//obtener los nombres limpios de los archivos json
     
 
     foreach ($filenames_array as $filename ) {
-        $json_news = read_json("db_json/". $filename);//lee json y devuelve array asociativo
+        $json_news = read_json("../db_json/". $filename);//lee json y devuelve array asociativo
         extract($json_news);//extrae las keys del json a variables php con su value
         $collapse     = ($id !== "One") ? "collapsed" : "";
         $expanded     = ($id !== "One") ? "false" : "true";
