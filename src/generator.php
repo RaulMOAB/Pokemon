@@ -2,6 +2,7 @@
 
 declare(strict_types = 1);
 require_once(__DIR__ . '/lib/utils.php');
+require(__DIR__.'/templates/blog.item.template.php');//
 
 //Functions here
 /**
@@ -14,6 +15,19 @@ function make_index(string $index_template_filename, array $news_array):void{
     $template_vars           = ['news_array' => $news_array];
     $make_index_html         = render_template($index_template_filename, $template_vars);
     file_put_contents($index_filename, $make_index_html);
+}
+
+/**
+ * Function that compare dates
+ * @return 0 if first date is lower than second date
+ * @return -1 if second date is higher than first date
+ * Me hace falta entender mas esta funcion
+ */
+function compareByTimeStamp($time1, $time2)
+{
+	if (strtotime($time1) < strtotime($time2)){return 0;}
+	else if (strtotime($time1) > strtotime($time2)){return -1;}
+	else{return 1;}
 }
 
 /**
@@ -34,27 +48,13 @@ function get_news_array():array{
         $expanded     = ($id !== "One") ? "false" : "true";
         $expanded_div = ($id !== "One") ? "" : "show";
         
-        $news_content = <<<END_OF_NEW
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="panelsStayOpen-heading{$id}">
-                        <button class="accordion-button {$collapse}" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse{$id}" aria-expanded="{$expanded}" aria-controls="panelsStayOpen-collapse{$id}">
-                            {$date}
-                        </button>
-                    </h2>
+        $news_content = getBlogItem($id,$collapse,$expanded,$date,$title,$expanded_div,$content);
+        array_push($news_array, $news_content);
+    }   
 
-                    <div id="panelsStayOpen-collapse{$id}" class="accordion-collapse collapse {$expanded_div}" aria-labelledby="panelsStayOpen-heading{$id}">
-                        <div class="accordion-body">
-                            <strong>{$title}</strong><br>
-                            {$content}
-                        </div>
-                    </div>
-                </div>           
-                END_OF_NEW;
 
-                array_push($news_array, $news_content);
-    }    
 
-    rsort($news_array);// sort an array in descending   
+    usort($news_array,'compareByTimeStamp');// sort an array in descending   
     return $news_array;
 }
 /**

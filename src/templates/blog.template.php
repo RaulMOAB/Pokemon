@@ -41,6 +41,17 @@
       </div>
       </div>
 
+      <!-- Footer -->
+      <footer class="page-footer font-small blue">
+
+      <!-- Copyright -->
+      <div class="footer-copyright text-white text-center py-3">© 2022 Copyright:
+        <pre class="text-white"> Raul Montoro, Alvin Miller Garcia Garcia y Eloy Gonzales</pre>
+      </div>
+      <!-- Copyright -->
+
+      </footer>
+      <!-- Footer -->
 
 
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
