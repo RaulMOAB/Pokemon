@@ -75,6 +75,12 @@ function main(): void
     $index_filename_template = "templates/blog.template.php";
     $news_array = get_news_array();
     make_index($index_filename_template,$news_array);
+
+    //shell_exec("rm -r -f public/*"); borra el dir public/
+
+    //create_dir('public'); crea el dir public
+
+    shell_exec("cp -r resources/ /public/"); //copia el dir resources a public
 }
 //------------------------------------------------------------------------------------------
 main();

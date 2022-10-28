@@ -12,7 +12,7 @@
     <nav class="navbar navbar-expand-lg sticky-top" id="navbar-section">
         <div class="container-fluid">
           <a class="navbar-brand" href="index.html" aria-current="home">
-            <img src="img/pokeball.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-center">
+            <img src="./resources/img/img_aux/pokeball.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-center">
             <span id="home-title">PokéBlog</span> 
           </a>
           <button class="navbar-toggler" id="toggle-btn" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,7 +29,7 @@
     </nav>
       <!--Contents-->
       <div class="container ">
-        <span class="logo"><img src="/img/pokemon-logo-png-1428.png" alt="logo-image"></span>
+        <span class="logo"><img src="./resources/img/img_aux/pokemon-logo.png" alt="logo-image"></span>
         <h1 class="main-title">Entérate de las últimas notícias sobre Pokémon y Pokémon GO!</h1>
       <div class="accordion mt-5" id="accordionExample">
         <?php
