@@ -11,10 +11,19 @@ require_once(__DIR__ . '/lib/utils.php');
  * @param{$news array} array of news 
  */
 function make_index(string $index_template_filename, array $news_array):void{
-    $index_filename          = "../public/blog.html";
-    $template_vars           = ['news_array' => $news_array];
+    $index_filename          = "../public/index.html";
+    $blog_filename           = "../public/blog.html";
+    $template_vars           = ['news_array' => $news_array,];
     $make_index_html         = render_template($index_template_filename, $template_vars);
-    file_put_contents($index_filename, $make_index_html);
+    
+    //shell_exec("rm -r -f ../public/*");
+
+    //create_dir('../public'); 
+
+    
+    //shell_exec("cp -r ../resources/ ../public/"); 
+    file_put_contents($blog_filename, $make_index_html);
+    file_put_contents($index_filename, $make_index_html);// geenra el index con noticias
 }
 
 
@@ -66,11 +75,11 @@ function main(): void
     $news_array = get_news_array();
     make_index($index_filename_template, $news_array);
 
-    //shell_exec("rm -r -f public/*"); borra el dir public/
+    //shell_exec("rm -r -f ../public/*");
 
-    //create_dir('public'); crea el dir public
+    //create_dir('../public'); 
 
-    shell_exec("cp -r resources/ /public/"); //copia el dir resources a public
+    //shell_exec("cp -r ../resources/ ../public/"); //copia el dir resources a public
 
     
 }
