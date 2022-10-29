@@ -31,14 +31,16 @@
       <div class="container ">
         <span class="logo"><img src="./resources/img/img_aux/pokemon-logo.png" alt="logo-image"></span>
         <h1 class="main-title">Entérate de las últimas notícias sobre Pokémon y Pokémon GO!</h1>
-      <div class="accordion mt-5" id="accordionExample">
-        <?php
-          foreach ($news_array as $new) {
-            echo $new;
-          }
-        ?>
-
-      </div>
+         <div class="news">
+          <?php   
+            foreach ($news_array as $new) {
+              extract($new);        
+              echo "<h2>$title</h2>
+                      <span>$date</span>
+                        <p>$content</p>";
+            }
+          ?>
+         </div> 
       </div>
 
       <!-- Footer -->
