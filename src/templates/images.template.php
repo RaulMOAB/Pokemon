@@ -9,7 +9,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 </head>
 <body>
-
     <nav class="navbar navbar-expand-lg sticky-top" id="navbar-section">
         <div class="container-fluid">
           <a class="navbar-brand" href="index.html" aria-current="home">
@@ -21,8 +20,8 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
-                <li class="nav-item"> <a class="nav-link link-light" href="blog.html" aria-current="pokemon-news">Blog</a></li>
-                <li class="nav-item"> <a class="nav-link link-light" href="images.html" aria-current="pokemon-images">Galería</a></li>
+                <li class="nav-item"> <a class="nav-link link-light" href="index.html" aria-current="pokemon-news">Blog</a></li>
+                <li class="nav-item"> <a class="nav-link link-light" href="#" aria-current="pokemon-images">Galería</a></li>
                 <li class="nav-item"> <a class="nav-link link-light" href="#" aria-current="pokemon-dates">Datos</a></li>
             </ul>
           </div>
@@ -30,16 +29,15 @@
     </nav>
       <!--Contents-->
       <div class="container ">
-      <span class="logo"><img src="img/img_aux/pokemon-logo.png" alt="logo-image" width="350" height="100"></span>
-      <h1 class="main-title">Bienvenidos a Pokephp</h1>
-      <h2 class="main-title">Esto es un trabajo de m06 de la uf3 y nosotros somos:</h2>
-      <ul>
-      <?php   
-            foreach ($contributors as $contributor) {       
-              echo "<li class='text-white'>$contributor</li>";
+        <span class="logo"><img src="img/img_aux/pokemon-logo.png" alt="logo-image" width="350" height="100"></span>
+        <h1 class="main-title">Imagenes de los iniciales</h1>
+          <?php   
+            foreach ($images as $image) {       
+              echo "
+                  <img class='d-block w-100' src='$image'>";
             }
-        ?>
-      </ul>
+          ?>
+
       </div>
 
       <!-- Footer -->

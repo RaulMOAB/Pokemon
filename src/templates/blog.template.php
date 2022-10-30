@@ -12,7 +12,7 @@
     <nav class="navbar navbar-expand-lg sticky-top" id="navbar-section">
         <div class="container-fluid">
           <a class="navbar-brand" href="index.html" aria-current="home">
-            <img src="./resources/img/img_aux/pokeball.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-center">
+            <img src="img/img_aux/pokeball.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-center">
             <span id="home-title">PokéBlog</span> 
           </a>
           <button class="navbar-toggler" id="toggle-btn" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -21,7 +21,7 @@
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item"> <a class="nav-link link-light" href="index.html" aria-current="pokemon-news">Blog</a></li>
-                <li class="nav-item"> <a class="nav-link link-light" href="#" aria-current="pokemon-images">Galería</a></li>
+                <li class="nav-item"> <a class="nav-link link-light" href="images.html" aria-current="pokemon-images">Galería</a></li>
                 <li class="nav-item"> <a class="nav-link link-light" href="#" aria-current="pokemon-dates">Datos</a></li>
             </ul>
           </div>
@@ -29,15 +29,15 @@
     </nav>
       <!--Contents-->
       <div class="container ">
-        <span class="logo"><img src="./resources/img/img_aux/pokemon-logo.png" alt="logo-image"></span>
+        <span class="logo"><img src="img/img_aux/pokemon-logo.png" alt="logo-image" width="350" height="100"></span>
         <h1 class="main-title">Entérate de las últimas notícias sobre Pokémon y Pokémon GO!</h1>
          <div class="news">
           <?php   
             foreach ($news_array as $new) {
               extract($new);        
-              echo "<h2>$title</h2>
-                      <span>$date</span>
-                        <p>$content</p>";
+              echo "<h2 class='text-white'>$title</h2>
+                      <span class='text-white'>$date</span>
+                        <p class='text-white'>$content</p>";
             }
           ?>
          </div> 
