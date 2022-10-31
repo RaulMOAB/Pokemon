@@ -5,6 +5,7 @@ require_once(__DIR__ . '/lib/utils.php');
 
 
 //Functions here
+
 /**
  * Function to generate an index.html
  * @param{$index_template_filename} path of the index template 
@@ -43,20 +44,13 @@ function get_news_array():array{
     $news_path_array                = glob("../db_json/*.json");// devuelve array con los nombres de las noticias
     $filenames_array                = array_map('get_file_name', $news_path_array);//obtener los nombres limpios de los archivos json
     
-    
     foreach ($filenames_array as $filename ) {
         $json_news                  = read_json("../db_json/". $filename);//lee json y devuelve array asociativo
-        extract($json_news);//extrae las keys del json a variables php con su value
-        $split_array                = substr($filename, 0, -5);
-        $filename_string_to_date    = strtotime($split_array);// json filenames to string to date to sort them
-      
- 
+        extract($json_news);
+
         array_push($news_array, $json_news);
     }   
-
-
-
-    rsort($news_array);// sort an array in descending   
+    sort($news_array);
     return $news_array;
 }
 function get_img_array():array{
@@ -68,7 +62,6 @@ function get_img_array():array{
     foreach ($filenames_array as $filename ) {
         array_push($img_array, "/img/".$filename);
     } 
-    print_r($img_array);
     return $img_array;
 }
 /**

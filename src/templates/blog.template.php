@@ -32,9 +32,9 @@
         <span class="logo"><img src="img/img_aux/pokemon-logo.png" alt="logo-image" width="350" height="100"></span>
         <h1 class="main-title">Entérate de las últimas notícias sobre Pokémon y Pokémon GO!</h1>
          <div class="news">
-          <?php   
-            foreach ($news_array as $new) {
-              extract($new);        
+          <?php  
+            foreach ($news_array as $news) {
+              extract($news);        
               echo "<h2 class='text-white'>$title</h2>
                       <span class='text-white'>$date</span>
                         <p class='text-white'>$content</p>";
