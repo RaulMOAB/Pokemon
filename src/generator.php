@@ -167,16 +167,12 @@ function main(): void
     $data_array = get_data_array();
     $data_template_vars =['csv_array' => $data_array];
 
-    print_r($regions_array);
-
 
     make_index($index_filename_template, $index_filename_html, $index_template_vars);       //Generate index.html
     make_html($blog_filename_template, $blog_filename_html, $news_template_vars);           //Generate blog.html
     make_html($images_filename_template, $images_filename_html, $images_template_vars);     //Generate image.html
     make_html($data_filename_template, $data_filename_html, $data_template_vars);           //Generate data.html
-    //make_html($region_filename_template, $regions_filename_html, $regions_template_vars);   //Generate region.html
-
-
+    make_html($region_filename_template, $regions_filename_html, $regions_template_vars);   //Generate region.html
     
 }
 //------------------------------------------------------------------------------------------

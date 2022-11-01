@@ -35,27 +35,22 @@
     <h1 class="main-title">Regiones de Pokemon</h1>
     <div class="pokemons-container">
 
-      <?php
-      foreach ($regions as $region => $array_asosiativo) {
-        $games = $array_asosiativo["game_versions"];
-        extract($array_asosiativo);
-        
-        echo "
-            <span class='initial-pokemons'>$region</span><br>
-            <div class='pokemons-img'>
-                <a href=''><img class='poke-img' src='/img/regions_map/$region_name'alt='region-pokemon'></a>
-             </div><br>
-             <ul>";
-
-          foreach ($games as $key => $value) {
-            extract($value);
-            echo "<li>$name</li>";
-          }
-          echo "</ul>";
-      }
       
-      ?>
-
+            <span class='initial-pokemons'>hoenn</span><br>
+            <div class='pokemons-img'>
+                <img class='poke-img' src='/img/regions_map/hoenn.webp'alt='region-pokemon's>
+             </div><br>
+             <ul><li>ruby-sapphire</li><li>emerald</li><li>omega-ruby-alpha-sapphire</li></ul>
+            <span class='initial-pokemons'>johto</span><br>
+            <div class='pokemons-img'>
+                <img class='poke-img' src='/img/regions_map/johto.webp'alt='region-pokemon's>
+             </div><br>
+             <ul><li>gold-silver</li><li>crystal</li><li>heartgold-soulsilver</li></ul>
+            <span class='initial-pokemons'>kanto</span><br>
+            <div class='pokemons-img'>
+                <img class='poke-img' src='/img/regions_map/kanto.webp'alt='region-pokemon's>
+             </div><br>
+             <ul><li>red-blue</li><li>yellow</li><li>gold-silver</li><li>crystal</li><li>firered-leafgreen</li><li>heartgold-soulsilver</li><li>lets-go-pikachu-lets-go-eevee</li></ul>
     </div>
   </div>
 

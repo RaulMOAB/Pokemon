@@ -24,7 +24,7 @@
                 <li class="nav-item"> <a class="nav-link link-light" href="blog.html" aria-current="pokemon-news">Blog</a></li>
                 <li class="nav-item"> <a class="nav-link link-light" href="images.html" aria-current="pokemon-images">Galería</a></li>
                 <li class="nav-item"> <a class="nav-link link-light" href="data.html" aria-current="pokemon-dates">Datos</a></li>
-                <li class="nav-item"> <a class="nav-link link-light" href="#" aria-current="pokemon-dates">PokéApi</a></li>
+                <li class="nav-item"> <a class="nav-link link-light" href="regions.html" aria-current="pokemon-dates">PokéApi</a></li>
             </ul>
           </div>
         </div>
