@@ -1,4 +1,4 @@
-<?php
+<!-- <?php
 
 declare(strict_types = 1);
 require_once(__DIR__ . '/lib/utils.php');
@@ -20,7 +20,7 @@ function make_index(
     
     //shell_exec("rm -r -f ../public/*");
     //create_dir('../public'); 
-    shell_exec("cp -r ../resources/* ../public/"); 
+    shell_exec("cp -r ../resources/ ../public/"); 
     file_put_contents($html_filename, $make_index_html);
 }
 

@@ -20,7 +20,7 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
-                <li class="nav-item"> <a class="nav-link link-light" href="index.html" aria-current="pokemon-news">Blog</a></li>
+                <li class="nav-item"> <a class="nav-link link-light" href="blog.html" aria-current="pokemon-news">Blog</a></li>
                 <li class="nav-item"> <a class="nav-link link-light" href="images.html" aria-current="pokemon-images">Galería</a></li>
                 <li class="nav-item"> <a class="nav-link link-light" href="#" aria-current="pokemon-dates">Datos</a></li>
             </ul>
@@ -35,9 +35,16 @@
           <?php  
             foreach ($news_array as $news) {
               extract($news);        
-              echo "<h2 class='text-white'>$title</h2>
+              /* echo "<h2 class='text-white'>$title</h2>
                       <span class='text-white'>$date</span>
-                        <p class='text-white'>$content</p>";
+                        <p class='text-white'>$content</p>"; */
+                  echo "<div class='card mb-3' style='width: 40rem;'>
+                  <div class='card-body'>
+                    <h5 class='card-title'>$title</h5>
+                    <h6 class='card-subtitle mb-2 text-primary'>$date</h6>
+                    <p class='card-text'>$content</p>                   
+                  </div>
+                </div>" ;     
             }
           ?>
          </div> 
