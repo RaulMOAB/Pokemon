@@ -21,9 +21,8 @@
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item"> <a class="nav-link link-light" href="blog.html" aria-current="pokemon-news">Blog</a></li>
-                <li class="nav-item"> <a class="nav-link link-light" href="images.html" aria-current="pokemon-images">Galería</a></li>
+                <li class="nav-item"> <a class="nav-link link-light" href="regions.html" aria-current="pokemon-images">Galería</a></li>
                 <li class="nav-item"> <a class="nav-link link-light" href="data.html" aria-current="pokemon-dates">Datos</a></li>
-                <li class="nav-item"> <a class="nav-link link-light" href="#" aria-current="pokemon-dates">PokéApi</a></li>
             </ul>
           </div>
         </div>
@@ -36,7 +35,7 @@
                 extract($info_region);
                 echo "
                 <h1 class='main-title'>Estos son los iniciales de $region_name</h1>
-                <span class='initial-pokemons'>$pokemon_inicial_1,$pokemon_inicial_2  y $pokemon_inicial_3</span>
+                <span class='initial-pokemons'>$pokemon_inicial_1 ,$pokemon_inicial_2  y $pokemon_inicial_3</span>
                 <div class='pokemons-container'>";
 
                 foreach ($images as $image) {
@@ -45,14 +44,14 @@
                     echo "
                     <div class='pokemons-img'>
                     <img class='poke-img' src='$image' alt='initial-pokemons'>
-                    </div>
                     </div>";
                 }
+                echo "</div>";
           ?>
       </div>
 
       <!-- Footer -->
-      <footer class="page-footer font-small blue">
+      <footer class="page-footer font-small blue" id="footer">
 
       <!-- Copyright -->
       <div class="footer-copyright text-white text-center py-3">© 2022 Copyright:

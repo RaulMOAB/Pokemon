@@ -23,7 +23,7 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item"> <a class="nav-link link-light" href="blog.html" aria-current="pokemon-news">Blog</a></li>
-          <li class="nav-item"> <a class="nav-link link-light" href="images.html" aria-current="pokemon-images">Galería</a></li>
+          <li class="nav-item"> <a class="nav-link link-light" href="regions.html" aria-current="pokemon-images">Galería</a></li>
           <li class="nav-item"> <a class="nav-link link-light" href="data.html" aria-current="pokemon-dates">Datos</a></li>
         </ul>
       </div>
@@ -39,11 +39,11 @@
       foreach ($regions as $region => $array_asosiativo) {
         $games = $array_asosiativo["game_versions"];
         extract($array_asosiativo);
-        
+        $region_html_path = $region.".html";
         echo "
             <span class='region-name'>$region</span><br>
             <div class='pokemons-img'>
-                <a href=''><img class='poke-img' src='/img/regions_map/$region_name'alt='region-pokemon'></a>
+                <a href='$region_html_path'><img class='poke-img' src='/img/regions_map/$region_name'alt='region-pokemon'></a>
              </div>
              <ul>";
 
