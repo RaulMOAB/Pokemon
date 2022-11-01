@@ -22,7 +22,8 @@
             <ul class="navbar-nav">
                 <li class="nav-item"> <a class="nav-link link-light" href="blog.html" aria-current="pokemon-news">Blog</a></li>
                 <li class="nav-item"> <a class="nav-link link-light" href="images.html" aria-current="pokemon-images">Galería</a></li>
-                <li class="nav-item"> <a class="nav-link link-light" href="#" aria-current="pokemon-dates">Datos</a></li>
+                <li class="nav-item"> <a class="nav-link link-light" href="data.html" aria-current="pokemon-dates">Datos</a></li>
+                <li class="nav-item"> <a class="nav-link link-light" href="#" aria-current="pokemon-dates">PokéApi</a></li>
             </ul>
           </div>
         </div>
@@ -34,16 +35,7 @@
       <div class="table-responsive-lg">
 
       <table id="data-table" class="table table-dark table-hover">
-        <?php
-        /* $fp= fopen("pokemon.csv","r");
-        foreach ($atributes as $rows){
-          echo "<tr>";
-          foreach ($rows as $cell){
-                  echo "<td> $cell </td>";
-                  }
-          echo "</tr>";
-          } */
-          
+        <?php         
           foreach ($csv_array as $key => $row) {
             echo "<tr>";
                 foreach ($row as $key2 => $row2) {
@@ -56,11 +48,18 @@
       </div>
       </div>
 
+  <!-- Footer -->
+  <footer class="page-footer font-small blue">
 
+    <!-- Copyright -->
+    <div class="footer-copyright text-white text-center py-3">© 2022 Copyright:
+      <pre class="text-white"> Raul Montoro, Alvin Miller Garcia Garcia y Eloy Gonzalez</pre>
+    </div>
+    <!-- Copyright -->
 
+  </footer>
+  <!-- Footer -->
 
-
-    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 </body>
 </html>
