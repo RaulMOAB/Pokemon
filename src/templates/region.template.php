@@ -32,7 +32,7 @@
   <!--Contents-->
   <div class="container ">
     <span class="logo"><img src="img/img_aux/pokemon-logo.png" alt="logo-image" width="350" height="100"></span>
-    <h1 class="main-title">Regiones de Pokemon</h1>
+    <h1 class="main-title">Regiones de Pokémon</h1>
     <div class="pokemons-container">
 
       <?php
@@ -41,10 +41,10 @@
         extract($array_asosiativo);
         
         echo "
-            <span class='initial-pokemons'>$region</span><br>
+            <span class='region-name'>$region</span><br>
             <div class='pokemons-img'>
                 <a href=''><img class='poke-img' src='/img/regions_map/$region_name'alt='region-pokemon'></a>
-             </div><br>
+             </div>
              <ul>";
 
           foreach ($games as $key => $value) {
@@ -60,7 +60,7 @@
   </div>
 
   <!-- Footer -->
-  <footer class="page-footer font-small blue">
+  <footer class="page-footer font-small blue" id="footer">
 
     <!-- Copyright -->
     <div class="footer-copyright text-white text-center py-3" id="footer">© 2022 Copyright:
