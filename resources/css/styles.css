@@ -62,3 +62,34 @@ body{
     margin: 1rem auto;
     
 }
+.logo > img {
+    height: fit-content;
+}
+
+/*BLOG SITE*/
+.news{
+    margin: auto;
+}
+
+/*GALLERY SITE*/
+.pokemons-container{
+    display: flex;
+    margin: auto;
+}
+.initial-pokemons{
+    margin: 2rem auto;
+    font-weight: 600;
+    color: #f8f9fa;
+}
+.pokemons-img{
+    padding: 0 2rem;
+}
+.poke-img{
+    width: 200px;
+    height: 200px;
+}
+
+/*DATA TABLE*/
+#data-table{
+    text-align: center;
+}

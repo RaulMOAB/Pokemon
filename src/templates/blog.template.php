@@ -34,10 +34,7 @@
          <div class="news">
           <?php  
             foreach ($news_array as $news) {
-              extract($news);        
-              /* echo "<h2 class='text-white'>$title</h2>
-                      <span class='text-white'>$date</span>
-                        <p class='text-white'>$content</p>"; */
+              extract($news);                      
                   echo "<div class='card mb-3' style='width: 40rem;'>
                   <div class='card-body'>
                     <h5 class='card-title'>$title</h5>

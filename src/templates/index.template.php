@@ -23,16 +23,16 @@
             <ul class="navbar-nav">
                 <li class="nav-item"> <a class="nav-link link-light" href="blog.html" aria-current="pokemon-news">Blog</a></li>
                 <li class="nav-item"> <a class="nav-link link-light" href="images.html" aria-current="pokemon-images">Galería</a></li>
-                <li class="nav-item"> <a class="nav-link link-light" href="#" aria-current="pokemon-dates">Datos</a></li>
+                <li class="nav-item"> <a class="nav-link link-light" href="data.html" aria-current="pokemon-dates">Datos</a></li>
             </ul>
           </div>
         </div>
     </nav>
       <!--Contents-->
       <div class="container ">
-      <span class="logo"><img src="img/img_aux/pokemon-logo.png" alt="logo-image" width="350" height="100"></span>
+      <span class="logo"><img src="../img/img_aux/pokemon-logo.png" alt="logo-image" width="350" height="100"></span>
       <h1 class="main-title">Bienvenidos a Pokephp</h1>
-      <h2 class="main-title">Esto es un trabajo de m07 de la uf3 y nosotros somos:</h2>
+      <h2 class="main-title">Esto es un trabajo de Desarrollo de Aplicaciones Web Entorno Servidor de la uf3 y nosotros somos:</h2>
       <ul>
       <?php   
             foreach ($contributors as $contributor) {       
