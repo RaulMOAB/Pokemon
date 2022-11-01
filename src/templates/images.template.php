@@ -87,7 +87,7 @@
 
       <!-- Copyright -->
       <div class="footer-copyright text-white text-center py-3">© 2022 Copyright:
-        <pre class="text-white"> Raul Montoro, Alvin Miller Garcia Garcia y Eloy Gonzales</pre>
+        <pre class="text-white"> Raul Montoro, Alvin Miller Garcia Garcia y Eloy Gonzalez</pre>
       </div>
       <!-- Copyright -->
 

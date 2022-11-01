@@ -32,7 +32,7 @@
       <div class="container ">
       <span class="logo"><img src="img/img_aux/pokemon-logo.png" alt="logo-image" width="350" height="100"></span>
       <h1 class="main-title">Bienvenidos a Pokephp</h1>
-      <h2 class="main-title">Esto es un trabajo de m06 de la uf3 y nosotros somos:</h2>
+      <h2 class="main-title">Esto es un trabajo de m07 de la uf3 y nosotros somos:</h2>
       <ul>
       <?php   
             foreach ($contributors as $contributor) {       
@@ -47,7 +47,7 @@
 
       <!-- Copyright -->
       <div class="footer-copyright text-white text-center py-3">© 2022 Copyright:
-        <pre class="text-white"> Raul Montoro, Alvin Miller Garcia Garcia y Eloy Gonzales</pre>
+        <pre class="text-white"> Raul Montoro, Alvin Miller Garcia Garcia y Eloy Gonzalez</pre>
       </div>
       <!-- Copyright -->
 

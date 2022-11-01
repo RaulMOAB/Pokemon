@@ -62,16 +62,3 @@ body{
     margin: 1rem auto;
     
 }
-.logo > img{
-    height: fit-content;
-}
-.news{
-    display: flex;
-    flex-direction: column;
-    margin:auto
-}
-
-.poke-img{
-    width: 300px;
-    height: 300px;
-}

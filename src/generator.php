@@ -1,11 +1,10 @@
-<!-- <?php
+<?php
 
 declare(strict_types = 1);
 require_once(__DIR__ . '/lib/utils.php');
 
 
 //Functions here
-
 /**
  * Function to generate an index.html
  * @param{$index_template_filename} path of the index template 
@@ -20,7 +19,7 @@ function make_index(
     
     //shell_exec("rm -r -f ../public/*");
     //create_dir('../public'); 
-    shell_exec("cp -r ../resources/ ../public/"); 
+    shell_exec("cp -r ../resources/* ../public/"); 
     file_put_contents($html_filename, $make_index_html);
 }
 
@@ -44,13 +43,20 @@ function get_news_array():array{
     $news_path_array                = glob("../db_json/*.json");// devuelve array con los nombres de las noticias
     $filenames_array                = array_map('get_file_name', $news_path_array);//obtener los nombres limpios de los archivos json
     
+    
     foreach ($filenames_array as $filename ) {
         $json_news                  = read_json("../db_json/". $filename);//lee json y devuelve array asociativo
-        extract($json_news);
-
+        extract($json_news);//extrae las keys del json a variables php con su value
+        $split_array                = substr($filename, 0, -5);
+        $filename_string_to_date    = strtotime($split_array);// json filenames to string to date to sort them
+      
+ 
         array_push($news_array, $json_news);
     }   
-    sort($news_array);
+
+
+
+    rsort($news_array);// sort an array in descending   
     return $news_array;
 }
 function get_img_array():array{
@@ -62,6 +68,7 @@ function get_img_array():array{
     foreach ($filenames_array as $filename ) {
         array_push($img_array, "/img/".$filename);
     } 
+    print_r($img_array);
     return $img_array;
 }
 /**
@@ -81,8 +88,10 @@ function main(): void
 {
     //TEMPLATES HTML
     $index_filename_template        = "templates/index.template.php";
-    $blog_filename_template         = "templates/blog.template.php";
+    $blog_filename_template         = "templates/blog.template.php"; 
     $images_filename_template       = "templates/images.template.php";
+    
+    
 
     //HTML FILENAME
     $index_filename_html            = "../public/index.html";
@@ -91,7 +100,7 @@ function main(): void
 
     //TEMPLATE VARS
     //Index
-    $contributors                   = ["Alvin Miller Garcia Garcia", "Raul Montoro", "Eloy Gomez"];
+    $contributors                   = ["Alvin Miller Garcia Garcia", "Raul Montoro", "Eloy Gonzalez"];
     $index_template_vars            = ['contributors'=>$contributors];
 
     //Blog
