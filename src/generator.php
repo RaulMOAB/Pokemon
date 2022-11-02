@@ -54,7 +54,7 @@ function make_regions_html(array $region_info):void{
         $filename_html                                  = "../public/$region.html";
 
         $region_pokemons                                = glob("../public/img/regions/$region/*.webp");
-        $pokemon_images_paths                           = array_map('get_true_path_pokemons_files',$region_pokemons);
+        $pokemon_images_paths                           = array_map('get_pokemon_paths',$region_pokemons);
         $pokemons_filenames                             = array_map('get_file_name',$region_pokemons);
 
         $pokemons_name                                  = array_map('get_pokemon_name',$pokemons_filenames);
@@ -127,12 +127,12 @@ function get_regions_array():array{
         $region_name                = substr($filename,0,-5);
         $url                        = "https://pokeapi.co/api/v2/region/$region_name";
         $json_string                = shell_exec("curl $url");
-        $data                       = json_decode($json_string,true);
-        $version_group              = $data["version_groups"];
+        $api_response               = json_decode($json_string,true);
+        $version_group              = $api_response["version_groups"];
 
         $region                     = [];
         $region["region_name"]      = $filename;
-        $region["game_versions"]    =$version_group;
+        $region["game_versions"]    = $version_group;
 
         $regions[$region_name]=$region;
     }
@@ -162,9 +162,9 @@ function get_pokemon_name(string $pokemon_filename):string{
 
 /**
  * Function that remove ../public from the path to get the correct path from the server
- * @return string correct path from the server public/
+ * @return string correct path from the server public
  */
-function get_true_path_pokemons_files(string $path):string{
+function get_pokemon_paths(string $path):string{
     return substr($path,9);
 }
 
@@ -174,7 +174,6 @@ function main(): void
     //TEMPLATES HTML
     $index_filename_template        = "templates/index.template.php";
     $blog_filename_template         = "templates/blog.template.php"; 
-    $images_filename_template       = "templates/images.template.php";
     $data_filename_template         = "templates/data.template.php";
     $region_filename_template       = "templates/region.template.php";
     

@@ -78,10 +78,17 @@ body{
     margin: auto;
 }
 
-/*GALLERY SITE*/
+/*REGION   SITE*/
 .pokemons-container{
     display: flex;
+    justify-content: center;
+    width: -webkit-fill-available;
+}
+.pokemons-img-container{
     margin: auto;
+    display: flex;
+    justify-content: center;
+    width: -webkit-fill-available;
 }
 .initial-pokemons{
     margin: 2rem auto;
@@ -122,4 +129,8 @@ body{
 #data-table{
     text-align: center;
 }
-#data-table tr:first-child td { position: sticky; top: 60; }
+table#data-table > tbody > tr:nth-of-type(1) {
+    position: sticky;
+    top: 50px;
+}
+/* #data-table tr:first-child td{ position: sticky; top: 60;} */

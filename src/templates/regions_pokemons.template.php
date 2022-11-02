@@ -36,7 +36,7 @@
                 echo "
                 <h1 class='main-title'>Estos son los iniciales de $region_name</h1>
                 <span class='initial-pokemons'>$pokemon_inicial_1 ,$pokemon_inicial_2  y $pokemon_inicial_3</span>
-                <div class='pokemons-container'>";
+                <div class='pokemons-img-container'>";
 
                 foreach ($images as $image) {
                     /*images vendra de la variable extraida del array de toda la info de la region.
