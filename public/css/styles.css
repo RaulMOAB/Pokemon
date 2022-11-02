@@ -19,11 +19,13 @@ body{
     background-attachment: fixed;  
    
 }
-
+#footer-container{
+    margin: auto;
+}
 #footer{
-    /* position: absolute; */
+    position: fixed;
     bottom: 0;
-    width: 100%;
+   
 }
 
 /*NAVBAR*/
@@ -63,7 +65,10 @@ body{
     color: var(--navbar-item-font-color);
     text-shadow: 0px 3px 6px rgba(0,0,0,0.24);
 }
-
+.names{
+    margin: 1rem auto;
+    font-size: 2rem;
+}
 .logo{
     width: 300px;
     margin: 1rem auto;
@@ -94,6 +99,8 @@ body{
     margin: 2rem auto;
     font-weight: 600;
     color: #f8f9fa;
+    font-size: 1.25rem;
+    letter-spacing: 2px;
 }
 .pokemons-img{
     padding: 0 2rem;

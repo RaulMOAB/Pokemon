@@ -34,7 +34,7 @@
       <span class="logo"><img src="../img/img_aux/pokemon-logo.png" alt="logo-image" width="350" height="100"></span>
       <h1 class="main-title">Bienvenidos a Pokephp</h1>
       <h2 class="main-title">Esto es un trabajo de Desarrollo de Aplicaciones Web Entorno Servidor de la uf3 y nosotros somos:</h2>
-      <ul>
+      <ul class="names">
       <?php   
             foreach ($contributors as $contributor) {       
               echo "<li class='text-white'>$contributor</li>";
@@ -42,18 +42,20 @@
         ?>
       </ul>
       </div>
+       <div class="container-fluid text-center" id="footer-container">
 
-      <!-- Footer -->
-      <footer class="page-footer font-small blue" id="footer">
-
-      <!-- Copyright -->
-      <div class="footer-copyright text-white text-center py-3">© 2022 Copyright:
-        <pre class="text-white"> Raul Montoro, Alvin Miller Garcia Garcia y Eloy Gonzalez</pre>
-      </div>
-      <!-- Copyright -->
-
-      </footer>
-      <!-- Footer -->
+         <!-- Footer -->
+         <footer class="row align-items-end page-footer font-small blue" id="footer">
+   
+         <!-- Copyright -->
+         <div class="footer-copyright text-white text-center">© 2022 Copyright:
+           <pre class="text-white"> Raul Montoro, Alvin Miller Garcia Garcia y Eloy Gonzalez</pre>
+         </div>
+         <!-- Copyright -->
+   
+         </footer>
+         <!-- Footer -->
+       </div>     
 
 
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
