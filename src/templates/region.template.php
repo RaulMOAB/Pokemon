@@ -36,9 +36,9 @@
     <div class="pokemons-container">
 
       <?php
-      foreach ($regions as $region => $array_asosiativo) {
-        $games = $array_asosiativo["game_versions"];
-        extract($array_asosiativo);
+      foreach ($regions as $region => $region_info) {
+        $games = $region_info["game_versions"];
+        extract($region_info);
         $region_html_path = $region.".html";
         echo "
             <span class='region-name'>$region</span><br>
