@@ -49,7 +49,7 @@
       </div>
 
       <!-- Footer -->
-      <footer class="page-footer font-small blue">
+      <footer class="page-footer">
 
       <!-- Copyright -->
       <div class="footer-copyright text-white text-center py-3">© 2022 Copyright:

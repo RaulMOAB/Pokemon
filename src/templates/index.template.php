@@ -42,17 +42,15 @@
         ?>
       </ul>
       </div>
-       <div class="container-fluid text-center" id="footer-container">
-
+      
+       <div id="footer-container">
          <!-- Footer -->
-         <footer class="row align-items-end page-footer font-small blue" id="footer">
-   
+         <footer>
          <!-- Copyright -->
          <div class="footer-copyright text-white text-center">© 2022 Copyright:
            <pre class="text-white"> Raul Montoro, Alvin Miller Garcia Garcia y Eloy Gonzalez</pre>
          </div>
          <!-- Copyright -->
-   
          </footer>
          <!-- Footer -->
        </div>     
