@@ -89,11 +89,8 @@ function get_news_array():array{
     
     
     foreach ($filenames_array as $filename ) {
-
         $json_news                  = read_json("../db_json/". $filename);//lee json y devuelve array asociativo
-        extract($json_news);//extrae las keys del json a variables php con su value
         array_push($news_array, $json_news);
-
     }
 
     sort($news_array);// sort an array in descending   
