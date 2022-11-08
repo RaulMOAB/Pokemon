@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-
+namespace Lib;
 // Utils
 // -----
 
@@ -122,7 +122,7 @@ function join_paths(string ...$path_array): string {
 
     // Check for empty strings
     $empty_path_found = any_true(array_map('is_empty_str', $path_array));
-    if ($empty_path_found) { throw new Exception('Error: join_paths() on an empty path.'); }
+    if ($empty_path_found) { throw new \Exception('Error: join_paths() on an empty path.'); }
 
     // Join paths
     $joint_path = join(DIRECTORY_SEPARATOR, $path_array);

@@ -2,6 +2,11 @@
 
 declare(strict_types = 1);
 require_once(__DIR__ . '/lib/utils.php');
+namespace Src;
+
+use function Utils\render_template;
+use function Utils\read_json;
+
 
 
 /*______________________________________________Functions here____________________________________________*/
