@@ -1,11 +1,15 @@
 <?php
 
 declare(strict_types = 1);
+namespace Ssg;
 require_once(__DIR__ . '/lib/utils.php');
-namespace Src;
+// require_once(__DIR__ . '/lib/Table.php');
 
-use function Utils\render_template;
-use function Utils\read_json;
+// use Table;
+use function Lib\render_template;
+use function Lib\read_json;
+use function Lib\create_dir;
+
 
 
 
@@ -59,10 +63,10 @@ function make_regions_html(array $region_info):void{
         $filename_html                                  = "../public/$region.html";
 
         $region_pokemons                                = glob("../public/img/regions/$region/*.webp");
-        $pokemon_images_paths                           = array_map('get_pokemon_paths',$region_pokemons);
-        $pokemons_filenames                             = array_map('get_file_name',$region_pokemons);
+        $pokemon_images_paths                           = array_map('Ssg\get_pokemon_paths',$region_pokemons);
+        $pokemons_filenames                             = array_map('Ssg\get_file_name',$region_pokemons);
 
-        $pokemons_name                                  = array_map('get_pokemon_name',$pokemons_filenames);
+        $pokemons_name                                  = array_map('Ssg\get_pokemon_name',$pokemons_filenames);
 
         $region_name                                    = ucfirst($region);//This function make first char to uppercase
 
@@ -90,7 +94,7 @@ function get_news_array():array{
 
     $news_array                     = [];//array final a devolver despues del glob() y el basename()
     $news_path_array                = glob("../db_json/*.json");// devuelve array con los nombres de las noticias
-    $filenames_array                = array_map('get_file_name', $news_path_array);//obtener los nombres limpios de los archivos json
+    $filenames_array                = array_map('Ssg\get_file_name', $news_path_array);//obtener los nombres limpios de los archivos json
     
     
     foreach ($filenames_array as $filename ) {
@@ -122,7 +126,7 @@ function get_data_array():array{
 function get_regions_array():array{
     $regions = [];
     $regions_img_array          = glob("../public/img/regions_map/*.webp");
-    $filenames_array            = array_map('get_file_name',$regions_img_array);
+    $filenames_array            = array_map('Ssg\get_file_name',$regions_img_array);
 
     foreach ($filenames_array as $filename) {
         
