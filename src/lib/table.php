@@ -97,6 +97,13 @@ class Table
         }
         fclose($file);
     }
+
+    //TODO-->
+
+    //Filtrar filas
+
+    //Obtener columna
+
 }
 
 //!test
