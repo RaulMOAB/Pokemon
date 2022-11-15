@@ -102,15 +102,22 @@ class Table
 
     //Filtrar filas
     public function filterRows(int $num_volums){
-        
-        $aray_filtered = array_filter($this->body, function ($num_volums){
-           return $num_volums[1] > 10;
+        $filter = $num_volums;
+
+        $aray_filtered = array_filter($this->body, function ($num_volums) use ($filter){
+           return $num_volums[1] > $filter;//? [1] ??
         }, ARRAY_FILTER_USE_BOTH);    
         return $aray_filtered;
     }
 
     //Obtener columna
+    public function getRow(int $row):array{
+        return $this->body[$row];
+    }
     
+    public function getColumn(int $col):array{
+        return array_column($this->body, $col);
+    }
 }
 
 //!test
@@ -136,8 +143,10 @@ function main(): void
     Table::writeCsv('../../pokemon.csv', $new_row);
     Table::readCsv('../../pokemon.csv'); */
      
-    $num_volums = 30;
+    $num_volums = 13;
     print_r($manga_table->filterRows($num_volums));
+    print_r($manga_table->getRow(3));
+    print_r($manga_table->getColumn(0));
     
  
 }
