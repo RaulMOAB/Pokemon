@@ -25,7 +25,7 @@ class Table
      */
     private function get_max_length():int{
         $arr = [];
-        foreach ($this->body as $index => $value) {   
+        foreach ($this->body as $index => $value) {  
          $arr [] = max(array_map('strlen',$value));  
         }
         $max_length = max($arr);
@@ -51,12 +51,12 @@ class Table
         $line = str_repeat("═",($max_length*count($header)));//Horizontal line to get more prettier usint str_repeat that repeat a character a number of times, in this case $max_length *  number of columns of the table
 
 
-        $string_table = $string_table.$line.PHP_EOL;         //Horizontal line
+        $string_table  = $string_table.$line.PHP_EOL;         //Horizontal line
 
         $string_header = implode("║ ",$header) . PHP_EOL;     //Header fields separated by an "║" with implode function
-        $string_table  =$string_table . $string_header;      //Concat header fields already formatted in final string
+        $string_table  = $string_table . $string_header;      //Concat header fields already formatted in final string
 
-        $string_table = $string_table.$line.PHP_EOL;         //Horizontal line
+        $string_table  = $string_table.$line.PHP_EOL;         //Horizontal line
 
         //__________________________BODY_SET_UP____________________________________
 
@@ -85,7 +85,12 @@ class Table
             $csv_array[] = str_getcsv($row);
         }
         //print_r($csv_array);
-        return $csv_array;
+        
+        $header=array_shift($csv_array);
+        $body=$csv_array;
+                    
+        
+        return [$header,$body];
     }
 
     //*Append a new row into csv array
@@ -124,7 +129,7 @@ class Table
 function main(): void
 {
     //$empty_table = new Table();
-
+/*
     $header = ['Title', 'Volumes', 'id'];
     $body = [
         ['Chainsaw Man',    13, "QP9"],
@@ -140,15 +145,16 @@ function main(): void
 
     //?Test csv static functions
    /*  $new_row[] = ['23123123'];
-    Table::writeCsv('../../pokemon.csv', $new_row);
-    Table::readCsv('../../pokemon.csv'); */
+    Table::writeCsv('../../pokemon.csv', $new_row);*
+    Table::readCsv('../../pokemon.csv'); 
      
     $num_volums = 13;
     print_r($manga_table->filterRows($num_volums));
     print_r($manga_table->getRow(3));
-    print_r($manga_table->getColumn(0));
-    
- 
+    print_r($manga_table->getColumn(0));*/
+    $datos=Table::readCsv('../../pokemon.csv');
+ $prueba = new Table($datos[0],$datos[1]);
+ print_r($prueba);
 }
 //----------------------------------------------------------------------------------
 main();
