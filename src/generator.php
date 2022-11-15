@@ -210,17 +210,18 @@ function main(): void
     $regions_array                  = get_regions_array();
     $regions_template_vars          = ['regions'=>$regions_array];
 
-    //For Data
+    //For Data from Table object
     $csv_data = Table::readCsv('../pokemon.csv');
    
     //$data_array                     = get_data_array();
-    $data_template_vars             = ['csv_array' => $csv_data];
+    $data_template_vars             = ['header' => $csv_data[0],
+                                       'body'   => $csv_data[1]];
     
 
     //Calling functions
     make_index($index_filename_template, $index_filename_html, $index_template_vars);       //Generate index.html
     make_html($blog_filename_template, $blog_filename_html, $news_template_vars);           //Generate blog.html
-    make_html($data_filename_template, $data_filename_html, $data_template_vars);           // todo Generate data.html
+    make_html($data_filename_template, $data_filename_html, $data_template_vars);           //Generate data.html
     make_html($region_filename_template, $regions_filename_html, $regions_template_vars);   //Generate region.html
     make_regions_html($regions_array);    
     

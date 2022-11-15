@@ -35,15 +35,22 @@
       <div class="table-responsive-lg">
 
       <table id="data-table" class="table table-dark table-hover">
+        <tbody>
         <?php         
-          foreach ($csv_array as $key => $row) {
-            echo "<tr>";
-                foreach ($row as $key2 => $row2) {
-                  echo "<td>$row2</td>";
-                }
-            echo "</tr>";
+          foreach ($header as $key) {
+            echo "<th>$key</th>";
           };
-        ?>
+          foreach ($body as $row) {
+              echo "<tr>";
+              foreach ($row as $data) {
+                echo "<td>$data</td>";
+              };
+              echo "</tr>";
+             
+            }
+          
+          ?>
+          </tbody>
       </table>
       </div>
       </div>

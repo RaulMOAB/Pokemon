@@ -86,8 +86,8 @@ class Table
         }
         //print_r($csv_array);
         
-        $header=array_shift($csv_array);
-        $body=$csv_array;
+        $header = array_shift($csv_array);
+        $body   = $csv_array;
                     
         
         return [$header,$body];
@@ -152,9 +152,9 @@ function main(): void
     print_r($manga_table->filterRows($num_volums));
     print_r($manga_table->getRow(3));
     print_r($manga_table->getColumn(0));*/
-    $datos=Table::readCsv('../../pokemon.csv');
- $prueba = new Table($datos[0],$datos[1]);
- print_r($prueba);
+    //$datos=Table::readCsv('../../pokemon.csv');
+    //$prueba = new Table($datos[0],$datos[1]);
+   // print_r($prueba);
 }
 //----------------------------------------------------------------------------------
 main();
@@ -163,5 +163,5 @@ main();
 //TODO 1. __toString falta encontrar el max length
 //!2. metodo leer csv static REPASAR
 //!3. metodo escribir csv static REPASAR
-//*4. Filtrar filas
-//*5. Obtener columna
+//!4. Filtrar filas
+//!5. Obtener columna y filas 
