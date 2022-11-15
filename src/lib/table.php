@@ -103,9 +103,9 @@ class Table
     //Filtrar filas
     public function filterRows(int $num_volums){
         
-        $aray_filtered = array_filter($this->body, function ($volums){
-           return $volums[1] == 27;
-        });    
+        $aray_filtered = array_filter($this->body, function ($num_volums){
+           return $num_volums[1] > 10;
+        }, ARRAY_FILTER_USE_BOTH);    
         return $aray_filtered;
     }
 
