@@ -9,9 +9,9 @@ class Table
     public array $body;
 
     /**
-     * Constructor of table
+     * Table's constructor
      * @param array $header indexed array with the name of each field of the table
-     * @param array $body multidimensional array that contain array of each row
+     * @param array $body multidimensional array that contains an array of each row
      */
     public function __construct(array $header, array $body)
     {
@@ -20,13 +20,13 @@ class Table
     }
 
     /**
-     * Function that returns the longest number of characters in the body content
-     * @return int $max_length  number of characters of the longest content in multidimensional array
+     * Function to get the max length of body
+     * @return int $max_length  
      */
     private function get_max_length():int{
         $arr = [];
         foreach ($this->body as $index => $value) {   
-         $arr []= max(array_map('strlen',$value));  //
+         $arr [] = max(array_map('strlen',$value));  
         }
         $max_length = max($arr);
         return $max_length;
@@ -39,13 +39,13 @@ class Table
     public function __toString():string{
 
         $max_length = Table::get_max_length();                  //Getting max length of the content
-        $string_table  = '';                                    //Initialize the final string to return
+        $string_table  = '';                                   
 
         //_________________________HEADER_SET_UP__________________________________
 
-        $header = $this->header;                             //Create header array for not modify the original
-        foreach ($header as $index => $title) {
-            $header[$index] = str_pad($title,$max_length);   //Adding to not original header the value of original header but spaced up to $max_length
+        $header = $this->header;                             //Put header into new variable to not modify the original one
+        foreach ($header as $index => $title) {              // modify index from an indexed array   
+            $header[$index] = str_pad($title,$max_length);   //?Adding to header the value of original header but spaced up to $max_length
         }
 
         $line = str_repeat("═",($max_length*count($header)));//Horizontal line to get more prettier usint str_repeat that repeat a character a number of times, in this case $max_length *  number of columns of the table
@@ -53,7 +53,7 @@ class Table
 
         $string_table = $string_table.$line.PHP_EOL;         //Horizontal line
 
-        $string_header = implode("║",$header) . PHP_EOL;     //Header fields separated by an "║" with implode function
+        $string_header = implode("║ ",$header) . PHP_EOL;     //Header fields separated by an "║" with implode function
         $string_table  =$string_table . $string_header;      //Concat header fields already formatted in final string
 
         $string_table = $string_table.$line.PHP_EOL;         //Horizontal line
@@ -66,7 +66,7 @@ class Table
             foreach ($content as $index => $comic_info) {
                 $content[$index] = str_pad((string)$comic_info,$max_length); //Adding to not original body the value of original body but spaced up to $max_length
             }
-            $string_content = implode("║", $content) . PHP_EOL;              //Row fields separated by an "║" with implode function 
+            $string_content = implode("║ ", $content) . PHP_EOL;              //Row fields separated by an "║" with implode function 
             $body_string    = $body_string . $string_content;               
         }
 
@@ -101,9 +101,16 @@ class Table
     //TODO-->
 
     //Filtrar filas
+    public function filterRows(int $num_volums){
+        
+        $aray_filtered = array_filter($this->body, function ($volums){
+           return $volums[1] == 27;
+        });    
+        return $aray_filtered;
+    }
 
     //Obtener columna
-
+    
 }
 
 //!test
@@ -121,15 +128,16 @@ function main(): void
     //
 
 
-
     $manga_table = new Table($header, $body);
-    echo $manga_table;
+    //echo $manga_table;
 
     //?Test csv static functions
    /*  $new_row[] = ['23123123'];
     Table::writeCsv('../../pokemon.csv', $new_row);
     Table::readCsv('../../pokemon.csv'); */
      
+    $num_volums = 30;
+    print_r($manga_table->filterRows($num_volums));
     
  
 }
