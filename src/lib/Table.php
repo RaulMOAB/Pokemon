@@ -51,7 +51,8 @@ class Table
         $body = $this->body; //Create body array for not modify the original
 
         //Horizontal line to get more prettier, in this case all $max_lengths +  number of columns +2 (first and last "|")
-        $line = str_repeat("═", array_sum($max_lengths) + sizeof($max_lengths) + 2) . PHP_EOL;
+        // $line = str_repeat("═", array_sum($max_lengths) + sizeof($max_lengths) + 2) . PHP_EOL;
+        $line = '';
 
         //the string table, head and body inits as a void string.
         $string_table = '';
@@ -81,7 +82,7 @@ class Table
 
 
         //_________________________BUILD_AND_RETURN_THE_TABLE________________________________
-        $string_table .= $line; //Horizontal line
+        //$string_table .= $line; //Horizontal line
 
         $string_table .= $string_header;  //Concat header fields already formatted in final string
 
@@ -94,14 +95,22 @@ class Table
         return $string_table;
     }
 
+  
+
     //*Read a csv file
-    public static function readCsv(string $csv_file): array
+    public static function readCsv(string $csv_file, string $separator): self
     {
 
+       /*  $csv_str    = file_get_contents($csv_file);
+        $csv_array  = explode($separator, $csv_str); */
+        // explode en $rows
+        // cada $row explode() en fields
+        
+      
         $file = file($csv_file);
         $csv_array = [];
         foreach ($file as $row) {
-            $csv_array[] = str_getcsv($row);
+            $csv_array[] = str_getcsv($row, $separator);
         }
         //print_r($csv_array);
 
@@ -109,18 +118,15 @@ class Table
         $body = $csv_array;
 
 
-        return [$header, $body];
+        return new Table($header, $body);
     }
 
-    //*Append a new row into csv array
-    public static function writeCsv(string $csv_file, array $fields): void
-    {
-        $file = fopen($csv_file, "a"); //*append
-        foreach ($fields as $values) {
-            fputcsv($file, $values);
-        }
-        fclose($file);
-    }
+    
+    public static function writeCsv(Table $table, string $csv_filename): void
+    {    
+        $table_str = $table->__toString();
+        file_put_contents($csv_filename, $table_str);
+    } 
 
     //TODO-->
 
@@ -211,7 +217,7 @@ function main()
             ['One Piece',       70, 'Hatsune Miku']
         ]
     );
-    echo $manga->__toString();
+    //echo $manga->__toString();
 
     
     $filtered_str = new Table(
@@ -227,9 +233,15 @@ function main()
         $manga->filterRows(1, 10, 30)
     );
     
-    echo $filtered_str->__toString();
-    echo $filtered_int->__toString();
-    echo $filtered_rng->__toString();
+    // echo $filtered_str->__toString();
+    // echo $filtered_int->__toString();
+    // echo $filtered_rng->__toString();
+
+    $prueba_table = Table::readCsv('../../prueba.csv', '║');
+    //var_dump($prueba_table);
+    $manga ->writeCsv($manga,'manga_test.csv');
+   
+
 }
 
 main();
