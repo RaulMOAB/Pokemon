@@ -13,6 +13,7 @@ use function Utils\render_template;
 
 require_once(realpath(__DIR__ . '/../model/model.php'));
 use function Model\get_news_array;
+use function Model\get_region_name;
 
 function index():string {
     $index_body_template = render_template(getTemplatePath('/body/index'),
@@ -33,21 +34,23 @@ function blog(): string
 }
 
 function gallery(): string {
+
+    $regions = get_region_name();
     $gallery_body_template = render_template(getTemplatePath('/body/gallery'),[/*response de la api para las regiones */]);
     $gallery_view          = render_template(getTemplatePath('/skeleton/skeleton'), ['body' => $gallery_body_template]);
 
     return $gallery_view;
 }
 
-//function data():string {
-  //$manga_table = read_table(get_csv_path('manga'));
+function data():string {
+  $pokemon_table      = read_table(__DIR__ . '/../../db/pokemon.csv');
 
-//   $data_body_template = render_template(getTemplatePath('/body/data'),
-//                                         ['manga_table' => $manga_table]);
-//   $data_view          = render_template(getTemplatePath('/skeleton/skeleton'),
-//                                         ['body' => $data_body_template]);
-//   return $data_view;                                        
-//}
+  $data_body_template = render_template(getTemplatePath('/body/data'),
+                                        ['pokemon_table' => $pokemon_table]);
+  $data_view          = render_template(getTemplatePath('/skeleton/skeleton'),
+                                        ['body' => $data_body_template]);
+  return $data_view;                                        
+}
 
 function error_404(string $request_path): string {
 

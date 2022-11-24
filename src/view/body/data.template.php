@@ -6,9 +6,8 @@
     <table id="data-table" class="table table-dark table-hover">
       
         <?php
-       
-
-        
+        echo $pokemon_table["header"];
+        echo $pokemon_table["body"];
         ?>
       
     </table>

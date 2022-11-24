@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Lib;
+namespace Table;
 
 class Table
 {

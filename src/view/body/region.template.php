@@ -40,7 +40,7 @@
       foreach ($regions as $region => $region_info) {
         $games = $region_info["game_versions"];
         extract($region_info);
-        $region_html_path = $region.".html";
+        $region_html_path = $region;
         echo "
             <span class='region-name'>$region</span><br>
             <div class='pokemons-img'>

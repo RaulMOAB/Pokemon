@@ -22,8 +22,8 @@ function make_response(string $request_path): string {
 
         '/index', ''    =>  Controller\index(),
         '/blog'         =>  Controller\blog(),
-        '/gallery'      =>  Controller\gallery(),
-        //'/data'         =>  Controller\data(),
+        '/regions'      =>  Controller\gallery(),
+        '/data'         =>  Controller\data(),
         
          default        =>  Controller\error_404($request_path),
     };
