@@ -23,6 +23,7 @@ function make_response(string $request_path): string {
         '/index', ''    =>  Controller\index(),
         '/blog'         =>  Controller\blog(),
         '/regions'      =>  Controller\gallery(),
+        '/pokemons'     =>  Controller\pokemons(),
         '/data'         =>  Controller\data(),
         
          default        =>  Controller\error_404($request_path),

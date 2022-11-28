@@ -14,6 +14,8 @@ use function Utils\render_template;
 require_once(realpath(__DIR__ . '/../model/model.php'));
 use function Model\get_news_array;
 use function Model\get_region_name;
+use function Model\get_regions_api;
+use function Model\get_pokemons;
 
 function index():string {
     $index_body_template = render_template(getTemplatePath('/body/index'),
@@ -35,11 +37,23 @@ function blog(): string
 
 function gallery(): string {
 
-    $regions = get_region_name();
-    $gallery_body_template = render_template(getTemplatePath('/body/gallery'),[/*response de la api para las regiones */]);
+    $regions_name = get_region_name();
+    $game_version = get_regions_api($regions_name);
+     
+    $gallery_body_template = render_template(getTemplatePath('/body/region'),['game_version' => $game_version]);
     $gallery_view          = render_template(getTemplatePath('/skeleton/skeleton'), ['body' => $gallery_body_template]);
 
     return $gallery_view;
+}
+
+function pokemons():string {
+    $regions_name    = get_region_name();
+    $pokemons_images = get_pokemons($regions_name);
+
+    $pokemons_body_template = render_template(getTemplatePath('/body/pokemons'),['pokemons_images' => $pokemons_images]);
+    $pokemons_view          = render_template(getTemplatePath('/skeleton/skeleton'), ['body' => $pokemons_body_template]);
+
+    return $pokemons_view;
 }
 
 function data():string {

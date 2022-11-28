@@ -108,6 +108,8 @@ body{
 .poke-img{
     width: 250px;
     height: 250px;
+    background-color: var(--navbar-background);
+    border: 1px solid #e2e2e2;
 }
 
 /*REGIONS*/ 
