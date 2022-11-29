@@ -130,10 +130,13 @@ function get_pokemons(array $regions_name):array{
     $pokemon_img_path = fn($filename) => "img/regions/$region_name/" . $filename;//*Calleable function to concatenate region_name + clean image filename
     $pokemon_img      = glob(__DIR__ . "/../../public/img/regions/$region_name/*.webp");//*Get images (with .webp)
     $pokemon_img      = array_map($pokemon_img_name, $pokemon_img);//*new array with images path
+    
+    
 
     $pokemon_image_array[$region_name] = array_map($pokemon_img_path, $pokemon_img);//*associative array with region name as key and an indexed array with all the image paths
-    
+   
    }
 
     return $pokemon_image_array;
 }
+

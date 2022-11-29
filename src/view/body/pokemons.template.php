@@ -9,11 +9,15 @@
                 <?php 
 
                   foreach ($pokemons_images as $region_name => $value) {
-                    echo "<h1 class='h1 text-center mt-3'>$region_name</h1>";
-                    foreach ($value as $img ) {
+                    echo "<h1 class='region-name text-center mt-3'>$region_name</h1>";
+                    echo "<div class='pokemon_images'>";
+                    
+                    foreach ($value as $img ) {                    
                       echo "<img src='$img' class='poke-img' title='pokemons'>";
                     }
+                    echo "</div>";
                   }
+                  
                   
                 ?>
               </div>

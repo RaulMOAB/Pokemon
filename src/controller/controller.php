@@ -17,6 +17,8 @@ use function Model\get_region_name;
 use function Model\get_regions_api;
 use function Model\get_pokemons;
 
+use function Model\get_pokemon_name;
+
 function index():string {
     $index_body_template = render_template(getTemplatePath('/body/index'),
                                             ['contributors' => ['Alvin Garcia', 'Raul Montoro', 'Eloy Gomez', 'Mario Barroso']]);

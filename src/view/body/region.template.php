@@ -17,8 +17,8 @@
         echo "<tr><td>$region_name <br><a href='/pokemons'><img src='$region_info[map_path]'></a></td>";
 
         foreach ($region_info as $key => $version_info) {
-          //$list .= "<li>$value[name]</li>";
-         $x = "$region_info[map_path]";
+         $region_map = "$region_info[map_path]";
+         
           foreach ($version_info as $key => $value) {
              $list .= "<li>$value[name]</li>";
           }
