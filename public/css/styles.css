@@ -136,6 +136,10 @@ body{
     color: white;
     font-weight: 700;
 }
+.pokemons-name{
+    text-align: center;
+    text-transform: capitalize;
+}
 
 /*DATA TABLE*/
 #data-table{

@@ -21,7 +21,7 @@ use function Model\get_pokemon_name;
 
 function index():string {
     $index_body_template = render_template(getTemplatePath('/body/index'),
-                                            ['contributors' => ['Alvin Garcia', 'Raul Montoro', 'Eloy Gomez', 'Mario Barroso']]);
+                                            ['contributors' => ['Alvin Garcia', 'Raul Montoro', 'Eloy Gonzalez', 'Mario Barroso']]);
     $index_view          = render_template(getTemplatePath('/skeleton/skeleton'),['body' => $index_body_template]);
 
     return $index_view;

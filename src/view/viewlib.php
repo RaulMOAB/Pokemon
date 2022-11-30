@@ -18,4 +18,9 @@ function getTemplatePath(string $template_name): string{
 
     return $template_path;
 }
+function getPokemonName(string $img_path):string{
+    $filename= basename($img_path);  
+    $name = substr($filename,0,-5);
 
+    return ucfirst($name);  
+}
