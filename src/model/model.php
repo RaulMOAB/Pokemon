@@ -12,21 +12,21 @@ use function Utils\read_json;
 
 
 // ############################################################################
-// News functions
+// Announcements functions
 // ############################################################################
 
 /**
  * Function that gets data from json and sort the array 
- * @return {$news} An array of news     
+ * @return {$announcements} An array of announcements     
  */
-function get_news_array():array{
+function get_announcements_array():array{
 
-    $news_path_array = glob(__DIR__ . '/../../db/news/*.json');// devuelve array con los nombres de las noticias
-    $news_to_array   = fn ($json_file) => read_json($json_file);
-    $news            = array_map($news_to_array, $news_path_array);
+    $announcements_path_array = glob(__DIR__ . '/../../db/announcements/*.json');// devuelve array con los nombres de las noticias
+    $announcements_to_array   = fn ($json_file) => read_json($json_file);
+    $announcements            = array_map($announcements_to_array, $announcements_path_array);
     
-    sort($news);// sort an array in descending   
-    return $news;
+    sort($announcements);// sort an array in descending   
+    return $announcements;
 }
 
 

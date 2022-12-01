@@ -12,7 +12,7 @@ require_once(realpath(__DIR__ . '/../../lib/utils/utils.php'));
 use function Utils\render_template;
 
 require_once(realpath(__DIR__ . '/../model/model.php'));
-use function Model\get_news_array;
+use function Model\get_announcements_array;
 use function Model\get_region_name;
 use function Model\get_regions_api;
 use function Model\get_pokemons;
@@ -29,9 +29,9 @@ function index():string {
 
 function blog(): string
 {
-    $get_news = get_news_array();
+    $get_announcements = get_announcements_array();
 
-    $blog_body_template = render_template(getTemplatePath('/body/blog'), ['news' => $get_news]);
+    $blog_body_template = render_template(getTemplatePath('/body/blog'), ['announcements' => $get_announcements]);
     $blog_view          = render_template(getTemplatePath('/skeleton/skeleton'), ['body' => $blog_body_template]);
 
     return $blog_view;

@@ -26,7 +26,7 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav">
-                            <li class="nav-item"> <a class="nav-link link-light" href="/blog" aria-current="pokemon-news">Blog</a></li>
+                            <li class="nav-item"> <a class="nav-link link-light" href="/blog" aria-current="pokemon-announcements">Blog</a></li>
                             <li class="nav-item"> <a class="nav-link link-light" href="/regions" aria-current="pokemon-images">Regiones</a></li>
                             <li class="nav-item"> <a class="nav-link link-light" href="/data" aria-current="pokemon-dates">Datos</a></li>
                         </ul>
