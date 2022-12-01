@@ -1,161 +1,161 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-:root{
-    --background: rgb(35,67,117);
+:root {
+    --background: rgb(35, 67, 117);
 
-    --navbar-background: rgba(8,34,78,.9);;
+    --navbar-background: rgba(8, 34, 78, .9);
+    ;
     --navbar-item-font-size: 1.25rem;
-    --navbar-item-font-color:#f8f9fa;
+    --navbar-item-font-color: #f8f9fa;
 }
 
-body{
+body {
     min-height: 100vh;
     background: var(--background);
-    background: linear-gradient(180deg, rgba(35,67,117,1) 0%, rgba(25,82,142,1) 100%);
-    background-attachment: fixed;  
-   
-}
-#footer-container{
-    margin: auto;
-}
-#footer{
-    position: fixed;
-    bottom: 0;
-   
+    background: linear-gradient(180deg, rgba(35, 67, 117, 1) 0%, rgba(25, 82, 142, 1) 100%);
+    background-attachment: fixed;
+
 }
 
 /*NAVBAR*/
-#home-title{
+#home-title {
     color: var(--navbar-item-font-color);
 }
-#toggle-btn{
-   background-color: #f8f9fa;
+
+#toggle-btn {
+    background-color: #f8f9fa;
 }
-#navbar-section{
+
+#navbar-section {
     background-color: var(--navbar-background);
-    color: var(--navbar-item-font-color)!important;
+    color: var(--navbar-item-font-color) !important;
 }
-#navbarNav{
+
+#navbarNav {
     justify-content: center;
 }
 
-#navbarNav > ul > li{
+#navbarNav>ul>li {
     margin: auto;
     padding: 0 5rem;
 }
-#navbarNav > ul > li > a:hover{
+
+#navbarNav>ul>li>a:hover {
     border-bottom: 1px solid white;
     transform: scale(1.1);
     transition: all 0.3 ease-in-out;
-    
+
+}
+
+#nav-pokeball {
+    width: 2em;
+    height: auto;
 }
 
 /*PAGE CONTENT*/
-.container{
-    display: flex;
-    flex-direction: column;
-}
-.main-title{
+.main-title {
     margin: 1rem auto;
     text-align: center;
     color: var(--navbar-item-font-color);
-    text-shadow: 0px 3px 6px rgba(0,0,0,0.24);
+    text-shadow: 0px 3px 6px rgba(0, 0, 0, 0.24);
 }
-.names{
+
+.names {
     margin: 1rem auto;
     font-size: 2rem;
 }
-.logo{
-    width: 300px;
+
+.logo {
+    height: 10em;
+    width: auto;
     margin: 1rem auto;
-    
-}
-.logo > img {
-    height: fit-content;
+
 }
 
 /*BLOG SITE*/
-.news{
+.news {
     margin: auto;
 }
 
 /*REGION   SITE*/
-.pokemons-container{
+.pokemons-container {
     display: flex;
     justify-content: center;
     width: -webkit-fill-available;
 }
-.pokemons-img-container{
+
+.pokemons-img-container {
     margin: auto;
     display: flex;
     justify-content: center;
     width: -webkit-fill-available;
 }
-.initial-pokemons{
+
+.initial-pokemons {
     margin: 2rem auto;
     font-weight: 600;
     color: #f8f9fa;
     font-size: 1.25rem;
     letter-spacing: 2px;
 }
-.pokemons-img{
+
+.pokemons-img {
     padding: 0 2rem;
 }
-.poke-img{
+
+.poke-img {
     width: 250px;
     height: 250px;
-    
 }
-.pokemon_images{ 
+
+.pokemon_images {
     background-color: var(--navbar-background);
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
-/*REGIONS*/ 
-.pokemons-container{
+/*REGIONS*/
+.pokemons-container {
     display: grid;
     grid-template-columns: auto auto;
     margin: auto;
 }
-.pokemons-container > ul{
+
+.pokemons-container>ul {
     text-transform: capitalize;
     font-weight: 500;
     font-size: 1.25rem;
     color: white;
 
 }
-.region-name{
-    font-size: 2rem;
+
+.region-name {
+    font-size: 1.5rem;
     text-align: center;
     padding: 1rem;
     text-transform: capitalize;
     color: white;
     font-weight: 700;
 }
-.pokemons-name{
-    text-align: center;
-    text-transform: capitalize;
-}
-
-/*DATA TABLE*/
-#data-table{
-    text-align: center;
-}
-table#data-table > tbody > tr:nth-of-type(1) {
-    position: sticky;
-    top: 50px;
-}
 
 /*FOOTER*/
-#footer-container{
-    display: flex;
-    position: fixed;
+#page-container {
+    position: relative;
+    min-height: 100vh;
+}
+
+#content-wrap {
+    padding-bottom: 4rem;
+    /* Footer height */
+}
+
+#page-footer {
+
+    position: absolute;
     bottom: 0;
-    justify-content: center;
-    margin: auto;
     width: 100%;
+    height: 4rem;
 }

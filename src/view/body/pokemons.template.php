@@ -1,7 +1,6 @@
 
       <!--Contents-->
       <div class="container ">
-        <span class="logo"><img src="img/img_aux/pokemon-logo.png" alt="logo-image" width="350" height="100"></span>
         <h1 class='main-title'>Pokémons iniciales</h1>
           <div class="pokemons-container">
             <div class="pokemons-img-container">
