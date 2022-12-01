@@ -2,7 +2,7 @@
 declare(strict_types=1);
 namespace View;
 
-require_once(realpath(__DIR__ . '/../../vendor/utils/utils.php'));
+require_once(realpath(__DIR__ . '/../../lib/utils/utils.php'));
 use function Utils\join_paths;
 
 // ############################################################################

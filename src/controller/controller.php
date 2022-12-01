@@ -8,7 +8,7 @@ use function Model\get_csv_path;
 use function Model\read_table;
 use function View\getTemplatePath;
 
-require_once(realpath(__DIR__ . '/../../vendor/utils/utils.php'));
+require_once(realpath(__DIR__ . '/../../lib/utils/utils.php'));
 use function Utils\render_template;
 
 require_once(realpath(__DIR__ . '/../model/model.php'));

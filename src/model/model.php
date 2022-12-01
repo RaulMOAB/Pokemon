@@ -2,10 +2,10 @@
 declare(strict_types=1);
 namespace Model;
 
-require_once(realpath(__DIR__ . '/../../vendor/Table.php'));
+require_once(realpath(__DIR__ . '/../../lib/Table.php'));
 use Table\Table;
 
-require_once(realpath(__DIR__ . '/../../vendor/utils/utils.php'));
+require_once(realpath(__DIR__ . '/../../lib/utils/utils.php'));
 use function Utils\join_paths;
 use function Utils\read_json;
 

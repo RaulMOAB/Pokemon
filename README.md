@@ -8,7 +8,7 @@
 - db:     All structured data files: databases, .csv files, etc. 
 - public: All static content: img, css, js, etc.
 - src:    The main codebase that generates the dynamic content.
-- vendor: Libraries and third-party code.
+- lib: Libraries and third-party code.
 
 # Source
 - Start reading src/rewriter.php
