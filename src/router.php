@@ -22,7 +22,7 @@ function make_response(string $request_path): string {
 
         '/index', ''    =>  Controller\index(),
         '/blog'         =>  Controller\blog(),
-        '/regions'      =>  Controller\gallery(),
+        '/regions'      =>  Controller\regions(),
         '/pokemons'     =>  Controller\pokemons(),
         '/data'         =>  Controller\data(),
         

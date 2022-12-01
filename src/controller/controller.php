@@ -37,15 +37,15 @@ function blog(): string
     return $blog_view;
 }
 
-function gallery(): string {
+function regions(): string {
 
     $regions_name = get_region_name();
     $game_version = get_regions_api($regions_name);
      
-    $gallery_body_template = render_template(getTemplatePath('/body/region'),['game_version' => $game_version]);
-    $gallery_view          = render_template(getTemplatePath('/skeleton/skeleton'), ['body' => $gallery_body_template]);
+    $regions_body_template = render_template(getTemplatePath('/body/region'),['game_version' => $game_version]);
+    $regions_view          = render_template(getTemplatePath('/skeleton/skeleton'), ['body' => $regions_body_template]);
 
-    return $gallery_view;
+    return $regions_view;
 }
 
 function pokemons():string {
