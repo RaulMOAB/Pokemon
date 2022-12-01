@@ -1,6 +1,10 @@
-<h1> Error 404 </h1>
+<h1 class="main-title"> Error 404 </h1>
 
-<p>  Request path
-     <strong> <?=$request_path?> </strong>
-     was not found on this server.
-</p>
+<div class="container text-center">
+     <img class="" src="/img/img_aux/missigno.gif" alt="'Missing Number' glitched Pokemon">
+</div>
+
+<h2 class="main-title"> La ruta
+     <strong> <?= $request_path ?> </strong>
+     no existe.
+</h2>
