@@ -10,6 +10,10 @@ use function Utils\join_paths;
 use function Utils\read_json;
 
 
+// ############################################################################
+// Meta functions and vars
+// ############################################################################
+const CONTRIBUTORS=['Alvin Garcia', 'Raul Montoro', 'Eloy Gonzalez', 'Mario Barroso'];
 
 // ############################################################################
 // Announcements functions

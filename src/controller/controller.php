@@ -21,6 +21,7 @@ use function Model\get_announcements_array;
 use function Model\get_region_name;
 use function Model\get_regions_api;
 use function Model\get_pokemons;
+use const Model\CONTRIBUTORS;
 
 use function Model\get_pokemon_name;
 
@@ -28,13 +29,14 @@ function index(): string
 {
     $index_body_template = render_template(
         getTemplatePath('/body/index'),
-        ['contributors' => ['Alvin Garcia', 'Raul Montoro', 'Eloy Gonzalez', 'Mario Barroso']]
+        ['contributors' => CONTRIBUTORS]
     );
     $index_view          = render_template(
         getTemplatePath('/skeleton/skeleton'),
         [
             'title'  => 'PokéBlog',
-            'body' => $index_body_template
+            'body' => $index_body_template,
+            'contributors' => CONTRIBUTORS
         ]
     );
 
@@ -55,7 +57,8 @@ function blog(): string
         getTemplatePath('/skeleton/skeleton'),
         [
             'title' => 'Blog de noticias',
-            'body' => $blog_body_template
+            'body' => $blog_body_template,
+            'contributors' => CONTRIBUTORS
         ]
     );
 
@@ -78,7 +81,8 @@ function regions(): string
         getTemplatePath('/skeleton/skeleton'),
         [
             'title' => 'Regiones',
-            'body' => $regions_body_template
+            'body' => $regions_body_template,
+            'contributors' => CONTRIBUTORS
         ]
     );
 
@@ -100,7 +104,8 @@ function pokemons(): string
         getTemplatePath('/skeleton/skeleton'),
         [
             'title' => 'Pokémon',
-            'body' => $pokemons_body_template
+            'body' => $pokemons_body_template,
+            'contributors' => CONTRIBUTORS
         ]
     );
 
@@ -121,7 +126,8 @@ function data(): string
         getTemplatePath('/skeleton/skeleton'),
         [
             'title' => 'Datos',
-            'body' => $data_body_template
+            'body' => $data_body_template,
+            'contributors' => CONTRIBUTORS
         ]
     );
     return $data_view;
@@ -143,7 +149,8 @@ function error_404(string $request_path): string
         getTemplatePath('/skeleton/skeleton'),
         [
             'title' => 'Not found',
-            'body'  => $error404_body
+            'body'  => $error404_body,
+            'contributors' => CONTRIBUTORS
         ]
     );
 

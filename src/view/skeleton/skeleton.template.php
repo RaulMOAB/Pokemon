@@ -53,7 +53,7 @@
             <footer>
                 <!-- Copyright -->
                 <div class="footer-copyright text-white text-center">© 2022 Copyright:
-                    <pre class="text-white"> Raul Montoro, Alvin Miller Garcia Garcia, Mario Barroso Ribes y Eloy Gonzalez</pre>
+                    <pre class="text-white"> <?= implode(", ", $contributors) ?></pre>
                 </div>
             </footer>
         </div>
