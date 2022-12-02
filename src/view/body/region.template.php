@@ -3,7 +3,7 @@
   <div class="container ">
     <h1 class="main-title">Regiones de Pokémon</h1>
     <div class="pokemons-container">
-      <table  class="table table-dark table-hover">
+      <table  class="table table-light table-hover">
         <tbody>
           <tr>
             <th>Nombre de la región</th>

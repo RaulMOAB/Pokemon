@@ -103,8 +103,9 @@ body {
 }
 
 .poke-img {
-    width: 250px;
-    height: 250px;
+    image-rendering: crisp-edges;
+    width: auto;
+    height: 15rem;
 }
 
 .pokemon_images {

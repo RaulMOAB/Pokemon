@@ -15,7 +15,7 @@
                     
                     foreach ($value as $img ) {    
                       $name = getPokemonName($img);   
-                      echo "<div class='pokemons-name'>";
+                      echo "<div class='pokemons-name text-center'>";
                       echo "<img src='$img' class='poke-img' title='$name'>";
                       echo "<p>$name</p>";
                       echo "</div>";
