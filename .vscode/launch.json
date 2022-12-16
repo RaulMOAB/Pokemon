@@ -53,7 +53,7 @@
                 "-S",
                 "localhost:8080",
                 "-t",
-                "${fileDirname}/../public",
+                "${fileDirname}/../../public",
                 "${file}"
             ],
             "program": "",

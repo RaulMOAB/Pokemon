@@ -1,38 +1,45 @@
 <?php
-
 declare(strict_types=1);
-
 namespace Controller;
 
-require_once(realpath(__DIR__ . '/../view/viewlib.php'));
+require_once(__DIR__ . '/../config.php');
+use function Config\get_lib_dir;
+use function Config\get_model_dir;
+use function Config\get_view_dir;
 
+require_once(get_lib_dir() . '/request/request.php');
+use Request\Request;
+
+require_once(get_lib_dir() . '/response/Response.php');
+use Response\Response;
+
+require_once(get_model_dir() . '/model.php');
 use function Model\get_csv_path;
-
 use function Model\read_table;
-use function View\getTemplatePath;
-
-require_once(realpath(__DIR__ . '/../../lib/utils/utils.php'));
-
-use function Utils\render_template;
-
-require_once(realpath(__DIR__ . '/../model/model.php'));
-
 use function Model\get_announcements_array;
 use function Model\get_region_name;
 use function Model\get_regions_api;
 use function Model\get_pokemons;
+use function Model\get_pokemon_name;
 use const Model\CONTRIBUTORS;
 
-use function Model\get_pokemon_name;
+require_once(get_view_dir() . '/view.php');
+use function View\get_template_path;
+use function View\render_template;
 
-function index(): string
+
+
+
+
+
+function index(): Response
 {
     $index_body_template = render_template(
-        getTemplatePath('/body/index'),
+        get_template_path('/body/index'),
         ['contributors' => CONTRIBUTORS]
     );
     $index_view          = render_template(
-        getTemplatePath('/skeleton/skeleton'),
+        get_template_path('/skeleton/skeleton'),
         [
             'title'  => 'PokéBlog',
             'body' => $index_body_template,
@@ -40,21 +47,22 @@ function index(): string
         ]
     );
 
-    return $index_view;
+    $response = new Response($index_view);
+    return $response;
 }
 
-function blog(): string
+function blog(): Response
 {
     $get_announcements = get_announcements_array();
 
     $blog_body_template = render_template(
-        getTemplatePath('/body/blog'),
+        get_template_path('/body/blog'),
         [
             'announcements' => $get_announcements
         ]
     );
     $blog_view          = render_template(
-        getTemplatePath('/skeleton/skeleton'),
+        get_template_path('/skeleton/skeleton'),
         [
             'title' => 'Blog de noticias',
             'body' => $blog_body_template,
@@ -62,7 +70,8 @@ function blog(): string
         ]
     );
 
-    return $blog_view;
+    $response = new Response($blog_view);
+    return $response;
 }
 
 function regions(): string
@@ -72,13 +81,13 @@ function regions(): string
     $game_version = get_regions_api($regions_name);
 
     $regions_body_template = render_template(
-        getTemplatePath('/body/region'),
+        get_template_path('/body/region'),
         [
             'game_version' => $game_version
         ]
     );
     $regions_view          = render_template(
-        getTemplatePath('/skeleton/skeleton'),
+        get_template_path('/skeleton/skeleton'),
         [
             'title' => 'Regiones',
             'body' => $regions_body_template,
@@ -95,13 +104,13 @@ function pokemons(): string
     $pokemons_images = get_pokemons($regions_name);
 
     $pokemons_body_template = render_template(
-        getTemplatePath('/body/pokemons'),
+        get_template_path('/body/pokemons'),
         [
             'pokemons_images' => $pokemons_images
         ]
     );
     $pokemons_view          = render_template(
-        getTemplatePath('/skeleton/skeleton'),
+        get_template_path('/skeleton/skeleton'),
         [
             'title' => 'Pokémon',
             'body' => $pokemons_body_template,
@@ -117,13 +126,13 @@ function data(): string
     $pokemon_table      = read_table(__DIR__ . '/../../db/pokemon.csv');
 
     $data_body_template = render_template(
-        getTemplatePath('/body/data'),
+        get_template_path('/body/data'),
         [
             'pokemon_table' => $pokemon_table
         ]
     );
     $data_view          = render_template(
-        getTemplatePath('/skeleton/skeleton'),
+        get_template_path('/skeleton/skeleton'),
         [
             'title' => 'Datos',
             'body' => $data_body_template,
@@ -139,14 +148,14 @@ function error_404(string $request_path): string
     http_response_code(404);
 
     $error404_body = render_template(
-        getTemplatePath('/body/error404'),
+        get_template_path('/body/error404'),
         [
             'request_path' => $request_path
         ]
     );
 
     $error404_view = render_template(
-        getTemplatePath('/skeleton/skeleton'),
+        get_template_path('/skeleton/skeleton'),
         [
             'title' => 'Not found',
             'body'  => $error404_body,

@@ -2,6 +2,13 @@
 declare(strict_types=1);
 namespace Rewriter;
 
+require_once(__DIR__ . '/config.php');
+use function Config\get_app_dir;
+use function Config\get_public_dir;
+use function Config\get_lib_dir;
+
+require_once(get_lib_dir() . '/request/request.php');
+use Request\Request;
 
 // ############################################################################
 // About URL Rewriting
@@ -53,21 +60,18 @@ namespace Rewriter;
 // ----------------------------------------------------------------------------
 function main() {
 
-    // 1. WebApp dirs
-    $src_dir = __DIR__;
-    $public_dir     = realpath(__DIR__ . '/../public');
+    // 1. Main function
+    $main = get_app_dir() . '/main.php';
 
-    // 2. Routes
-    $router = $src_dir . '/router.php'; // src/router.php
 
-    // 3. Request
-    $request_path = $_SERVER['REQUEST_URI'];
-    $local_path   = $public_dir . $request_path;
+    // 2. Request
+    $request      = Request::getFromWebServer();
+    $local_path   = get_public_dir() . $request->path;
     $file_found   = is_file($local_path);
 
     // 4. Process request
     if   ($file_found)  { return false; }         // Serve static  resource (public/)
-    else                { require_once $router; } // Serve dynamic resource
+    else                { require_once $main; } // Serve dynamic resource
 
 }
 // ----------------------------------------------------------------------------

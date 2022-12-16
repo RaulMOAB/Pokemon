@@ -1,0 +1,7 @@
+path            | methods   | controller_function   
+                | GET       | Controller\index      
+/index          | GET       | Controller\index      
+/blog           | GET, POST | Controller\blog       
+/regions        | GET       | Controller\regions      
+/data           | GET       | Controller\data       
+*any            | GET, POST | Controller\error_404  

@@ -2,10 +2,12 @@
 declare(strict_types=1);
 namespace Model;
 
-require_once(realpath(__DIR__ . '/../../lib/Table.php'));
+use function Config\get_lib_dir;
+
+require_once(realpath(get_lib_dir() . '/table/Table.php'));
 use Table\Table;
 
-require_once(realpath(__DIR__ . '/../../lib/utils/utils.php'));
+require_once(realpath(get_lib_dir() . '/utils/utils.php'));
 use function Utils\join_paths;
 use function Utils\read_json;
 
@@ -76,11 +78,12 @@ function get_body(array $body):string{
 }
 
 // ----------------------------------------------------------------------------
-function read_table(string $csv_filename): array {
-    $data = Table::readCsv($csv_filename, ",");
-    $header_table = get_header($data->header);
-    $body_table   = get_body($data->body);
-    return ["header" => $header_table, "body" => $body_table];
+function read_table(string $csv_filename): Table {
+    $data = Table::readCsv($csv_filename);
+    // $header_table = get_header($data->header);
+    // $body_table   = get_body($data->body);
+    // return ["header" => $header_table, "body" => $body_table];
+    return $data;
 }
 
 // ############################################################################
