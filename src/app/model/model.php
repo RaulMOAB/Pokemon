@@ -50,7 +50,7 @@ function get_csv_path(string $csv_id): string {
     $csv_suffix        = '.csv';
     $csv_relative_path = $csv_id . $csv_suffix;
 
-    $db_dir        = realpath(join_paths(__DIR__, '/../../db'));
+    $db_dir        = realpath(join_paths(get_db_dir()));
     $csv_full_path = join_paths($db_dir, $csv_relative_path);
 
     return $csv_full_path;

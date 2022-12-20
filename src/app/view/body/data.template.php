@@ -10,7 +10,7 @@
     require_once(get_view_dir() . '/view.php');
       //echo $pokemon_table["header"];
       echo View\get_html_header($pokemon_table->header);
-      echo View\get_html_body($pokemon_table->body)
+      echo View\get_html_body($pokemon_table->body);
 
       
       //echo $pokemon_table["body"];

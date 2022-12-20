@@ -19,7 +19,7 @@
               <h3 class='card-title'>".ucfirst($region_name)."</h3>
               <ul class='list-group'>";
                 foreach($region_info['game_version'] as $version){
-                  echo "<li class='list-group-item'>$version</li>";
+                  echo "<li class='list-group-item'>$version[name]</li>";
                 }
     echo "    </ul>
             </div>

@@ -37,7 +37,7 @@ use function View\render_template;
 
 
 
-function index(): Response
+function index(Request $request): Response
 {
     $index_body_template = render_template(
         get_template_path('/body/index'),
@@ -56,7 +56,7 @@ function index(): Response
     return $response;
 }
 
-function blog(): Response
+function blog(Request $request): Response
 {
     $get_announcements = get_announcements_array();
 
@@ -79,16 +79,16 @@ function blog(): Response
     return $response;
 }
 
-function regions(): Response
+function regions(Request $request): Response
 {
 
     $regions_name = get_region_name();
-    $game_version = get_regions_api($regions_name);
+    $regions_info = get_regions_api($regions_name);
 
     $regions_body_template = render_template(
         get_template_path('/body/region'),
         [
-            'game_version' => $game_version
+            'regions_info' => $regions_info
         ]
     );
     $regions_view          = render_template(
@@ -104,7 +104,7 @@ function regions(): Response
     return $response;
 }
 
-function pokemons(): Response
+function pokemons(Request $request): Response
 {
     $regions_name    = get_region_name();
     $pokemons_images = get_pokemons($regions_name);
@@ -128,9 +128,9 @@ function pokemons(): Response
     return $response;
 }
 
-function data(): Response
+function data(Request $request): Response
 {
-    $pokemon_table      = read_table(get_db_dir() . '/pokemon.csv');
+    $pokemon_table = read_table(get_csv_path('pokemon'));
 
     $data_body_template = render_template(
         get_template_path('/body/data'),
@@ -151,15 +151,15 @@ function data(): Response
     return $response;
 }
 
-function error_404(string $request_path): Response
+function error_404(Request $request): Response
 {
 
-    http_response_code(404);
+    
 
     $error404_body = render_template(
         get_template_path('/body/error404'),
         [
-            'request_path' => $request_path
+            'request_path' => $request->path
         ]
     );
 
@@ -172,6 +172,6 @@ function error_404(string $request_path): Response
         ]
     );
 
-    $response = new Response($error404_view);
+    $response = new Response($error404_view, 404);
     return $response;
 }
