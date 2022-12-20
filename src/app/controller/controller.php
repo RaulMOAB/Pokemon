@@ -3,6 +3,8 @@ declare(strict_types=1);
 namespace Controller;
 
 require_once(__DIR__ . '/../config.php');
+
+use function Config\get_db_dir;
 use function Config\get_lib_dir;
 use function Config\get_model_dir;
 use function Config\get_view_dir;
@@ -12,6 +14,9 @@ use Request\Request;
 
 require_once(get_lib_dir() . '/response/Response.php');
 use Response\Response;
+
+require_once(get_lib_dir() . '/table/Table.php');
+use Table\Table;
 
 require_once(get_model_dir() . '/model.php');
 use function Model\get_csv_path;
@@ -74,7 +79,7 @@ function blog(): Response
     return $response;
 }
 
-function regions(): string
+function regions(): Response
 {
 
     $regions_name = get_region_name();
@@ -95,10 +100,11 @@ function regions(): string
         ]
     );
 
-    return $regions_view;
+    $response = new Response($regions_view);
+    return $response;
 }
 
-function pokemons(): string
+function pokemons(): Response
 {
     $regions_name    = get_region_name();
     $pokemons_images = get_pokemons($regions_name);
@@ -118,12 +124,13 @@ function pokemons(): string
         ]
     );
 
-    return $pokemons_view;
+    $response = new Response($pokemons_view);
+    return $response;
 }
 
-function data(): string
+function data(): Response
 {
-    $pokemon_table      = read_table(__DIR__ . '/../../db/pokemon.csv');
+    $pokemon_table      = read_table(get_db_dir() . '/pokemon.csv');
 
     $data_body_template = render_template(
         get_template_path('/body/data'),
@@ -139,10 +146,12 @@ function data(): string
             'contributors' => CONTRIBUTORS
         ]
     );
-    return $data_view;
+
+    $response = new Response($data_view);
+    return $response;
 }
 
-function error_404(string $request_path): string
+function error_404(string $request_path): Response
 {
 
     http_response_code(404);
@@ -163,5 +172,6 @@ function error_404(string $request_path): string
         ]
     );
 
-    return $error404_view;
+    $response = new Response($error404_view);
+    return $response;
 }

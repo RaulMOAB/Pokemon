@@ -2,7 +2,10 @@
 declare(strict_types=1);
 namespace Model;
 
+require_once(__DIR__ . '/../config.php');
 use function Config\get_lib_dir;
+use function Config\get_db_dir;
+use function Config\get_app_dir;
 
 require_once(realpath(get_lib_dir() . '/table/Table.php'));
 use Table\Table;
@@ -27,7 +30,7 @@ const CONTRIBUTORS=['Alvin Garcia', 'Raul Montoro', 'Eloy Gonzalez', 'Mario Barr
  */
 function get_announcements_array():array{
 
-    $announcements_path_array = glob(__DIR__ . '/../../db/announcements/*.json');// devuelve array con los nombres de las noticias
+    $announcements_path_array = glob(get_db_dir() . '/announcements/*.json');// devuelve array con los nombres de las noticias
     $announcements_to_array   = fn ($json_file) => read_json($json_file);
     $announcements            = array_map($announcements_to_array, $announcements_path_array);
     
@@ -112,7 +115,7 @@ function get_regions_api(array $region_name):array{
 }
 
 function get_region_name():array{
-    $region_name_array  = glob(__DIR__ .'/../../public/img/regions_map/*.webp');
+    $region_name_array  = glob(get_app_dir() .'/../../public/img/regions_map/*.webp');
     $get_file_name      = fn($filename) => basename($filename);
     //$get_pure_file_name = fn($filename) => substr($filename, 0,strlen($filename) - 5);
 
@@ -135,7 +138,7 @@ function get_pokemons(array $regions_name):array{
     $region_name      = substr($region,0, strlen($region) - 5);//*get clean region name from array $regions_name
     $pokemon_img_name = fn($filename) => basename($filename);//*Calleable function to get celan image name
     $pokemon_img_path = fn($filename) => "img/regions/$region_name/" . $filename;//*Calleable function to concatenate region_name + clean image filename
-    $pokemon_img      = glob(__DIR__ . "/../../public/img/regions/$region_name/*.webp");//*Get images (with .webp)
+    $pokemon_img      = glob(get_app_dir() . "/../../public/img/regions/$region_name/*.webp");//*Get images (with .webp)
     $pokemon_img      = array_map($pokemon_img_name, $pokemon_img);//*new array with images path
     
     

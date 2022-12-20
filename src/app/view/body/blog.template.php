@@ -11,7 +11,7 @@
         <div class='card-body m-2'>
             <h4 class='card-title'>$announcement->title</h4>
             <p class='card-subtitle mb-2 text-muted'>$announcement->date · $announcement->autor</p>
-            <p class='card-text'>$announcement->paragraph</p>
+            <p class='card-text'>$announcement->content</p>
         </div>
     </div>
     ";
