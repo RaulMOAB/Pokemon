@@ -57,7 +57,11 @@ function index(Request $request): Response
 }
 
 function blog(Request $request): Response
-{
+{    
+    if ($request->method == 'POST') {
+        # add function to add news
+    }
+
     $get_announcements = get_announcements_array();
 
     $blog_body_template = render_template(
