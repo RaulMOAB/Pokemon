@@ -30,7 +30,7 @@ const CONTRIBUTORS=['Alvin Garcia', 'Raul Montoro', 'Eloy Gonzalez', 'Mario Barr
  */
 function get_announcements_array():array{
 
-    $announcements_path_array = glob(get_db_dir() . '/announcements/*.json');// devuelve array con los nombres de las noticias
+    $announcements_path_array = glob(get_db_dir() . '/announcements/*.json');// return an indexed array of news names
     $announcements_to_array   = fn ($json_file) => read_json($json_file);
     $announcements            = array_map($announcements_to_array, $announcements_path_array);
     

@@ -11,6 +11,12 @@ use Request\Request;
 require_once(get_lib_dir() . '/router/router.php');
 use function Router\process_request;
 
+require_once(get_lib_dir() . '/context/context.php');
+use Context\Context;
+
+require_once(get_lib_dir() . '/cookie/cookie.php');
+use Cookie\Cookie;
+
 require_once(get_lib_dir() . '/table/Table.php');
 use Table\Table;
 
@@ -18,13 +24,45 @@ function main(): void{
 
     //*Get the request and read csv routes
     $request   = Request::getFromWebServer();
-    $route_csv = Table::readCSV(__DIR__ . '/routes.csv');
+    $route_table = Table::readCSV(__DIR__ . '/routes.csv');
 
-    //*Process request
-    $response = process_request($request, $route_csv) ;
+    $exists = key_exists('browser_id', $request->parameters);
 
-    //*Send response
-    $response->send();
+    if (!$exists) {
+        // 1. Create browser_id cookie
+        $browser_id = (string) random_int(0, 100);
+        $browser_id_cookie = new Cookie('browser_id', $browser_id);
+
+        // 2. Create  browser_id .json file
+        $context = new Context();
+        $context->writeToDisk($browser_id);
+
+        // 3. Process request
+        [$response, $context] = process_request($request, $context, $route_table);
+
+        // 4. Save context
+        $context->writeToDisk($browser_id);
+
+        // 5. Add cookies
+        $response->add_cookie($browser_id_cookie);
+
+        // 6. Send response
+        $response->send();
+
+    } else {
+        // 1. Read context from disk
+        $browser_id = $request->parameters['browser_id'];
+        $context = Context::readFromDisk($browser_id);
+
+        // 2. Process request
+        [$response, $context] = process_request($request, $context, $route_table);
+
+        // 3. Save context
+        $context->writeToDisk($browser_id);
+
+        // 4. Send response
+        $response->send();
+    }
 }
 
 main();

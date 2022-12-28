@@ -115,7 +115,7 @@ function pokemons(Request $request): Response
             'pokemons_images' => $pokemons_images
         ]
     );
-    $pokemons_view          = render_template(
+    $pokemons_view = render_template(
         get_template_path('/skeleton/skeleton'),
         [
             'title' => 'Pokémon',

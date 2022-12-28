@@ -36,9 +36,9 @@ class Request
    public static function getFromWebServer(): self
     {
         $url_path_and_query = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
-        $url_path           =  urldecode(parse_url($url_path_and_query, PHP_URL_PATH));
+        $url_path           = urldecode(parse_url($url_path_and_query, PHP_URL_PATH));
         $method     = $_SERVER["REQUEST_METHOD"];
-        $parameters = $_REQUEST;
+        $parameters = array_merge($_GET, $_POST, $_COOKIE);
 
         $request    = new Request($url_path, $method, $parameters);
 

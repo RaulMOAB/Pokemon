@@ -1,4 +1,4 @@
-<h1 class="main-title"> Blog de noticias </h1>
+<h1 class="main-title"> Blog de notícias </h1>
 
 <div class="container">
 
