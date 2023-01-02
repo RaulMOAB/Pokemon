@@ -15,4 +15,8 @@ class Announcement {
         $this->date    = $date;
         $this->content = $content;
     }
+
+    // function convert_to_json():array{
+        
+    // }
 }

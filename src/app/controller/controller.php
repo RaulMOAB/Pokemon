@@ -22,7 +22,7 @@ use Table\Table;
 require_once(get_lib_dir() . '/context/context.php');
 use Context\Context;
 
-require_once(get_lib_dir() . 'user/user.php');
+require_once(get_lib_dir() . '/user/user.php');
 use User\User;
 
 require_once(get_model_dir() . '/model.php');

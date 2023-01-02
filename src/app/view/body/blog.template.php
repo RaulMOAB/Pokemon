@@ -1,7 +1,25 @@
 <h1 class="main-title"> Blog de notícias </h1>
 
 <div class="container">
-
+  <!--Visible para admin(podría ser un modal)-->
+<div class="card my-4 w-sm-100 w-75 m-auto">
+  <div class="m-2">
+    <h3 class="mt-3">Añade una nueva notícia</h3>
+    <form action="POST">
+      <div class="mb-3">
+        <label for="title" class="form-label">Título de la notícia</label>
+        <input type="text" class="form-control" name="title">
+      </div>
+      <div class="mb-3">
+        <label for="title" class="form-label">Contenido</label>
+        <input type="text" class="form-control" name="content">
+      </div>
+      <div class="mb-3">
+        <button type="submit" class="btn btn-success mt-3">Añadir</button>
+      </div>
+    </form>
+  </div>
+</div>
 
   <!-- Dinamic announcements -->
   <?php

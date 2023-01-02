@@ -38,6 +38,13 @@ function get_announcements_array():array{
     return $announcements;
 }
 
+function add_announcement():void{
+
+    if (isset($_POST['submit'])) {// post form has been submitted
+        echo "Title: " . $_POST['title'];
+    }
+}
+
 
 
 
