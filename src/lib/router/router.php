@@ -9,6 +9,9 @@ use function Config\get_controller_dir;
 require_once(get_lib_dir() . '/table/Table.php');
 use Table\Table;
 
+require_once(get_lib_dir() . '/context/context.php');
+use Context\Context;
+
 require_once(get_lib_dir() . '/request/request.php');
 use Request\Request;
 
@@ -156,7 +159,7 @@ function default_error_404(Request $request): Response {
 
 // Route = Associative array with these keys: path, method, controller_function
 // ----------------------------------------------------------------------------
-function process_request(Request $request, Table $route_table): Response {
+function process_request(Request $request, Context $context, Table $route_table): array {
 
     // 1. Append default_error_404 route
     $route_table->appendRow( [$request->path, $request->method, 'Router\default_error_404'] );
@@ -175,9 +178,9 @@ function process_request(Request $request, Table $route_table): Response {
     $request_with_path_parameters = merge_path_parameters($request, $matched_route['path']);
 
     // 6. Call controller function.
-    $response = $matched_route['controller_function']($request_with_path_parameters);
+    [$response, $context] = $matched_route['controller_function']($request_with_path_parameters, $context);
 
-    return $response;
+    return [$response, $context];
 }
 
 // ----------------------------------------------------------------------------

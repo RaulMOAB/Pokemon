@@ -1,6 +1,7 @@
 path               | methods   | controller_function   
                    | GET       | Controller\index      
-/index             | GET       | Controller\index      
+/index             | GET       | Controller\index   
+/login             | GET, POST | Controller\login     
 /blog              | GET, POST | Controller\blog       
 /regions           | GET       | Controller\regions 
 /regions/pokemons  | GET       | Controller\pokemons         

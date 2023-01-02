@@ -29,7 +29,7 @@ class Context {
                  'name'      => $this->name,
                  'role'      => $this->role      ];
 
-        $filename = get_db_dir() . "/$browser_id.json";
+        $filename = get_db_dir() . "/sessions/$browser_id.json";
 
         file_put_contents($filename, $data);
     }

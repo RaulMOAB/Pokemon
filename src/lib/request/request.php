@@ -28,19 +28,20 @@ class Request
 
     function __construct(string $url_path = "/", string $method = "GET", array $parameters = [])
     {
-        $this->path       = get_canonical_path($url_path);
         $this->method     = $method;
+        $this->path       = get_canonical_path($url_path);
         $this->parameters = $parameters;
     }
 
    public static function getFromWebServer(): self
     {
-        $url_path_and_query = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
+        $url_path_and_query = $_SERVER["REQUEST_URI"];
         $url_path           = urldecode(parse_url($url_path_and_query, PHP_URL_PATH));
-        $method     = $_SERVER["REQUEST_METHOD"];
-        $parameters = array_merge($_GET, $_POST, $_COOKIE);
+        $method             = $_SERVER["REQUEST_METHOD"];
+        //$parameters         = array_merge($_GET, $_POST, $_COOKIE);
+        $parameters = $_REQUEST;
 
-        $request    = new Request($url_path, $method, $parameters);
+        $request = new Request($url_path, $method, $parameters);
 
         return $request;
     }

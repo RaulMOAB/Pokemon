@@ -23,8 +23,8 @@ use Table\Table;
 function main(): void{
 
     //*Get the request and read csv routes
-    $request   = Request::getFromWebServer();
     $route_table = Table::readCSV(__DIR__ . '/routes.csv');
+    $request   = Request::getFromWebServer();
 
     $exists = key_exists('browser_id', $request->parameters);
 

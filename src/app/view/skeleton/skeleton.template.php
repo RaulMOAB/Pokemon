@@ -34,6 +34,7 @@
                             <li class="nav-item"> <a class="nav-link link-light" href="/blog" aria-current="pokemon-announcements">Blog</a></li>
                             <li class="nav-item"> <a class="nav-link link-light" href="/regions" aria-current="pokemon-images">Regiones</a></li>
                             <li class="nav-item"> <a class="nav-link link-light" href="/data" aria-current="pokemon-dates">Datos</a></li>
+                            <li class="nav-item"> <button class="btn btn-light me-2" type="button"><a href="/login" class="login-btn">Login</a></button></li>     
                         </ul>
                     </div>
                 </div>
