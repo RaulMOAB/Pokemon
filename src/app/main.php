@@ -13,6 +13,7 @@ use function Router\process_request;
 
 require_once(get_lib_dir() . '/context/context.php');
 use Context\Context;
+use function Context\get_new_browser_id;
 
 require_once(get_lib_dir() . '/cookie/cookie.php');
 use Cookie\Cookie;
@@ -30,7 +31,7 @@ function main(): void{
 
     if (!$exists) {
         // 1. Create browser_id cookie
-        $browser_id = (string) random_int(0, 100);
+        $browser_id =  get_new_browser_id();
         $browser_id_cookie = new Cookie('browser_id', $browser_id);
 
         // 2. Create  browser_id .json file

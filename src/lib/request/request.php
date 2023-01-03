@@ -38,9 +38,8 @@ class Request
         $url_path_and_query = $_SERVER["REQUEST_URI"];
         $url_path           = urldecode(parse_url($url_path_and_query, PHP_URL_PATH));
         $method             = $_SERVER["REQUEST_METHOD"];
-        //$parameters         = array_merge($_GET, $_POST, $_COOKIE);
-        $parameters = $_REQUEST;
-
+        $parameters         = array_merge($_GET, $_POST, $_COOKIE);
+        
         $request = new Request($url_path, $method, $parameters);
 
         return $request;

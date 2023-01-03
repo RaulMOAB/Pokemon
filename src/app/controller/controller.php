@@ -34,6 +34,7 @@ use function Model\get_regions_api;
 use function Model\get_pokemons;
 use function Model\get_pokemon_name;
 use function Table\read_csv;
+use function Model\find_user;
 
 use const Model\CONTRIBUTORS;
 
@@ -65,7 +66,7 @@ function index(Request $request, Context $context): array
     return [$response, $context];
 }
 
-function login(Request $request, Context $context, User $user): array {
+function login(Request $request, Context $context): array {
 
     if ($request->method == 'GET') {
         $login_body_template = render_template(get_template_path('/body/login'),['contributors' => CONTRIBUTORS]);
@@ -82,11 +83,10 @@ function login(Request $request, Context $context, User $user): array {
 
     } elseif ($request->method == 'POST') {
         # hacer login
-        $user = Table::readCSV(get_app_dir() . '/users.csv');
-        
-        $username = $user->username;
-        $password = $user->password;
+        $username = $request->parameters['username'];
+        $password = $request->parameters['password'];
        
+        $registered_user = find_user($username, $password);
 
     }
     return [];

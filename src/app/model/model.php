@@ -6,6 +6,7 @@ require_once(__DIR__ . '/../config.php');
 use function Config\get_lib_dir;
 use function Config\get_db_dir;
 use function Config\get_app_dir;
+use function Table\read_csv;
 
 require_once(realpath(get_lib_dir() . '/table/Table.php'));
 use Table\Table;
@@ -19,6 +20,27 @@ use function Utils\read_json;
 // Meta functions and vars
 // ############################################################################
 const CONTRIBUTORS=['Alvin Garcia', 'Raul Montoro', 'Eloy Gonzalez', 'Mario Barroso'];
+
+
+// ############################################################################
+// Login functions
+// ############################################################################
+
+function find_user(string $username, string $password):bool{
+    //1.Read csv file and returns a table
+    $users_table = read_csv(get_app_dir() . '/users.csv', '|');
+
+    //2.Need to do a calleable function to find username and password on a table
+    
+    //$matched_user = $users_table->filterRows();
+
+   
+    
+
+    return false;
+}
+
+
 
 // ############################################################################
 // Announcements functions
@@ -90,9 +112,6 @@ function get_body(array $body):string{
 // ----------------------------------------------------------------------------
 function read_table(string $csv_filename): Table {
     $data = Table::readCsv($csv_filename);
-    // $header_table = get_header($data->header);
-    // $body_table   = get_body($data->body);
-    // return ["header" => $header_table, "body" => $body_table];
     return $data;
 }
 

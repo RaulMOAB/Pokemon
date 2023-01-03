@@ -7,6 +7,7 @@ namespace Config;
 function get_project_dir():string  { return realpath(__DIR__ . '/../..'); }
 
 function get_db_dir(): string           { return get_project_dir() . '/db'; }
+function get_session_dir():string       { return get_project_dir() . '/db/sessions'; }
 function get_public_dir():string        { return get_project_dir() . '/public'; }
 function get_source_dir():string        { return get_project_dir() . '/src'; }
 function get_app_dir(): string          { return get_project_dir() . '/src/app'; }

@@ -72,7 +72,10 @@ class Response
     public function set_cookies(): void {
 
         foreach ($this->cookies as $cookie) { 
-            setcookie($cookie->name, $cookie->value, $cookie->expiration_date);
+            setcookie(  $cookie->name,
+                        $cookie->value,
+                        $cookie->expiration_date,
+                        '/');
         }
     }
 
