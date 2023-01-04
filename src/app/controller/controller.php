@@ -68,20 +68,6 @@ function index(Request $request, Context $context): array
 
 function login(Request $request, Context $context): array {
 
-    /************es una prueba**************/
-    $index_body_template = render_template(
-        get_template_path('/body/index'),
-        ['contributors' => CONTRIBUTORS]
-    );
-    $index_view          = render_template(
-        get_template_path('/skeleton/skeleton'),
-        [
-            'title'  => 'PokéBlog',
-            'body' => $index_body_template,
-            'contributors' => CONTRIBUTORS
-        ]
-    );
-    /***************************************/
 
     if ($request->method == 'GET') {
         $login_body_template = render_template(get_template_path('/body/login'),['contributors' => CONTRIBUTORS]);
@@ -106,8 +92,9 @@ function login(Request $request, Context $context): array {
 
        if ($registered_user) {
         $context = new Context(true, $username, $password);
-        $response = new Response($index_view);
-        return [$response, $context];
+        $request = new Request("/index");
+        $response = index($request, $context);
+        return $response;
        }
 
     }
