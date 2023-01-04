@@ -26,18 +26,36 @@ const CONTRIBUTORS=['Alvin Garcia', 'Raul Montoro', 'Eloy Gonzalez', 'Mario Barr
 // Login functions
 // ############################################################################
 
-function find_user(string $username, string $password):bool{
-    //1.Read csv file and returns a table
-    $users_table = read_csv(get_app_dir() . '/users.csv', '|');
-
-    //2.Need to do a calleable function to find username and password on a table
+function csv_to_array(string $filename, string $separator = '|'):array{
     
-    //$matched_user = $users_table->filterRows();
+    $csv_str = file_get_contents($filename);
 
+    $users_array = explode(PHP_EOL, $csv_str);
+
+    $split_lines = fn ($line) => array_map('trim', explode($separator, $line));
+
+    $result = array_map($split_lines, $users_array);
+
+    return $result;
+}
+
+
+function find_user(string $username, string $password):bool{
+    //1.Read csv file and returns an arrays with users
+    $users_array = csv_to_array(get_app_dir() . '/users.csv');
+  
+   foreach ($users_array as $value ) {
+    if (($username == $value[0]) && ($password == $value[1])) {
+        $login = true;
+        break;
+    }else{
+        $login = false;
+    }
+   }
    
     
 
-    return false;
+    return $login;
 }
 
 
