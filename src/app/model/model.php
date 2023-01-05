@@ -6,6 +6,7 @@ require_once(__DIR__ . '/../config.php');
 use function Config\get_lib_dir;
 use function Config\get_db_dir;
 use function Config\get_app_dir;
+use function Config\get_project_dir;
 use function Table\read_csv;
 
 require_once(realpath(get_lib_dir() . '/table/Table.php'));
@@ -192,5 +193,17 @@ function get_pokemons(array $regions_name):array{
    }
 
     return $pokemon_image_array;
+}
+
+function get_pokemon_images(string $region_name):array{
+
+    $clean_image_name = fn ($filename) => basename($filename);
+    $region_img_path  = fn($filename) => "img/regions/$region_name/" . $filename;
+    $pokemons_img     = glob(get_app_dir() . "/../../public/img/regions/$region_name/*.webp");
+    $pokemons_img     = array_map($clean_image_name, $pokemons_img);//*array with images names ex: totodile.webp
+
+    $regions_pokemon_img[$region_name] = array_map($region_img_path, $pokemons_img);
+
+    return $regions_pokemon_img;
 }
 

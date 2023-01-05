@@ -32,6 +32,9 @@ use function Model\get_announcements_array;
 use function Model\get_region_name;
 use function Model\get_regions_api;
 use function Model\get_pokemons;
+
+use function Model\get_pokemon_images;
+
 use function Model\get_pokemon_name;
 use function Table\read_csv;
 use function Model\find_user;
@@ -91,9 +94,10 @@ function login(Request $request, Context $context): array {
         $registered_user = find_user($username, $password);
 
        if ($registered_user) {
-        $context = new Context(true, $username, $password);
-        $request = new Request("/index");
+        $context  = new Context(true, $username);
+        $request  = new Request("/index");
         $response = index($request, $context);
+        
         return $response;
        }
 
@@ -154,8 +158,10 @@ function regions(Request $request, Context $context): array
 
 function pokemons(Request $request, Context $context): array
 {
-    $regions_name    = get_region_name();
-    $pokemons_images = get_pokemons($regions_name);
+    //$regions_name    = get_region_name();
+    $region_name = substr($request->path,9);
+    //$pokemons_images = get_pokemons($regions_name);
+    $pokemons_images = get_pokemon_images($region_name);
 
     $pokemons_body_template = render_template(
         get_template_path('/body/pokemons'),

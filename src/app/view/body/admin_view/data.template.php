@@ -1,7 +1,6 @@
 <h1 class="main-title"> Pokemon Data </h1>
 
 <div class="container">
-  
   <table class="mx-auto table table-bordered table-primary table-striped table-sm">
     
       <?php

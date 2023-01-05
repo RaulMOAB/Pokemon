@@ -4,6 +4,8 @@ path               | methods   | controller_function
 /login             | GET, POST | Controller\login     
 /blog              | GET, POST | Controller\blog       
 /regions           | GET       | Controller\regions 
-/regions/pokemons  | GET       | Controller\pokemons         
+/regions/hoenn     | GET       | Controller\pokemons 
+/regions/johto     | GET       | Controller\pokemons   
+/regions/kanto     | GET       | Controller\pokemons           
 /data              | GET       | Controller\data       
 *any               | GET, POST | Controller\error_404  
