@@ -89,43 +89,69 @@ function login(Request $request, Context $context): array {
         # hacer login
         $username = $request->parameters['username'];
         $password = $request->parameters['password'];
-       
-        //*hace falta devolver el rol tambien
+
         $registered_user = find_user($username, $password);
 
-       if ($registered_user) {
-        $context  = new Context(true, $username);
-        $request  = new Request("/index");
-        $response = index($request, $context);
-        
-        return $response;
-       }
+        if (!empty($registered_user->username)) { // if user does not exist an empty object is returned
+            $context  = new Context(true, $registered_user->username, $registered_user->role);
+            $request  = new Request("/index");
+            $response = index($request, $context);
+
+            return $response;
+
+        } else {
+            $request  = new Request("/login","GET");
+            $context  = new Context(false);
+            $response = login($request, $context);
+            return $response;
+        }
 
     }
 }
 
 function blog(Request $request, Context $context): array
-{    
-    if ($request->method == 'POST') {
-        # add function to add news
+{
+
+    if (($context->role == "admin") && ($request->method == 'POST')) {
+        #  add function to add news.
+    } elseif (($context->role == "admin") && ($request->method == 'GET')) {
+        # code...
+        $get_announcements = get_announcements_array();
+
+        $blog_body_template = render_template(
+            get_template_path('/body/admin_view/blog'),
+            [
+                'announcements' => $get_announcements
+            ]
+        );
+        $blog_view          = render_template(
+            get_template_path('/skeleton/skeleton'),
+            [
+                'title' => 'Blog de noticias',
+                'body' => $blog_body_template,
+                'contributors' => CONTRIBUTORS
+            ]
+        );
+    } else {
+        $get_announcements = get_announcements_array();
+
+        $blog_body_template = render_template(
+            get_template_path('/body/blog'),
+            [
+                'announcements' => $get_announcements
+            ]
+        );
+        $blog_view          = render_template(
+            get_template_path('/skeleton/skeleton'),
+            [
+                'title' => 'Blog de noticias',
+                'body' => $blog_body_template,
+                'contributors' => CONTRIBUTORS
+            ]
+        );
     }
 
-    $get_announcements = get_announcements_array();
 
-    $blog_body_template = render_template(
-        get_template_path('/body/blog'),
-        [
-            'announcements' => $get_announcements
-        ]
-    );
-    $blog_view          = render_template(
-        get_template_path('/skeleton/skeleton'),
-        [
-            'title' => 'Blog de noticias',
-            'body' => $blog_body_template,
-            'contributors' => CONTRIBUTORS
-        ]
-    );
 
     $response = new Response($blog_view);
     return [$response, $context];

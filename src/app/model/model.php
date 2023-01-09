@@ -11,6 +11,7 @@ use function Table\read_csv;
 
 require_once(realpath(get_lib_dir() . '/table/Table.php'));
 use Table\Table;
+use User\User;
 
 require_once(realpath(get_lib_dir() . '/utils/utils.php'));
 use function Utils\join_paths;
@@ -41,22 +42,21 @@ function csv_to_array(string $filename, string $separator = '|'):array{
 }
 
 
-function find_user(string $username, string $password):bool{
+function find_user(string $username, string $password):User{
     //1.Read csv file and returns an arrays with users
     $users_array = csv_to_array(get_app_dir() . '/users.csv');
-  
-   foreach ($users_array as $value ) {
-    if (($username == $value[0]) && ($password == $value[1])) {
-        $login = true;
-        break;
-    }else{
-        $login = false;
-    }
-   }
-   
-    
+    $user = [];
+    $registered_user = new User();
 
-    return $login;
+
+    foreach ($users_array as $value) {
+        if (($username == $value[0]) && ($password == $value[1])) {
+            $user = ["username" => $value[0], "password" => $value[1], "rol" => $value[2]];
+            $registred_user =  new User($user["username"], $user["password"], $user["rol"]);
+            return $registred_user;
+        }
+    }
+    return $registered_user;
 }
 
 
