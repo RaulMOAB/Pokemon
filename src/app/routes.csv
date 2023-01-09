@@ -7,5 +7,5 @@ path               | methods   | controller_function
 /regions/hoenn     | GET       | Controller\pokemons 
 /regions/johto     | GET       | Controller\pokemons   
 /regions/kanto     | GET       | Controller\pokemons           
-/data              | GET       | Controller\data       
+/data              | GET, POST | Controller\data       
 *any               | GET, POST | Controller\error_404  

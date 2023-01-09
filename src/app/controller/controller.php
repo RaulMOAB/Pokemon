@@ -31,7 +31,7 @@ use function Model\read_table;
 use function Model\get_announcements_array;
 use function Model\get_region_name;
 use function Model\get_regions_api;
-use function Model\get_pokemons;
+use function Model\add_pokemon;
 
 use function Model\get_pokemon_images;
 
@@ -184,9 +184,7 @@ function regions(Request $request, Context $context): array
 
 function pokemons(Request $request, Context $context): array
 {
-    //$regions_name    = get_region_name();
-    $region_name = substr($request->path,9);
-    //$pokemons_images = get_pokemons($regions_name);
+    $region_name     = substr($request->path,9);
     $pokemons_images = get_pokemon_images($region_name);
 
     $pokemons_body_template = render_template(
@@ -210,22 +208,67 @@ function pokemons(Request $request, Context $context): array
 
 function data(Request $request, Context $context): array
 {
-    $pokemon_table = read_table(get_csv_path('pokemon'));
 
-    $data_body_template = render_template(
-        get_template_path('/body/data'),
-        [
-            'pokemon_table' => $pokemon_table
-        ]
-    );
-    $data_view          = render_template(
-        get_template_path('/skeleton/skeleton'),
-        [
-            'title' => 'Datos',
-            'body' => $data_body_template,
-            'contributors' => CONTRIBUTORS
-        ]
-    );
+    if (($context->role == "admin") && ($request->method == "GET")) {
+        
+        $pokemon_table = read_table(get_csv_path('pokemon'));
+
+        $data_body_template = render_template(
+            get_template_path('/body/admin_view/data'),
+            [
+                'pokemon_table' => $pokemon_table
+            ]
+        );
+        $data_view          = render_template(
+            get_template_path('/skeleton/skeleton'),
+            [
+                'title' => 'Datos',
+                'body' => $data_body_template,
+                'contributors' => CONTRIBUTORS
+            ]
+        );
+    } elseif (($context->role == "admin") && ($request->method == 'POST')) {
+        # add pokemon
+        $pokemon_data = $request->parameters;
+        array_pop($pokemon_data);// pop brwoser_id
+        add_pokemon(get_csv_path('pokemon'), $pokemon_data);
+
+        $pokemon_table = read_table(get_csv_path('pokemon'));
+
+        $data_body_template = render_template(
+            get_template_path('/body/admin_view/data'),
+            [
+                'pokemon_table' => $pokemon_table
+            ]
+        );
+        $data_view          = render_template(
+            get_template_path('/skeleton/skeleton'),
+            [
+                'title' => 'Datos',
+                'body' => $data_body_template,
+                'contributors' => CONTRIBUTORS
+            ]
+        );
+
+    } else {
+        $pokemon_table = read_table(get_csv_path('pokemon'));
+
+        $data_body_template = render_template(
+            get_template_path('/body/data'),
+            [
+                'pokemon_table' => $pokemon_table
+            ]
+        );
+        $data_view          = render_template(
+            get_template_path('/skeleton/skeleton'),
+            [
+                'title' => 'Datos',
+                'body' => $data_body_template,
+                'contributors' => CONTRIBUTORS
+            ]
+        );
+    }
+
 
     $response = new Response($data_view);
     return [$response, $context];

@@ -11,9 +11,74 @@ use function Utils\is_empty_str;
 
 
 // ############################################################################
+// Table __toString() helper functions
+// ############################################################################
+
+function transpose(array $matrix): array {
+
+    $result = array_map(null, ...$matrix);
+    return $result;
+}
+
+// Helper function: Get max length of all columns
+// ----------------------------------------------------------------------------
+function get_column_widths(array $header, array $body): array {
+
+    // Combine header and body
+    $header_and_body = array_prepend($header, $body);
+
+    // Arrange data by columns, including column names
+    $columns       = transpose($header_and_body);
+    $named_columns = array_combine($header, $columns);
+
+    // Functions to calculate column widths
+    $get_width        = fn ($field)  => strlen( (string) $field);
+    $get_column_width = fn ($column) => max(array_map($get_width, $column));
+
+    // Calculate widths
+    $column_widths = array_map($get_column_width, $named_columns);
+
+    return $column_widths;
+}
+
+// String conversion
+// ----------------------------------------------------------------------------
+function convert_table_to_string(array $header, array $body, string $separator = ' | '): string {
+
+    // Get all column widths
+    $column_widths = get_column_widths($header, $body);
+
+    // Functions to convert rows to string lines
+    $convert_field_to_string = fn ($field, $width) => str_pad( (string) $field, $width, ' ', STR_PAD_RIGHT);
+    $convert_row_to_line     = fn ($row)           => implode( $separator, array_map($convert_field_to_string, $row, $column_widths) );
+
+    // Convert header and body to string
+    $header_and_body = array_prepend($header, $body);
+    $result = implode( PHP_EOL, array_map($convert_row_to_line, $header_and_body) );
+
+    return $result;
+}
+
+
+// ############################################################################
 // Table CSV helper functions
 // ############################################################################
 
+function write_csv(Table $table, string $csv_filename, string $separator = ' | '): void {
+
+    // 1. Check if table contains the separator string
+    $contents_str  = convert_table_to_string($table->header, $table->body, '');
+    $has_separator = str_contains($contents_str, $separator);
+
+    // 2. If separator found: Abort
+    $error_msg = "Write error: Table contains '$separator' already. Cannot use it as a separator in CSV file.";
+    if ($has_separator) { throw new \Exception($error_msg); }
+
+    // 3. Else: Return string using separator
+    $table_str = convert_table_to_string($table->header, $table->body, $separator);
+    file_put_contents($csv_filename, $table_str);
+}
+// ----------------------------------------------------------------------------
 function read_csv(string $csv_filename, string $separator): Table
 {
 
@@ -202,10 +267,9 @@ class Table
 
 
 
-    public static function writeCsv(Table $table, string $csv_filename): void
+    public function writeCsv(string $csv_filename, string $separator = '|'): void
     {
-        $table_str = $table->__toString();
-        file_put_contents($csv_filename, $table_str);
+        write_csv($this, $csv_filename, $separator);
     }
 
     // ------------------------------------------------------------------------
@@ -214,6 +278,14 @@ class Table
 
         $decorated_row = array_combine($this->header, $row);
         array_push($this->body, $decorated_row);
+    }
+
+    // ------------------------------------------------------------------------
+    public function prependRow(array $row): void
+    {
+
+        $decorated_row = array_combine($this->header, $row);
+        array_unshift($this->body, $decorated_row);
     }
 
 

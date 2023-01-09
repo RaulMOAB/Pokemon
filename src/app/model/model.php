@@ -7,10 +7,12 @@ use function Config\get_lib_dir;
 use function Config\get_db_dir;
 use function Config\get_app_dir;
 use function Config\get_project_dir;
-use function Table\read_csv;
 
 require_once(realpath(get_lib_dir() . '/table/Table.php'));
 use Table\Table;
+use function Table\read_csv;
+use function Utils\convert_to_string;
+
 use User\User;
 
 require_once(realpath(get_lib_dir() . '/utils/utils.php'));
@@ -108,6 +110,7 @@ function get_csv_path(string $csv_id): string {
 
 function get_header(array $header):string{
     $header_html = "";
+    $header = explode(",", $header[0]);
     foreach ($header as $value) {
         $header_html .= "<th>$value</th>";
     }
@@ -120,11 +123,13 @@ function get_body(array $body):string{
     $body_html = "";
     foreach ($body as $row) {
         foreach ($row as $value) {
-            $body_html .= "<td>$value</td>";
+            $tds = explode(",",$value);
+            foreach ($tds as $td) {
+                $body_html .= "<td>$td</td>";
+            }
         }
         $body_html = "<tr>$body_html</tr>";
     }
-
     return $body_html;
 }
 
@@ -132,6 +137,26 @@ function get_body(array $body):string{
 function read_table(string $csv_filename): Table {
     $data = Table::readCsv($csv_filename);
     return $data;
+}
+
+function add_pokemon(string $csv_filename, array $pokemon_data):void{
+
+    //1. Read Pokemon data table
+    $pokemon_table = Table::readCSV($csv_filename);
+
+    //2. Get the last entry number
+    $last_entry = csv_to_array($csv_filename, "|");
+    $last_entry = count($last_entry);
+    $pokemon_num["#"] = $last_entry;
+
+    //pasar a string los values
+    $pokemon_data = array_merge($pokemon_num, $pokemon_data);
+    $pokemon_data =array_values($pokemon_data);
+   
+   
+
+    $pokemon_table->appendRow([$pokemon_data]);
+    $pokemon_table->writeCSV($csv_filename, ',');
 }
 
 // ############################################################################
@@ -162,13 +187,9 @@ function get_regions_api(array $region_name):array{
 function get_region_name():array{
     $region_name_array  = glob(get_app_dir() .'/../../public/img/regions_map/*.webp');
     $get_file_name      = fn($filename) => basename($filename);
-    //$get_pure_file_name = fn($filename) => substr($filename, 0,strlen($filename) - 5);
-
-    $filenames_array   = array_map($get_file_name,$region_name_array);//*Arrray of img names with extension
-   // $region_name       = array_map($get_pure_file_name, $filenames_array);//*Array of images without extension, pure name
-    
-
-    return $filenames_array;
+    $filenames_array    = array_map($get_file_name,$region_name_array);//*Arrray of img names with extension
+ 
+  return $filenames_array;
 }
 
 // ############################################################################
