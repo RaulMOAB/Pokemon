@@ -3,6 +3,8 @@ declare(strict_types=1);
 namespace Main;
 
 require_once(__DIR__ . '/config.php');
+
+use function Config\get_session_dir;
 use function Config\get_lib_dir;
 
 require_once(get_lib_dir() . '/request/request.php');
@@ -21,15 +23,23 @@ use Cookie\Cookie;
 require_once(get_lib_dir() . '/table/Table.php');
 use Table\Table;
 
+function check_session(array $request_params): bool{
+    $browser_id     = $request_params['browser_id'] ?? 'no_browser_id';
+    $context_file   = get_session_dir(). "/$browser_id.json" ;
+    $context_exsits = file_exists($context_file);
+
+    return $context_exsits;
+}
+
 function main(): void{
 
-    //*Get the request and read csv routes
+    //*Get  request and route table
     $route_table = Table::readCSV(__DIR__ . '/routes.csv');
     $request   = Request::getFromWebServer();
 
-    $exists = key_exists('browser_id', $request->parameters);
+    $context_exists = check_session($request->parameters);
 
-    if (!$exists) {
+    if (!$context_exists) {
         // 1. Create browser_id cookie
         $browser_id =  get_new_browser_id();
         $browser_id_cookie = new Cookie('browser_id', $browser_id);

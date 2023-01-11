@@ -94,16 +94,15 @@ function login(Request $request, Context $context): array {
 
         if (!empty($registered_user->username)) { // if user does not exist an empty object is returned
             $context  = new Context(true, $registered_user->username, $registered_user->role);
-            $request  = new Request("/index");
-            $response = index($request, $context);
+            $response = new Response(redirection_path:"/");
 
-            return $response;
+            return [$response, $context];
 
-        } else {
-            $request  = new Request("/login","GET");
-            $context  = new Context(false);
-            $response = login($request, $context);
-            return $response;
+        } else {           
+            $context  = new Context();
+            $response = new Response(redirection_path:"/login");
+
+            return [$response, $context];
         }
 
     }
@@ -115,7 +114,7 @@ function blog(Request $request, Context $context): array
     if (($context->role == "admin") && ($request->method == 'POST')) {
         #  add function to add news.
     } elseif (($context->role == "admin") && ($request->method == 'GET')) {
-        # code...
+        
         $get_announcements = get_announcements_array();
 
         $blog_body_template = render_template(
