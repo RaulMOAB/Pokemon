@@ -78,6 +78,9 @@ body {
 .announcements {
     margin: auto;
 }
+.del-btn{
+    text-decoration: none;
+}
 
 /*REGION   SITE*/
 .pokemons-container {

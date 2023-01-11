@@ -124,6 +124,9 @@ function blog(Request $request, Context $context): array
         return [$response, $context];
     } elseif (($context->role == "admin") && ($request->method == 'GET')) {
         
+        # add function to delete news
+        $action = $request->parameters['action'] ?? 'list';
+        if($action == 'delete') {}
         $get_announcements = get_announcements_array();
 
         $blog_body_template = render_template(
