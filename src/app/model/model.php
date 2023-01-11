@@ -7,11 +7,13 @@ use function Config\get_lib_dir;
 use function Config\get_db_dir;
 use function Config\get_app_dir;
 use function Config\get_project_dir;
+use function Config\get_session_dir;
 
 require_once(realpath(get_lib_dir() . '/table/Table.php'));
 use Table\Table;
 use function Table\read_csv;
 use function Utils\convert_to_string;
+use function Utils\ensure_dir;
 
 use User\User;
 
@@ -81,11 +83,27 @@ function get_announcements_array():array{
     return $announcements;
 }
 
-function add_announcement():void{
+function add_blog_announcement(array $announcement):void{
 
-    if (isset($_POST['submit'])) {// post form has been submitted
-        echo "Title: " . $_POST['title'];
+    //?pop browser_id from array
+    array_pop($announcement);
+
+    $json_title = $announcement["date"];
+
+    //*Do diferents json titles if the announcment has the same date
+    //* exemple 2023-01-11 to 2023-01-11_1
+    $count = 0;
+    while ($announcement["date"] == $json_title) {
+        $count++;
+        $json_title = $json_title . '_' . $count;
     }
+ 
+    $convert_to_json = convert_to_string($announcement, true);
+    $json_file       = get_db_dir() . "/announcements/$json_title.json";
+
+    ensure_dir(get_db_dir());
+    file_put_contents($json_file, $convert_to_json );
+
 }
 
 

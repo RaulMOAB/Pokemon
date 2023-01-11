@@ -34,7 +34,7 @@ use function Model\get_regions_api;
 use function Model\add_pokemon;
 
 use function Model\get_pokemon_images;
-
+use function Model\add_blog_announcement;
 use function Model\get_pokemon_name;
 use function Table\read_csv;
 use function Model\find_user;
@@ -54,14 +54,17 @@ function index(Request $request, Context $context): array
 {
     $index_body_template = render_template(
         get_template_path('/body/index'),
-        ['contributors' => CONTRIBUTORS]
+        ['contributors' => CONTRIBUTORS,
+         'user'         => $context->name
+        ]
     );
     $index_view          = render_template(
         get_template_path('/skeleton/skeleton'),
         [
             'title'  => 'PokéBlog',
             'body' => $index_body_template,
-            'contributors' => CONTRIBUTORS
+            'contributors' => CONTRIBUTORS,
+            'user'         => $context->name
         ]
     );
 
@@ -78,7 +81,8 @@ function login(Request $request, Context $context): array {
         $login_view = render_template(get_template_path('/skeleton/skeleton'),[
             'title'  => 'PokéBlog',
             'body' => $login_body_template,
-            'contributors' => CONTRIBUTORS
+            'contributors' => CONTRIBUTORS,
+            'user'         => $context->name
         ]);
     
         $response = new Response($login_view);
@@ -113,6 +117,11 @@ function blog(Request $request, Context $context): array
 
     if (($context->role == "admin") && ($request->method == 'POST')) {
         #  add function to add news.
+        add_blog_announcement($request->parameters);
+
+        $response = new Response(redirection_path: '/blog');
+
+        return [$response, $context];
     } elseif (($context->role == "admin") && ($request->method == 'GET')) {
         
         $get_announcements = get_announcements_array();
@@ -128,7 +137,8 @@ function blog(Request $request, Context $context): array
             [
                 'title' => 'Blog de noticias',
                 'body' => $blog_body_template,
-                'contributors' => CONTRIBUTORS
+                'contributors' => CONTRIBUTORS,
+                'user'         => $context->name
             ]
         );
     } else {
@@ -145,7 +155,8 @@ function blog(Request $request, Context $context): array
             [
                 'title' => 'Blog de noticias',
                 'body' => $blog_body_template,
-                'contributors' => CONTRIBUTORS
+                'contributors' => CONTRIBUTORS,
+                'user'         => $context->name
             ]
         );
     }
@@ -171,9 +182,10 @@ function regions(Request $request, Context $context): array
     $regions_view          = render_template(
         get_template_path('/skeleton/skeleton'),
         [
-            'title' => 'Regiones',
-            'body' => $regions_body_template,
-            'contributors' => CONTRIBUTORS
+            'title'        => 'Regiones',
+            'body'         => $regions_body_template,
+            'contributors' => CONTRIBUTORS,
+            'user'         => $context->name
         ]
     );
 
@@ -195,9 +207,10 @@ function pokemons(Request $request, Context $context): array
     $pokemons_view = render_template(
         get_template_path('/skeleton/skeleton'),
         [
-            'title' => 'Pokémon',
-            'body' => $pokemons_body_template,
-            'contributors' => CONTRIBUTORS
+            'title'        => 'Pokémon',
+            'body'         => $pokemons_body_template,
+            'contributors' => CONTRIBUTORS,
+            'user'         => $context->name
         ]
     );
 
@@ -221,9 +234,10 @@ function data(Request $request, Context $context): array
         $data_view          = render_template(
             get_template_path('/skeleton/skeleton'),
             [
-                'title' => 'Datos',
-                'body' => $data_body_template,
-                'contributors' => CONTRIBUTORS
+                'title'        => 'Datos',
+                'body'         => $data_body_template,
+                'contributors' => CONTRIBUTORS,
+                'user'         => $context->name
             ]
         );
     } elseif (($context->role == "admin") && ($request->method == 'POST')) {
@@ -243,9 +257,10 @@ function data(Request $request, Context $context): array
         $data_view          = render_template(
             get_template_path('/skeleton/skeleton'),
             [
-                'title' => 'Datos',
-                'body' => $data_body_template,
-                'contributors' => CONTRIBUTORS
+                'title'        => 'Datos',
+                'body'         => $data_body_template,
+                'contributors' => CONTRIBUTORS,
+                'user'         => $context->name
             ]
         );
 
@@ -261,9 +276,10 @@ function data(Request $request, Context $context): array
         $data_view          = render_template(
             get_template_path('/skeleton/skeleton'),
             [
-                'title' => 'Datos',
-                'body' => $data_body_template,
-                'contributors' => CONTRIBUTORS
+                'title'        => 'Datos',
+                'body'         => $data_body_template,
+                'contributors' => CONTRIBUTORS,
+                'user'         => $context->name
             ]
         );
     }
@@ -288,9 +304,9 @@ function error_404(Request $request, Context $context): array
     $error404_view = render_template(
         get_template_path('/skeleton/skeleton'),
         [
-            'title' => 'Not found',
-            'body'  => $error404_body,
-            'contributors' => CONTRIBUTORS
+            'title'         => 'Not found',
+            'body'          => $error404_body,
+            'contributors'  => CONTRIBUTORS
         ]
     );
 
