@@ -38,6 +38,7 @@ use function Model\add_blog_announcement;
 use function Model\get_pokemon_name;
 use function Table\read_csv;
 use function Model\find_user;
+use function Model\exist_user;
 
 use const Model\CONTRIBUTORS;
 
@@ -109,6 +110,46 @@ function login(Request $request, Context $context): array {
             return [$response, $context];
         }
 
+    }
+}
+
+function register(Request $request , Context $context):array{
+    $method = $request->method;
+
+    if($method == 'GET'){
+        $register_body_template = render_template(get_template_path('/body/register'),[]);
+        $register_view = render_template(get_template_path('/skeleton/skeleton'), [
+            'body' => $register_body_template,
+            'title' => 'Registro',
+            'contributors'=>[]
+        ]);
+        $response = new Response($register_view);
+        return [$response, $context];
+    }
+    else if($method == 'POST'){
+        $users_table= read_csv(get_app_dir() . '/users.csv', '|');
+        $username = $request->parameters['username'];
+        $password = $request->parameters['password'];
+        $confirm_password = $request->parameters['confirm_password'];
+        $exist = exist_user($username,$password);
+        if($exist){
+            $response = new Response(redirection_path:'/register');
+            return [$response, $context];
+        }else{
+            define('DEFAULT_ROL','user');
+            $ready_user_to_add_to_table = [$username,$password,DEFAULT_ROL];
+            $users_table->appendRow($ready_user_to_add_to_table);
+            $users_table->writeCSV(get_app_dir().'users.csv');
+
+            $context->logged_in = true;
+            $context->name = $username;
+            $context = new Context(true,$username,DEFAULT_ROL);
+            $response = new Response(redirection_path:'');
+            
+            return [$response, $context];
+        }
+        
+        
     }
 }
 
