@@ -85,24 +85,43 @@ function get_announcements_array():array{
 
 function add_blog_announcement(array $announcement):void{
 
-    //?pop browser_id from array
-    array_pop($announcement);
+    //1.Get the announcements array from DB
+    $announcement_path_array = glob(get_db_dir() . '/announcements/*.json'); // return an indexed array of news names
 
-    $json_title = $announcement["date"];
+    //2. Build json properties(announcements sections)
+    $id      = count($announcement_path_array) + 1;
+    $date    = $announcement['date'];
+    $title   = $announcement['title'];
+    $content = $announcement['content'];
 
-    //*Do diferents json titles if the announcment has the same date
-    //* exemple 2023-01-11 to 2023-01-11_1
+    //3. Build a new announcement  
+    $announcement_array = [
+        "id"      => $id,
+        "date"    => $date,
+        "title"   => $title,
+        "content" => $content
+    ];
+
+    //*4. Do diferents json titles if the announcment has the same date
+    //* exemple 2023-01-11 to 2023-01-11_1.json
     $count = 0;
-    while ($announcement["date"] == $json_title) {
-        $count++;
-        $json_title = $json_title . '_' . $count;
+
+    $get_file_name      = fn ($filename) => basename($filename);
+    $json_filenames_array    = array_map($get_file_name, $announcement_path_array);
+
+    foreach ($json_filenames_array as $announcement_name) {
+        $name  = substr($announcement_name, 0, strlen($announcement_name) - 5);
+        while ($name == $date) {
+            $count++;
+            $date = $date . '_' . $count;
+        }
     }
- 
-    $convert_to_json = convert_to_string($announcement, true);
-    $json_file       = get_db_dir() . "/announcements/$json_title.json";
+    //5. Write to disk   
+    $convert_to_json = convert_to_string($announcement_array, true);
+    $json_file       = get_db_dir() . "/announcements/$date.json";
 
     ensure_dir(get_db_dir());
-    file_put_contents($json_file, $convert_to_json );
+    file_put_contents($json_file, $convert_to_json);
 
 }
 
