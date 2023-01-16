@@ -139,12 +139,12 @@ function register(Request $request , Context $context):array{
             define('DEFAULT_ROL','user');
             $ready_user_to_add_to_table = [$username,$password,DEFAULT_ROL];
             $users_table->appendRow($ready_user_to_add_to_table);
-            $users_table->writeCSV(get_app_dir().'users.csv');
+            $users_table->writeCSV(get_app_dir().'/users.csv');
 
             $context->logged_in = true;
             $context->name = $username;
             $context = new Context(true,$username,DEFAULT_ROL);
-            $response = new Response(redirection_path:'');
+            $response = new Response(redirection_path:'/');
             
             return [$response, $context];
         }
