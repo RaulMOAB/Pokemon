@@ -264,6 +264,10 @@ function pokemons(Request $request, Context $context): array
 
 function data(Request $request, Context $context): array
 {
+    if($context->role == ''){
+        $response = new Response(redirection_path: '/');
+        return [$response, $context];
+    }
 
     if (($context->role == "admin") && ($request->method == "GET")) {
         
