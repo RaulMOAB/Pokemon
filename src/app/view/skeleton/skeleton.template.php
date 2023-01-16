@@ -36,10 +36,15 @@
                             <?php
                                 $show_data = $user == '' ? false : true;
                                 $data_link = $show_data ? '<li class="nav-item"> <a class="nav-link link-light" href="/data" aria-current="pokemon-dates">Datos</a></li>' : '' ;
+
+                                $login_link = '<li class="nav-item"> <button class="btn btn-light me-2" type="button"><a href="/login" class="login-btn">Login</a></button></li>';
+                                $logout_link = '<li> <a href="/logout" class="btn btn-danger">Logout</a></li>';
+
+                                $log_link = $logged ? $logout_link : $login_link ;
+
                                 echo $data_link;
-                            ?>
-                            
-                            <li class="nav-item"> <button class="btn btn-light me-2" type="button"><a href="/login" class="login-btn">Login</a></button></li>     
+                                echo $log_link;
+                            ?> 
                         </ul>
                     </div>
                 </div>
