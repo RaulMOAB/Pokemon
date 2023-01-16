@@ -35,7 +35,7 @@
             <p class='card-subtitle mb-2 text-muted'>$announcement[date] · $announcement[autor]</p>
             <p class='card-text'>$announcement[content]</p>
             <div>
-              <button class='btn btn-danger'><a href='/blog?action=delete' name='$announcement[id]' class='text-white del-btn'>Eliminar</a></button>
+              <button class='btn btn-danger'><a href='/blog?action=$announcement[id]' name='$announcement[id]' class='text-white del-btn'>Eliminar</a></button>
             </div>
         </div>
     </div>

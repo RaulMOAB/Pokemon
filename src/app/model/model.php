@@ -8,6 +8,8 @@ use function Config\get_db_dir;
 use function Config\get_app_dir;
 use function Config\get_project_dir;
 use function Config\get_session_dir;
+use function Model\get_csv_path as ModelGet_csv_path;
+use function Model\read_table as ModelRead_table;
 
 require_once(realpath(get_lib_dir() . '/table/Table.php'));
 use Table\Table;
@@ -79,7 +81,9 @@ function get_announcements_array():array{
     $announcements_to_array   = fn ($json_file) => read_json($json_file);
     $announcements            = array_map($announcements_to_array, $announcements_path_array);
     
-    sort($announcements);// sort an array in descending   
+    
+    rsort($announcements);// sort an array in descending   
+  
     return $announcements;
 }
 
@@ -125,7 +129,21 @@ function add_blog_announcement(array $announcement):void{
 
 }
 
+function delete_announcement(string $announcement_id):void{
+    $announcement_id = (int)$announcement_id;
+    $announcement_path_array = glob(get_db_dir() . '/announcements/*.json'); 
 
+    foreach ($announcement_path_array as $announcement_path) {
+        
+        $read_json = read_json($announcement_path);
+
+        if ($announcement_id == $read_json['id']) {
+            # code...
+            unlink($announcement_path);
+        }
+    }
+   
+}
 
 
 // ############################################################################
@@ -179,21 +197,22 @@ function read_table(string $csv_filename): Table {
 function add_pokemon(string $csv_filename, array $pokemon_data):void{
 
     //1. Read Pokemon data table
-    $pokemon_table = Table::readCSV($csv_filename);
+    $pokemon_table = read_table(get_csv_path('pokemon'));
 
-    //2. Get the last entry number
-    $last_entry = csv_to_array($csv_filename, "|");
-    $last_entry = count($last_entry);
-    $pokemon_num["#"] = $last_entry;
+   //2. build new pokémon row
+   $new_pokemon = ['#'       => $pokemon_data["#"], 'Name'          => $pokemon_data['Name'],
+                   'Type 1'  => $pokemon_data['Type_1'], 'Type 2'   => $pokemon_data['Type_2'],
+                   'Total'   => $pokemon_data['Total'], 'HP'        => $pokemon_data['HP'],
+                   'Attack'  => $pokemon_data['Attack'], 'Defense'  => $pokemon_data['Defense'],
+                   'Sp. Atk' => $pokemon_data['Sp__Atk'], 'Sp. Def' => $pokemon_data['Sp__Def'],
+                   'Speed'   => $pokemon_data['Speed'],'Generation' => $pokemon_data['Generation'],
+                   'Legendary' =>$pokemon_data['Legendary']
+                ];
+    
+    $pokemon_table->appendRow($new_pokemon);
 
-    //pasar a string los values
-    $pokemon_data = array_merge($pokemon_num, $pokemon_data);
-    $pokemon_data =array_values($pokemon_data);
-   
-   
+    $pokemon_table->writeCSV($csv_filename);
 
-    $pokemon_table->appendRow([$pokemon_data]);
-    $pokemon_table->writeCSV($csv_filename, ',');
 }
 
 // ############################################################################

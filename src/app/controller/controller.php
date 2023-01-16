@@ -38,6 +38,7 @@ use function Model\add_blog_announcement;
 use function Model\get_pokemon_name;
 use function Table\read_csv;
 use function Model\find_user;
+use function Model\delete_announcement;
 
 use const Model\CONTRIBUTORS;
 
@@ -123,11 +124,14 @@ function blog(Request $request, Context $context): array
 
         return [$response, $context];
     } elseif (($context->role == "admin") && ($request->method == 'GET')) {
-        
         # add function to delete news
-        $action = $request->parameters['action'] ?? 'list';
-        if($action == 'delete') {}
+        $action = $request->parameters['action'] ?? 'none';
+        if($action !== 'none') {
+
+            delete_announcement($action);
+        }
         $get_announcements = get_announcements_array();
+
 
         $blog_body_template = render_template(
             get_template_path('/body/admin_view/blog'),
@@ -246,7 +250,7 @@ function data(Request $request, Context $context): array
     } elseif (($context->role == "admin") && ($request->method == 'POST')) {
         # add pokemon
         $pokemon_data = $request->parameters;
-        array_pop($pokemon_data);// pop brwoser_id
+       
         add_pokemon(get_csv_path('pokemon'), $pokemon_data);
 
         $pokemon_table = read_table(get_csv_path('pokemon'));

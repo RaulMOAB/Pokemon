@@ -1,5 +1,5 @@
 {
-    "logged_in": false,
-    "name": "",
-    "role": ""
+    "logged_in": true,
+    "name": "raulm",
+    "role": "admin"
 }
