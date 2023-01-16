@@ -43,7 +43,11 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col text-end mt-2 px-3">
-                        <p class="fs-6 text-white fw-semibold">Hola, <?= $user = $user ?? 'invitado' ?></p>
+                        <?php
+                            $user = $user == '' ? 'invitado': $user;
+                            echo " <p class='fs-6 text-white fw-semibold'>Hola, $user</p>"
+                        ?>
+                       
                     </div>
                 </div>
             </div>
