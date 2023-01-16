@@ -42,8 +42,13 @@
             
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col text-end mt-2 px-3">
-                        <p class="fs-6 text-white fw-semibold">Hola, <?= $user = $user ?? 'invitado' ?></p>
+                    <div class="col text-end mt-2 px-3 d-flex justify-content-end">
+                        <div class="profile-pic-container rounded-circle">
+                            <img src="../img/profile_pic/users_profile/pikachu_profile.png" class="img-thumbnail rounded-circle profile-picture me-2 shadow-4-strong" alt="...">
+                        </div>
+                        <div>
+                            <p class="fs-6 text-end  text-white fw-semibold"><?= $user = $user ?? 'invitado' ?></p>
+                        </div>
                     </div>
                 </div>
             </div>

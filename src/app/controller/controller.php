@@ -39,6 +39,7 @@ use function Model\get_pokemon_name;
 use function Table\read_csv;
 use function Model\find_user;
 use function Model\delete_announcement;
+use function Model\delete_pokemon;
 
 use const Model\CONTRIBUTORS;
 
@@ -229,8 +230,14 @@ function data(Request $request, Context $context): array
 {
 
     if (($context->role == "admin") && ($request->method == "GET")) {
-        
+
+        $action = $request->parameters['action'] ?? 'list';
         $pokemon_table = read_table(get_csv_path('pokemon'));
+
+        if ($action !== 'list') {
+            delete_pokemon($action, $pokemon_table);
+        }
+        
 
         $data_body_template = render_template(
             get_template_path('/body/admin_view/data'),
@@ -295,6 +302,8 @@ function data(Request $request, Context $context): array
     $response = new Response($data_view);
     return [$response, $context];
 }
+
+
 
 function error_404(Request $request, Context $context): array
 {

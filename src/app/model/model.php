@@ -188,12 +188,31 @@ function get_body(array $body):string{
     return $body_html;
 }
 
+function get_body_admin(array $body):string{
+    $body_html = "";
+    foreach ($body as $row) {
+        foreach ($row as $value) {
+            $tds = explode(",",$value);
+            foreach ($tds as $td) {
+                $body_html .= "<td>$td</td>";
+            }
+        }
+        $body_html .= " <td>                    
+                            <button type='submit' value='$tds[0]' class='btn btn-danger'><a href='/data?action=$tds[0]' class='text-white'>Delete</a></button>
+                        </td>";
+        $body_html = "<tr>$body_html</tr>";
+    }
+    return $body_html;
+}
+
 // ----------------------------------------------------------------------------
 function read_table(string $csv_filename): Table {
     $data = Table::readCsv($csv_filename);
     return $data;
 }
 
+// ----------------------------------------------------------------------------
+//Function to add a new pokemon to csv file(only admins can do this)
 function add_pokemon(string $csv_filename, array $pokemon_data):void{
 
     //1. Read Pokemon data table
@@ -208,7 +227,7 @@ function add_pokemon(string $csv_filename, array $pokemon_data):void{
 //                    'Speed'   => $pokemon_data['Speed'],'Generation' => $pokemon_data['Generation'],
 //                    'Legendary' =>$pokemon_data['Legendary']
 //                 ];
-//!Preguntar Pablo
+    //!Preguntar Pablo
     array_pop($pokemon_data);
     $new_pokemon = implode(',', $pokemon_data);
     $new_pokemon = [$new_pokemon];
@@ -217,6 +236,13 @@ function add_pokemon(string $csv_filename, array $pokemon_data):void{
     $pokemon_table->appendRow($new_pokemon);
     $pokemon_table->writeCSV($csv_filename);
 
+}
+// ----------------------------------------------------------------------------
+//Function to delete a pokemon from csv file (only admins can do this)
+function delete_pokemon(string $index, Table $pokemon_table):void{
+    $index = (int) $index;
+    $pokemon_table->deleteRow($index);
+    $pokemon_table->writeCSV(get_csv_path('pokemon'));
 }
 
 // ############################################################################

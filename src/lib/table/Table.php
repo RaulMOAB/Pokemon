@@ -288,6 +288,11 @@ class Table
         array_unshift($this->body, $decorated_row);
     }
 
+    public function deleteRow(int $row_index): void{
+        unset($this->body[$row_index - 1]);
+        array_values($this->body);
+    }
+
 
     // $filter function recieves a single parameter: a table row
     // Returns a new Table object. Does not modify the original table.
