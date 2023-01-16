@@ -200,17 +200,21 @@ function add_pokemon(string $csv_filename, array $pokemon_data):void{
     $pokemon_table = read_table(get_csv_path('pokemon'));
 
    //2. build new pokémon row
-   $new_pokemon = ['#'       => $pokemon_data["#"], 'Name'          => $pokemon_data['Name'],
-                   'Type 1'  => $pokemon_data['Type_1'], 'Type 2'   => $pokemon_data['Type_2'],
-                   'Total'   => $pokemon_data['Total'], 'HP'        => $pokemon_data['HP'],
-                   'Attack'  => $pokemon_data['Attack'], 'Defense'  => $pokemon_data['Defense'],
-                   'Sp. Atk' => $pokemon_data['Sp__Atk'], 'Sp. Def' => $pokemon_data['Sp__Def'],
-                   'Speed'   => $pokemon_data['Speed'],'Generation' => $pokemon_data['Generation'],
-                   'Legendary' =>$pokemon_data['Legendary']
-                ];
-    
-    $pokemon_table->appendRow($new_pokemon);
+//    $new_pokemon = ['#'       => $pokemon_data["#"], 'Name'          => $pokemon_data['Name'],
+//                    'Type 1'  => $pokemon_data['Type_1'], 'Type 2'   => $pokemon_data['Type_2'],
+//                    'Total'   => $pokemon_data['Total'], 'HP'        => $pokemon_data['HP'],
+//                    'Attack'  => $pokemon_data['Attack'], 'Defense'  => $pokemon_data['Defense'],
+//                    'Sp. Atk' => $pokemon_data['Sp__Atk'], 'Sp. Def' => $pokemon_data['Sp__Def'],
+//                    'Speed'   => $pokemon_data['Speed'],'Generation' => $pokemon_data['Generation'],
+//                    'Legendary' =>$pokemon_data['Legendary']
+//                 ];
+//!Preguntar Pablo
+    array_pop($pokemon_data);
+    $new_pokemon = implode(',', $pokemon_data);
+    $new_pokemon = [$new_pokemon];
 
+    //3. Add new row and write to disk
+    $pokemon_table->appendRow($new_pokemon);
     $pokemon_table->writeCSV($csv_filename);
 
 }
