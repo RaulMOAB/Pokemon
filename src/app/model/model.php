@@ -63,6 +63,18 @@ function find_user(string $username, string $password):User{
     return $registered_user;
 }
 
+function exist_user(string $username, string $password):bool{
+    $exist = false;
+    $users_array = read_csv(get_app_dir() . '/users.csv', '|');
+    foreach ($users_array->body as $key => $user) {
+        $exist = in_array($username, $user, true); 
+        if($exist){
+            return $exist;
+        }
+    }
+    return $exist;
+}
+
 
 
 // ############################################################################

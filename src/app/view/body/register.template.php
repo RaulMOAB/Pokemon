@@ -11,11 +11,15 @@
                 <label for="password" class="form-label">Contraseña</label>
                 <input type="password" class="form-control" id="userPass" name="password">
             </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Confirmar contraseña</label>
+                <input type="password" class="form-control" id="userConfirmPass" name="confirm_password">
+            </div>
             <div class="d-flex justify-content-center">
-                <button type="submit" class="btn btn-primary mt-3">Iniciar sesión</button>
+                <button type="submit" class="btn btn-primary mt-3">Registrarse</button>
             </div>
             <div class="d-flex justify-content-center links mt-3">
-					¿Aún no tienes cuenta? <a href="/register">Registrate</a>
+				<a href="/login">Ya tengo cuenta</a>
 			</div>
             </form>
         </div>
