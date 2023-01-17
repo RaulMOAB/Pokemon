@@ -7,7 +7,7 @@ class User{
     public string $password;
     public string $role;
 
-    public function __construct(string $username = '', string $password = '', string $role = '')
+    public function __construct(string $username = '', string $password = '', string $role = 'user')
     {
         $this->username = $username;
         $this->password = $password;

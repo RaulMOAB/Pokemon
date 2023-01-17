@@ -40,6 +40,8 @@ use function Table\read_csv;
 use function Model\find_user;
 use function Model\delete_announcement;
 use function Model\delete_pokemon;
+use function Model\add_user;
+use function Model\delete_user;
 
 use const Model\CONTRIBUTORS;
 
@@ -48,29 +50,107 @@ use function View\get_template_path;
 use function View\render_template;
 
 
+// ############################################################################
+// Helper functions
+// ############################################################################
+
+// ----------------------------------------------------------------------------
+function check_login(Table $user_table, string $user_name, string $user_pass): bool {
+
+    $get_user_row = fn ($row) => (($row['username'] . $row['password']) == ($user_name . $user_pass));
+    $filtered_table  = $user_table->filterRows($get_user_row);
+
+    $login_ok = (count($filtered_table->body) == 1);
+
+    return $login_ok;
+}
 
 
-
-
+// ----------------------------------------------------------------------------
 function index(Request $request, Context $context): array
 {
-    $index_body_template = render_template(
-        get_template_path('/body/index'),
-        ['contributors' => CONTRIBUTORS,
-         'user'         => $context->name
-        ]
-    );
-    $index_view          = render_template(
-        get_template_path('/skeleton/skeleton'),
-        [
-            'title'  => 'PokéBlog',
-            'body' => $index_body_template,
-            'contributors' => CONTRIBUTORS,
-            'user'         => $context->name
-        ]
-    );
+    
+    
+    if ($context->role !== 'admin') {
+       
+        $index_body_template = render_template(
+            get_template_path('/body/index'),
+            ['contributors' => CONTRIBUTORS,
+             'user'         => $context->name
+            ]
+        );
+        $index_view          = render_template(
+            get_template_path('/skeleton/skeleton'),
+            [
+                'title'  => 'PokéBlog',
+                'body' => $index_body_template,
+                'contributors' => CONTRIBUTORS,
+                'user'         => $context->name
+            ]
+        );
+    } else {
+       
+        $index_body_template = render_template(
+            get_template_path('/body/index'),
+            ['contributors' => CONTRIBUTORS,
+             'user'         => $context->name
+            ]
+        );
+        $index_view          = render_template(
+            get_template_path('/skeleton/admin.skeleton'),
+            [
+                'title'  => 'PokéBlog',
+                'body' => $index_body_template,
+                'contributors' => CONTRIBUTORS,
+                'user'         => $context->name
+            ]
+        );
+    }
+    
 
     $response = new Response($index_view);
+    return [$response, $context];
+}
+
+function admin (Request $request, Context $context):array {
+
+    
+    $users_table = read_table(get_csv_path('users'));
+    
+    
+    if ($request->method == 'POST') {
+        //add a new user
+        $username = $request->parameters['username'];
+        $password = $request->parameters['password'];
+        
+        $new_user = new User($username, $password);
+        
+        add_user($new_user, $users_table);
+        
+    }
+    
+    $admin_body_template = render_template(get_template_path('/body/admin_view/admin'), ['contributors' => CONTRIBUTORS,
+                                                                                         'users_table' => $users_table]);
+    $admin_view          = render_template(get_template_path('/skeleton/admin.skeleton'),['title' => 'Administración de usuarios',
+    'body' => $admin_body_template,
+    'contributors' => CONTRIBUTORS,
+    'user' => $context->name]);
+    $response = new Response($admin_view);
+
+    return [$response, $context];
+}
+
+function delete(Request $request, Context $context):array{
+
+    $users_table = read_table(get_csv_path('users'));
+
+    $user_to_delete = $request->parameters['username'];
+
+    delete_user($user_to_delete, $users_table);
+
+    $response = new Response();
+    $response->set_redirection('/admin');
+
     return [$response, $context];
 }
 
@@ -231,11 +311,12 @@ function data(Request $request, Context $context): array
 
     if (($context->role == "admin") && ($request->method == "GET")) {
 
-        $action = $request->parameters['action'] ?? 'list';
+        $action = $request->parameters['action'] ?? '';
         $pokemon_table = read_table(get_csv_path('pokemon'));
 
-        if ($action !== 'list') {
+        if ($action !== '') {
             delete_pokemon($action, $pokemon_table);
+           
         }
         
 
@@ -303,7 +384,16 @@ function data(Request $request, Context $context): array
     return [$response, $context];
 }
 
+function profile(Request $request, Context $context): array{
+    $profile_body = render_template(get_template_path('/body/profile'),[]);
+    $profile_view = render_template(get_template_path('/skeleton/skeleton'),
+    ['title' => 'Perfil',
+    'body' => $profile_body]);
+    
+    $response = new Response($profile_view);
 
+    return [$response, $context];
+}
 
 function error_404(Request $request, Context $context): array
 {

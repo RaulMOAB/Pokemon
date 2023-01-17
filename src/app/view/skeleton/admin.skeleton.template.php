@@ -6,17 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title> <?= $title ?> </title>   
+    <title> <?= $title ?> </title>
+    
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     
-    <!--CSS-->
     <link rel="stylesheet" href="/css/styles.css">
-    <!--Font Awesome-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
-    integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <script src="https://kit.fontawesome.com/bd26f4ad58.js" crossorigin="anonymous"></script>
-    <!--Bootstrap-->
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 </head>
@@ -39,6 +34,7 @@
                             <li class="nav-item"> <a class="nav-link link-light" href="/blog" aria-current="pokemon-announcements">Blog</a></li>
                             <li class="nav-item"> <a class="nav-link link-light" href="/regions" aria-current="pokemon-images">Regiones</a></li>
                             <li class="nav-item"> <a class="nav-link link-light" href="/data" aria-current="pokemon-dates">Datos</a></li>
+                            <li class="nav-item"> <a class="nav-link link-light" href="/admin" aria-current="user-management">Administrador</a></li>
                             <li class="nav-item"> <button class="btn btn-light me-2" type="button"><a href="/login" class="login-btn">Login</a></button></li>     
                         </ul>
                     </div>

@@ -69,6 +69,12 @@ class Response
         array_push($this->cookies, $cookie);
     }
 
+    // ------------------------------------------------------------------------
+    public function set_redirection(string $redirection_path): void {
+        
+        $this->redirection_path = $redirection_path;
+    }
+
     public function set_cookies(): void {
 
         foreach ($this->cookies as $cookie) { 

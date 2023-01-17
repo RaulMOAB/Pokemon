@@ -289,7 +289,7 @@ class Table
     }
 
     public function deleteRow(int $row_index): void{
-        unset($this->body[$row_index - 1]);
+        unset($this->body[$row_index]);
         array_values($this->body);
     }
 

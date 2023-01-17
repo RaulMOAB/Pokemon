@@ -50,7 +50,7 @@ function csv_to_array(string $filename, string $separator = '|'):array{
 
 function find_user(string $username, string $password):User{
     //1.Read csv file and returns an arrays with users
-    $users_array = csv_to_array(get_app_dir() . '/users.csv');
+    $users_array = csv_to_array(get_db_dir() . '/users.csv');
     $user = [];
     $registered_user = new User();
 
@@ -206,8 +206,8 @@ function get_body_admin(array $body):string{
 }
 
 // ----------------------------------------------------------------------------
-function read_table(string $csv_filename): Table {
-    $data = Table::readCsv($csv_filename);
+function read_table(string $csv_filename, $separator = '|'): Table {
+    $data = Table::readCsv($csv_filename, $separator);
     return $data;
 }
 
@@ -216,7 +216,13 @@ function read_table(string $csv_filename): Table {
 function add_pokemon(string $csv_filename, array $pokemon_data):void{
 
     //1. Read Pokemon data table
-    $pokemon_table = read_table(get_csv_path('pokemon'));
+    $pokemon_table = read_table(get_csv_path('pokemon'), ',');
+
+    // Test code
+    array_shift($pokemon_data);//deletes action
+    array_pop($pokemon_data);
+    $pokemon_table->appendRow($pokemon_data);
+
 
    //2. build new pokémon row
 //    $new_pokemon = ['#'       => $pokemon_data["#"], 'Name'          => $pokemon_data['Name'],
@@ -228,21 +234,58 @@ function add_pokemon(string $csv_filename, array $pokemon_data):void{
 //                    'Legendary' =>$pokemon_data['Legendary']
 //                 ];
     //!Preguntar Pablo
-    array_pop($pokemon_data);
-    $new_pokemon = implode(',', $pokemon_data);
-    $new_pokemon = [$new_pokemon];
+    // array_pop($pokemon_data);
+    // $new_pokemon = implode(',', $pokemon_data);
+    // $new_pokemon = [$new_pokemon];
 
     //3. Add new row and write to disk
-    $pokemon_table->appendRow($new_pokemon);
-    $pokemon_table->writeCSV($csv_filename);
+    // $pokemon_table->appendRow($new_pokemon);
+    $pokemon_table->writeCSV($csv_filename, ',');
 
 }
 // ----------------------------------------------------------------------------
 //Function to delete a pokemon from csv file (only admins can do this)
 function delete_pokemon(string $index, Table $pokemon_table):void{
     $index = (int) $index;
+    $table_length = count($pokemon_table->body);
+
+    if ($index > $table_length) {
+        $index = $table_length;
+    }
+
     $pokemon_table->deleteRow($index);
     $pokemon_table->writeCSV(get_csv_path('pokemon'));
+}
+
+
+// ############################################################################
+// Admin functions
+// ############################################################################
+
+function add_user(User $new_user, Table $users_table):void{
+
+    $user_row = ['username' => $new_user->username, 'password' => $new_user->password, 'role' => $new_user->role];
+
+    $users_table->appendRow($user_row);
+
+    $users_table->writeCSV(get_csv_path('users'));
+}
+
+function delete_user(string $username, Table $users_table):void {
+
+    $get_row        = fn ($row) => ($row['username'] == $username);
+    $filtered_table = $users_table->filterRows($get_row);
+    $user_row       = $filtered_table->body[0];
+    $index_row = 0;
+
+    foreach ($users_table->body as $row => $values) {
+        if ($values['username'] == $user_row['username']) {
+            $index_row = $row;
+        }
+    }
+
+    $users_table->deleteRow($index_row);
+    $users_table->writeCSV(get_csv_path('users'));
 }
 
 // ############################################################################
