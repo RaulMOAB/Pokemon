@@ -55,7 +55,15 @@
                     <div class="col text-end mt-2 px-3">
                         <?php
                             $user = $user == '' ? 'invitado': $user;
-                            echo " <p class='fs-6 text-white fw-semibold'>Hola, $user</p>"
+                            $avatar_seccion = <<<END
+                            <div class="row">
+                                <div class="col">
+                                    <img class='rounded-circle shadow-4-strong avatar' alt='avatar' src='$img_path' />
+                                    <p class='fs-6 text-white fw-semibold'>$user</p>
+                                </div>
+                            </div>
+                            END;
+                        echo $avatar_seccion;
                         ?>
                        
                     </div>

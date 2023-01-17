@@ -5,6 +5,7 @@ namespace Context;
 require_once(__DIR__ . '/../../app/config.php');
 use function Config\get_db_dir;
 use function Config\get_lib_dir;
+use function Config\get_public_dir;
 use function Config\get_session_dir;
 
 require_once(get_lib_dir() . '/utils/utils.php');
@@ -38,18 +39,22 @@ class Context {
     public string $name;
     public string $role;
 
-    public function __construct(bool $logged_in = false, string $name = '', string $role = ''){
+    public string $avatar_profile_path;
+
+    public function __construct(bool $logged_in = false, string $name = '', string $role = '', string $avatar_profile_path = ''){
         
         $this->logged_in = $logged_in;
         $this->name      = $name;
         $this->role      = $role;
+        $this->avatar_profile_path = $avatar_profile_path;
     }
 
     public function writeToDisk(string $browser_id): void {
 
         $data = ['logged_in' => $this->logged_in,
                  'name'      => $this->name,
-                 'role'      => $this->role      ];
+                 'role'      => $this->role,
+                 'avatar_profile_path' => $this->avatar_profile_path      ];
 
                  $json_str  = convert_to_string($data, true);
                  $json_file = get_session_dir() . "/$browser_id.json";
@@ -64,7 +69,7 @@ class Context {
         $json_str = file_get_contents($json_file);
         $data     = json_decode($json_str, true);
 
-        $context = new Context($data['logged_in'], $data['name'], $data['role']);
+        $context = new Context($data['logged_in'], $data['name'], $data['role'], $data['avatar_profile_path']);
         return $context;
     }
 }
