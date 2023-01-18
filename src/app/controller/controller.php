@@ -113,31 +113,39 @@ function index(Request $request, Context $context): array
 }
 
 function admin (Request $request, Context $context):array {
-
     
     $users_table = read_table(get_csv_path('users'));
     
+    if ($context->role == 'admin') {
+        if ($request->method == 'POST') {
+            //add a new user
+            $username = $request->parameters['username'];
+            $password = $request->parameters['password'];
+            $role     = $request->parameters['role'];
+            define('DEFAULT_ROLE', 'user');
+            $set_role = ($role == '') ? DEFAULT_ROLE : $role;
+            $new_user = new User($username, $password, $set_role);
+            
+            add_user($new_user, $users_table);
+            
+        }
+        
+        $admin_body_template = render_template(get_template_path('/body/admin_view/admin'), ['contributors' => CONTRIBUTORS,
+                                                                                             'users_table' => $users_table]);
+        $admin_view          = render_template(get_template_path('/skeleton/admin.skeleton'),['title' => 'Administración de usuarios',
+        'body' => $admin_body_template,
+        'contributors' => CONTRIBUTORS,
+        'user' => $context->name]);
+        $response = new Response($admin_view);
     
-    if ($request->method == 'POST') {
-        //add a new user
-        $username = $request->parameters['username'];
-        $password = $request->parameters['password'];
-        
-        $new_user = new User($username, $password);
-        
-        add_user($new_user, $users_table);
-        
-    }
-    
-    $admin_body_template = render_template(get_template_path('/body/admin_view/admin'), ['contributors' => CONTRIBUTORS,
-                                                                                         'users_table' => $users_table]);
-    $admin_view          = render_template(get_template_path('/skeleton/admin.skeleton'),['title' => 'Administración de usuarios',
-    'body' => $admin_body_template,
-    'contributors' => CONTRIBUTORS,
-    'user' => $context->name]);
-    $response = new Response($admin_view);
+        return [$response, $context];       
+    }else{
+        $response = new Response();
+        $response->set_redirection('/');
 
-    return [$response, $context];
+        return [$response, $context];
+    }
+
 }
 
 function delete(Request $request, Context $context):array{

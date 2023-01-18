@@ -48,13 +48,8 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col text-end mt-2 px-3 d-flex justify-content-end">
-                        <div class="profile-pic-container rounded-circle">
-                            
-                            <a href="/profile?user=<?=$user?>">
+                        <div class="profile-pic-container rounded-circle"> 
                                 <img src="../img/profile_pic/users_profile/pikachu_profile.png" class="img-thumbnail rounded-circle profile-picture me-2 shadow-4-strong" alt="profile picture">
-                            </a>
-
-                            
                         </div>
                         <div>
                             <p class="fs-6 text-end  text-white fw-semibold py-2"><?= $user = $user ?? 'invitado' ?></p>

@@ -13,7 +13,7 @@
                 </div>
                 <div class="mb-3">
                 <select class="form-select" name="role">
-                    <option selected value="0"></option>  
+                    <option selected value=""></option>  
                     <option value="user" name="user">User</option>
                     <option value="admin" name="admnin">Admin</option>                    
                 </select>
