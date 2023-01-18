@@ -1,6 +1,12 @@
 {
+<<<<<<< HEAD
     "logged_in": false,
     "name": "",
     "role": "",
     "avatar_profile_path": "/img/users_profile/guest/pokeball.png"
+=======
+    "logged_in": true,
+    "name": "raulm",
+    "role": "admin"
+>>>>>>> raul_v2
 }

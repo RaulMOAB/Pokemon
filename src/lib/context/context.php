@@ -38,7 +38,6 @@ class Context {
     public bool   $logged_in;
     public string $name;
     public string $role;
-
     public string $avatar_profile_path;
 
     public function __construct(bool $logged_in = false, string $name = '', string $role = '', string $avatar_profile_path = ''){

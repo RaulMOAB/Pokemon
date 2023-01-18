@@ -1,13 +1,17 @@
 path               | methods   | controller_function   
                    | GET       | Controller\index      
+/admin             | GET, POST | Controller\admin     
+/blog              | GET, POST | Controller\blog    
+/data              | GET, POST | Controller\data   
+/delete            | GET, POST | Controller\delete  
 /index             | GET       | Controller\index   
 /login             | GET, POST | Controller\login 
 /logout            | GET, POST | Controller\logout
 /register          | GET, POST | Controller\register    
-/blog              | GET, POST | Controller\blog       
+/blog              | GET, POST | Controller\blog         
 /regions           | GET       | Controller\regions 
 /regions/hoenn     | GET       | Controller\pokemons 
 /regions/johto     | GET       | Controller\pokemons   
 /regions/kanto     | GET       | Controller\pokemons           
-/data              | GET, POST | Controller\data       
+/profile           | GET, POST | Controller\profile   
 *any               | GET, POST | Controller\error_404  
