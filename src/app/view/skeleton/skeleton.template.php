@@ -33,8 +33,18 @@
                         <ul class="navbar-nav">
                             <li class="nav-item"> <a class="nav-link link-light" href="/blog" aria-current="pokemon-announcements">Blog</a></li>
                             <li class="nav-item"> <a class="nav-link link-light" href="/regions" aria-current="pokemon-images">Regiones</a></li>
-                            <li class="nav-item"> <a class="nav-link link-light" href="/data" aria-current="pokemon-dates">Datos</a></li>
-                            <li class="nav-item"> <button class="btn btn-light me-2" type="button"><a href="/login" class="login-btn">Login</a></button></li>     
+                            <?php
+                                $show_data = $user == '' ? false : true;
+                                $data_link = $show_data ? '<li class="nav-item"> <a class="nav-link link-light" href="/data" aria-current="pokemon-dates">Datos</a></li>' : '' ;
+
+                                $login_link = '<li class="nav-item"> <button class="btn btn-light me-2" type="button"><a href="/login" class="login-btn">Login</a></button></li>';
+                                $logout_link = '<li> <a href="/logout" class="btn btn-danger">Logout</a></li>';
+
+                                $log_link = $logged ? $logout_link : $login_link ;
+
+                                echo $data_link;
+                                echo $log_link;
+                            ?> 
                         </ul>
                     </div>
                 </div>
@@ -43,7 +53,19 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col text-end mt-2 px-3">
-                        <p class="fs-6 text-white fw-semibold">Hola, <?= $user = $user ?? 'invitado' ?></p>
+                        <?php
+                            $user = $user == '' ? 'invitado': $user;
+                            $avatar_seccion = <<<END
+                            <div class="row">
+                                <div class="col">
+                                    <img class='rounded-circle shadow-4-strong avatar' alt='avatar' src='$img_path' />
+                                    <p class='fs-6 text-white fw-semibold'>$user</p>
+                                </div>
+                            </div>
+                            END;
+                        echo $avatar_seccion;
+                        ?>
+                       
                     </div>
                 </div>
             </div>

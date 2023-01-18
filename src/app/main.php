@@ -6,6 +6,7 @@ require_once(__DIR__ . '/config.php');
 
 use function Config\get_session_dir;
 use function Config\get_lib_dir;
+use function Config\get_public_dir;
 
 require_once(get_lib_dir() . '/request/request.php');
 use Request\Request;
@@ -45,7 +46,7 @@ function main(): void{
         $browser_id_cookie = new Cookie('browser_id', $browser_id);
 
         // 2. Create  browser_id .json file
-        $context = new Context();
+        $context = new Context(avatar_profile_path:'/img/users_profile/guest/pokeball.png');
         $context->writeToDisk($browser_id);
 
         // 3. Process request

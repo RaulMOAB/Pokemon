@@ -9,6 +9,7 @@ use function Config\get_db_dir;
 use function Config\get_lib_dir;
 use function Config\get_model_dir;
 use function Config\get_view_dir;
+use function Config\get_public_dir;
 
 require_once(get_lib_dir() . '/request/request.php');
 use Request\Request;
@@ -51,8 +52,10 @@ use function View\render_template;
 
 
 
-function index(Request $request, Context $context): array
-{
+function index(Request $request, Context $context): array{
+    $logged = $context->logged_in;
+    $img_path = $context->avatar_profile_path;
+
     $index_body_template = render_template(
         get_template_path('/body/index'),
         ['contributors' => CONTRIBUTORS,
@@ -65,7 +68,9 @@ function index(Request $request, Context $context): array
             'title'  => 'PokéBlog',
             'body' => $index_body_template,
             'contributors' => CONTRIBUTORS,
-            'user'         => $context->name
+            'user'         => $context->name,
+            'logged' => $logged,
+            'img_path' => $img_path
         ]
     );
 
@@ -74,7 +79,8 @@ function index(Request $request, Context $context): array
 }
 
 function login(Request $request, Context $context): array {
-
+    $logged = $context->logged_in;
+    $img_path = $context->avatar_profile_path;
 
     if ($request->method == 'GET') {
         $login_body_template = render_template(get_template_path('/body/login'),['contributors' => CONTRIBUTORS]);
@@ -83,7 +89,9 @@ function login(Request $request, Context $context): array {
             'title'  => 'PokéBlog',
             'body' => $login_body_template,
             'contributors' => CONTRIBUTORS,
-            'user'         => $context->name
+            'user'         => $context->name,
+            'logged' => $logged,
+            'img_path' => $img_path
         ]);
     
         $response = new Response($login_view);
@@ -98,13 +106,13 @@ function login(Request $request, Context $context): array {
         $registered_user = find_user($username, $password);
 
         if (!empty($registered_user->username)) { // if user does not exist an empty object is returned
-            $context  = new Context(true, $registered_user->username, $registered_user->role);
+            $context  = new Context(true, $registered_user->username, $registered_user->role,"/img/users_profile/logged/".$username."_profile.png");
             $response = new Response(redirection_path:"/");
 
             return [$response, $context];
 
         } else {           
-            $context  = new Context();
+            $context  = new Context(avatar_profile_path:'/img/users_profile/guest/pokeball.png');
             $response = new Response(redirection_path:"/login");
 
             return [$response, $context];
@@ -114,6 +122,8 @@ function login(Request $request, Context $context): array {
 }
 
 function register(Request $request , Context $context):array{
+    $logged = $context->logged_in;
+    $img_path = $context->avatar_profile_path;
     $method = $request->method;
 
     if($method == 'GET'){
@@ -121,7 +131,10 @@ function register(Request $request , Context $context):array{
         $register_view = render_template(get_template_path('/skeleton/skeleton'), [
             'body' => $register_body_template,
             'title' => 'Registro',
-            'contributors'=>[]
+            'contributors'=>CONTRIBUTORS,
+            'user'         => $context->name,
+            'logged' => $logged,
+            'img_path' => $img_path
         ]);
         $response = new Response($register_view);
         return [$response, $context];
@@ -143,7 +156,7 @@ function register(Request $request , Context $context):array{
 
             $context->logged_in = true;
             $context->name = $username;
-            $context = new Context(true,$username,DEFAULT_ROL);
+            $context = new Context(true,$username,DEFAULT_ROL,'/img/users_profile/guest/pokeball.png');
             $response = new Response(redirection_path:'/');
             
             return [$response, $context];
@@ -153,8 +166,14 @@ function register(Request $request , Context $context):array{
     }
 }
 
-function blog(Request $request, Context $context): array
-{
+function logout(Request $request, Context $context):array{
+    $context = new Context(avatar_profile_path:'/img/users_profile/guest/pokeball.png');
+    $response = new Response(redirection_path: '/');
+    return [$response, $context];
+}
+function blog(Request $request, Context $context): array{
+    $logged = $context->logged_in;
+    $img_path = $context->avatar_profile_path;
 
     if (($context->role == "admin") && ($request->method == 'POST')) {
         #  add function to add news.
@@ -182,7 +201,9 @@ function blog(Request $request, Context $context): array
                 'title' => 'Blog de noticias',
                 'body' => $blog_body_template,
                 'contributors' => CONTRIBUTORS,
-                'user'         => $context->name
+                'user'         => $context->name,
+                'logged' => $logged,
+                'img_path' => $img_path
             ]
         );
     } else {
@@ -200,7 +221,9 @@ function blog(Request $request, Context $context): array
                 'title' => 'Blog de noticias',
                 'body' => $blog_body_template,
                 'contributors' => CONTRIBUTORS,
-                'user'         => $context->name
+                'user'         => $context->name,
+                'logged' => $logged,
+                'img_path' => $img_path
             ]
         );
     }
@@ -211,8 +234,9 @@ function blog(Request $request, Context $context): array
     return [$response, $context];
 }
 
-function regions(Request $request, Context $context): array
-{
+function regions(Request $request, Context $context): array{
+    $logged = $context->logged_in;
+    $img_path = $context->avatar_profile_path;
 
     $regions_name = get_region_name();
     $regions_info = get_regions_api($regions_name);
@@ -229,7 +253,9 @@ function regions(Request $request, Context $context): array
             'title'        => 'Regiones',
             'body'         => $regions_body_template,
             'contributors' => CONTRIBUTORS,
-            'user'         => $context->name
+            'user'         => $context->name,
+            'logged' => $logged,
+            'img_path' => $img_path
         ]
     );
 
@@ -239,6 +265,9 @@ function regions(Request $request, Context $context): array
 
 function pokemons(Request $request, Context $context): array
 {
+    $logged = $context->logged_in;
+    $img_path = $context->avatar_profile_path;
+
     $region_name     = substr($request->path,9);
     $pokemons_images = get_pokemon_images($region_name);
 
@@ -254,7 +283,9 @@ function pokemons(Request $request, Context $context): array
             'title'        => 'Pokémon',
             'body'         => $pokemons_body_template,
             'contributors' => CONTRIBUTORS,
-            'user'         => $context->name
+            'user'         => $context->name,
+            'logged' => $logged,
+            'img_path' => $img_path
         ]
     );
 
@@ -264,6 +295,13 @@ function pokemons(Request $request, Context $context): array
 
 function data(Request $request, Context $context): array
 {
+    $logged = $context->logged_in;
+    $img_path = $context->avatar_profile_path;
+
+    if($context->role == ''){
+        $response = new Response(redirection_path: '/');
+        return [$response, $context];
+    }
 
     if (($context->role == "admin") && ($request->method == "GET")) {
         
@@ -281,7 +319,9 @@ function data(Request $request, Context $context): array
                 'title'        => 'Datos',
                 'body'         => $data_body_template,
                 'contributors' => CONTRIBUTORS,
-                'user'         => $context->name
+                'user'         => $context->name,
+                'logged' => $logged,
+                'img_path' => $img_path
             ]
         );
     } elseif (($context->role == "admin") && ($request->method == 'POST')) {
@@ -304,7 +344,9 @@ function data(Request $request, Context $context): array
                 'title'        => 'Datos',
                 'body'         => $data_body_template,
                 'contributors' => CONTRIBUTORS,
-                'user'         => $context->name
+                'user'         => $context->name,
+                'logged' => $logged,
+                'img_path' => $img_path
             ]
         );
 
@@ -323,7 +365,9 @@ function data(Request $request, Context $context): array
                 'title'        => 'Datos',
                 'body'         => $data_body_template,
                 'contributors' => CONTRIBUTORS,
-                'user'         => $context->name
+                'user'         => $context->name,
+                'logged' => $logged,
+                'img_path' => $img_path
             ]
         );
     }
@@ -335,8 +379,6 @@ function data(Request $request, Context $context): array
 
 function error_404(Request $request, Context $context): array
 {
-
-    
 
     $error404_body = render_template(
         get_template_path('/body/error404'),
