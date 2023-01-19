@@ -7,11 +7,10 @@ namespace Controller;
 require_once(__DIR__ . '/../config.php');
 
 use function Config\get_app_dir;
-use function Config\get_db_dir;
 use function Config\get_lib_dir;
 use function Config\get_model_dir;
 use function Config\get_view_dir;
-use function Config\get_public_dir;
+
 
 require_once(get_lib_dir() . '/request/request.php');
 
@@ -41,10 +40,8 @@ use function Model\get_announcements_array;
 use function Model\get_region_name;
 use function Model\get_regions_api;
 use function Model\add_pokemon;
-
 use function Model\get_pokemon_images;
 use function Model\add_blog_announcement;
-use function Model\get_pokemon_name;
 use function Table\read_csv;
 use function Model\find_user;
 use function Model\exist_user;
@@ -52,7 +49,6 @@ use function Model\delete_announcement;
 use function Model\delete_pokemon;
 use function Model\add_user;
 use function Model\delete_user;
-
 use const Model\CONTRIBUTORS;
 
 require_once(get_view_dir() . '/view.php');
@@ -65,7 +61,10 @@ use function View\render_template;
 // Helper functions
 // ############################################################################
 
-// ----------------------------------------------------------------------------
+/**
+ * Function to check if an user is logged
+ * @return boolean 
+ */
 function check_login(Table $user_table, string $user_name, string $user_pass): bool
 {
 
@@ -76,11 +75,20 @@ function check_login(Table $user_table, string $user_name, string $user_pass): b
 
     return $login_ok;
 }
+// ----------------------------------------------------------------------------
 
+// ############################################################################
+// Request functions
+// ############################################################################
 
+/**
+ * Function to display index view
+ * @param $request is the path, http method and parameters
+ * @param $context comunication data from browser 
+ */
 function index(Request $request, Context $context): array
 {
-    $logged = $context->logged_in;
+    $logged   = $context->logged_in;
     $img_path = $context->avatar_profile_path;
 
     $index_body_template = render_template(
@@ -90,16 +98,16 @@ function index(Request $request, Context $context): array
             'user'         => $context->name
         ]
     );
-    $index_view          = render_template(
+    $index_view = render_template(
         get_template_path('/skeleton/skeleton'),
         [
-            'title'  => 'PokéBlog',
-            'body' => $index_body_template,
+            'title'        => 'PokéBlog',
+            'body'         => $index_body_template,
             'contributors' => CONTRIBUTORS,
             'user'         => $context->name,
-            'logged' => $logged,
-            'img_path' => $img_path,
-            'role' => $context->role
+            'logged'       => $logged,
+            'img_path'     => $img_path,
+            'role'         => $context->role
         ]
     );
 
@@ -107,6 +115,12 @@ function index(Request $request, Context $context): array
     return [$response, $context];
 }
 
+/**
+ * Function to display admin view to add new users
+ * Only users with role admin can access
+ * @param $request is the path, http method and parameters
+ * @param $context comunication data from browser 
+ */
 function admin(Request $request, Context $context): array
 {
 
@@ -114,7 +128,7 @@ function admin(Request $request, Context $context): array
 
     if ($context->role == 'admin') {
         if ($request->method == 'POST') {
-            //add a new user
+
             $username = $request->parameters['username'];
             $password = $request->parameters['password'];
             $role     = $request->parameters['role'];
@@ -139,10 +153,12 @@ function admin(Request $request, Context $context): array
             'img_path'     => $context->avatar_profile_path,
             'role'         => $context->role
         ]);
+
         $response = new Response($admin_view);
 
         return [$response, $context];
     } else {
+
         $response = new Response();
         $response->set_redirection('/');
 
@@ -150,6 +166,12 @@ function admin(Request $request, Context $context): array
     }
 }
 
+/**
+ * Function to delete an user by a form action from /admin
+ * it takes the username from $request parameters to be cheked 
+ * @param $request is the path, http method and parameters
+ * @param $context comunication data from browser 
+ */
 function delete(Request $request, Context $context): array
 {
 
@@ -165,29 +187,38 @@ function delete(Request $request, Context $context): array
     return [$response, $context];
 }
 
+/**
+ * Function to display login view by GEt and login an user by POST
+ * @param $request is the path, http method and parameters
+ * @param $context comunication data from browser 
+ */
 function login(Request $request, Context $context): array
 {
-    $logged = $context->logged_in;
+    $logged   = $context->logged_in;
     $img_path = $context->avatar_profile_path;
 
     if ($request->method == 'GET') {
-        $login_body_template = render_template(get_template_path('/body/login'), ['contributors' => CONTRIBUTORS]);
+
+        $login_body_template = render_template(
+            get_template_path('/body/login'),
+            ['contributors' => CONTRIBUTORS]
+        );
 
         $login_view = render_template(get_template_path('/skeleton/skeleton'), [
-            'title'  => 'PokéBlog',
-            'body' => $login_body_template,
+            'title'        => 'PokéBlog',
+            'body'         => $login_body_template,
             'contributors' => CONTRIBUTORS,
             'user'         => $context->name,
-            'logged' => $logged,
-            'img_path' => $img_path,
-            'role' => $context->role
+            'logged'       => $logged,
+            'img_path'     => $img_path,
+            'role'         => $context->role
         ]);
 
         $response = new Response($login_view);
 
         return [$response, $context];
     } elseif ($request->method == 'POST') {
-        # hacer login
+
         $username = $request->parameters['username'];
         $password = $request->parameters['password'];
 
@@ -209,22 +240,27 @@ function login(Request $request, Context $context): array
     }
 }
 
+/**
+ * Function to register a new user
+ * @param $request is the path, http method and parameters
+ * @param $context comunication data from browser 
+ */
 function register(Request $request, Context $context): array
 {
-    $logged = $context->logged_in;
+    $logged   = $context->logged_in;
     $img_path = $context->avatar_profile_path;
-    $method = $request->method;
+    $method   = $request->method;
 
     if ($method == 'GET') {
         $register_body_template = render_template(get_template_path('/body/register'), []);
         $register_view = render_template(get_template_path('/skeleton/skeleton'), [
-            'body' => $register_body_template,
-            'title' => 'Registro',
+            'body'         => $register_body_template,
+            'title'        => 'Registro',
             'contributors' => CONTRIBUTORS,
             'user'         => $context->name,
-            'logged' => $logged,
-            'img_path' => $img_path,
-            'role' => $context->role
+            'logged'       => $logged,
+            'img_path'     => $img_path,
+            'role'         => $context->role
         ]);
         $response = new Response($register_view);
         return [$response, $context];
@@ -246,7 +282,8 @@ function register(Request $request, Context $context): array
 
             $context->logged_in = true;
             $context->name = $username;
-            $context = new Context(true, $username, DEFAULT_ROL, '/img/users_profile/guest/pokeball.png');
+
+            $context  = new Context(true, $username, DEFAULT_ROL, '/img/users_profile/guest/pokeball.png');
             $response = new Response();
             $response->set_redirection('/');
 
@@ -255,17 +292,28 @@ function register(Request $request, Context $context): array
     }
 }
 
+/**
+ * Function to logout an user and redirect user to index view
+ * @param $request is the path, http method and parameters
+ * @param $context comunication data from browser 
+ */
 function logout(Request $request, Context $context): array
 {
-    $context = new Context(avatar_profile_path: '/img/users_profile/guest/pokeball.png');
+    $context  = new Context(avatar_profile_path: '/img/users_profile/guest/pokeball.png');
     $response = new Response();
     $response->set_redirection('/');
     return [$response, $context];
 }
 
+/**
+ * Function to display blog view
+ * ussers with admin role can add a new post or delete a post
+ * @param $request is the path, http method and parameters
+ * @param $context comunication data from browser 
+ */
 function blog(Request $request, Context $context): array
 {
-    $logged = $context->logged_in;
+    $logged   = $context->logged_in;
     $img_path = $context->avatar_profile_path;
 
     if (($context->role == "admin") && ($request->method == 'POST')) {
@@ -282,8 +330,8 @@ function blog(Request $request, Context $context): array
         if ($action !== 'none') {
             delete_announcement($action);
         }
-        $get_announcements = get_announcements_array();
 
+        $get_announcements = get_announcements_array();
 
         $blog_body_template = render_template(
             get_template_path('/body/admin_view/blog'),
@@ -291,16 +339,16 @@ function blog(Request $request, Context $context): array
                 'announcements' => $get_announcements
             ]
         );
-        $blog_view          = render_template(
+        $blog_view = render_template(
             get_template_path('/skeleton/skeleton'),
             [
-                'title' => 'Blog de noticias',
-                'body' => $blog_body_template,
+                'title'        => 'Blog de noticias',
+                'body'         => $blog_body_template,
                 'contributors' => CONTRIBUTORS,
                 'user'         => $context->name,
-                'logged' => $logged,
-                'img_path' => $img_path,
-                'role' => $context->role
+                'logged'       => $logged,
+                'img_path'     => $img_path,
+                'role'         => $context->role
             ]
         );
     } else {
@@ -312,7 +360,7 @@ function blog(Request $request, Context $context): array
                 'announcements' => $get_announcements
             ]
         );
-        $blog_view          = render_template(
+        $blog_view = render_template(
             get_template_path('/skeleton/skeleton'),
             [
                 'title'        => 'Blog de noticias',
@@ -331,6 +379,12 @@ function blog(Request $request, Context $context): array
     return [$response, $context];
 }
 
+/**
+ * Function to display regions view
+ * Regions and game versions are obtained by PokeApi
+ * @param $request is the path, http method and parameters
+ * @param $context comunication data from browser 
+ */
 function regions(Request $request, Context $context): array
 {
     $logged   = $context->logged_in;
@@ -363,6 +417,11 @@ function regions(Request $request, Context $context): array
     return [$response, $context];
 }
 
+/**
+ * Function to display each initial pokemons for every region
+ * @param $request is the path, http method and parameters
+ * @param $context comunication data from browser 
+ */
 function pokemons(Request $request, Context $context): array
 {
     $logged   = $context->logged_in;
@@ -384,8 +443,8 @@ function pokemons(Request $request, Context $context): array
             'body'         => $pokemons_body_template,
             'contributors' => CONTRIBUTORS,
             'user'         => $context->name,
-            'logged' => $logged,
-            'img_path' => $img_path
+            'logged'       => $logged,
+            'img_path'     => $img_path
         ]
     );
 
@@ -393,14 +452,22 @@ function pokemons(Request $request, Context $context): array
     return [$response, $context];
 }
 
+/**
+ * Function to display data view
+ * Data is all the pokemons information from a csv file
+ * User with admin role can add a new entry to the table or delete an entry
+ * @param $request is the path, http method and parameters
+ * @param $context comunication data from browser 
+ */
 function data(Request $request, Context $context): array
 {
-    $logged = $context->logged_in;
+    $logged   = $context->logged_in;
     $img_path = $context->avatar_profile_path;
 
     if (($context->role == "admin") && ($request->method == "GET")) {
 
         $action = $request->parameters['action'] ?? '';
+
         $pokemon_table = read_table(get_csv_path('pokemon'));
 
         if ($action !== '') {
@@ -439,7 +506,7 @@ function data(Request $request, Context $context): array
                 'pokemon_table' => $pokemon_table
             ]
         );
-        $data_view          = render_template(
+        $data_view = render_template(
             get_template_path('/skeleton/skeleton'),
             [
                 'title'        => 'Datos',
@@ -460,7 +527,7 @@ function data(Request $request, Context $context): array
                 'pokemon_table' => $pokemon_table
             ]
         );
-        $data_view          = render_template(
+        $data_view = render_template(
             get_template_path('/skeleton/skeleton'),
             [
                 'title'        => 'Datos',
@@ -479,7 +546,11 @@ function data(Request $request, Context $context): array
     return [$response, $context];
 }
 
-
+/**
+ * Function to display error 404 view where user can see the request path
+ * @param $request is the path, http method and parameters
+ * @param $context comunication data from browser 
+ */
 function error_404(Request $request, Context $context): array
 {
 

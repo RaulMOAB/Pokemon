@@ -1,11 +1,15 @@
 <?php
+
 declare(strict_types=1);
+
 namespace Table;
 
 require_once(__DIR__ . '/../../app/config.php');
+
 use function Config\get_lib_dir;
 
 require_once(get_lib_dir() . '/utils/utils.php');
+
 use function Utils\array_prepend;
 use function Utils\is_empty_str;
 
@@ -14,7 +18,8 @@ use function Utils\is_empty_str;
 // Table __toString() helper functions
 // ############################################################################
 
-function transpose(array $matrix): array {
+function transpose(array $matrix): array
+{
 
     $result = array_map(null, ...$matrix);
     return $result;
@@ -22,7 +27,8 @@ function transpose(array $matrix): array {
 
 // Helper function: Get max length of all columns
 // ----------------------------------------------------------------------------
-function get_column_widths(array $header, array $body): array {
+function get_column_widths(array $header, array $body): array
+{
 
     // Combine header and body
     $header_and_body = array_prepend($header, $body);
@@ -32,7 +38,7 @@ function get_column_widths(array $header, array $body): array {
     $named_columns = array_combine($header, $columns);
 
     // Functions to calculate column widths
-    $get_width        = fn ($field)  => strlen( (string) $field);
+    $get_width        = fn ($field)  => strlen((string) $field);
     $get_column_width = fn ($column) => max(array_map($get_width, $column));
 
     // Calculate widths
@@ -43,18 +49,19 @@ function get_column_widths(array $header, array $body): array {
 
 // String conversion
 // ----------------------------------------------------------------------------
-function convert_table_to_string(array $header, array $body, string $separator = ' | '): string {
+function convert_table_to_string(array $header, array $body, string $separator = ' | '): string
+{
 
     // Get all column widths
     $column_widths = get_column_widths($header, $body);
 
     // Functions to convert rows to string lines
-    $convert_field_to_string = fn ($field, $width) => str_pad( (string) $field, $width, ' ', STR_PAD_RIGHT);
-    $convert_row_to_line     = fn ($row)           => implode( $separator, array_map($convert_field_to_string, $row, $column_widths) );
+    $convert_field_to_string = fn ($field, $width) => str_pad((string) $field, $width, ' ', STR_PAD_RIGHT);
+    $convert_row_to_line     = fn ($row)           => implode($separator, array_map($convert_field_to_string, $row, $column_widths));
 
     // Convert header and body to string
     $header_and_body = array_prepend($header, $body);
-    $result = implode( PHP_EOL, array_map($convert_row_to_line, $header_and_body) );
+    $result = implode(PHP_EOL, array_map($convert_row_to_line, $header_and_body));
 
     return $result;
 }
@@ -64,7 +71,8 @@ function convert_table_to_string(array $header, array $body, string $separator =
 // Table CSV helper functions
 // ############################################################################
 
-function write_csv(Table $table, string $csv_filename, string $separator = ' | '): void {
+function write_csv(Table $table, string $csv_filename, string $separator = ' | '): void
+{
 
     // 1. Check if table contains the separator string
     $contents_str  = convert_table_to_string($table->header, $table->body, '');
@@ -72,7 +80,9 @@ function write_csv(Table $table, string $csv_filename, string $separator = ' | '
 
     // 2. If separator found: Abort
     $error_msg = "Write error: Table contains '$separator' already. Cannot use it as a separator in CSV file.";
-    if ($has_separator) { throw new \Exception($error_msg); }
+    if ($has_separator) {
+        throw new \Exception($error_msg);
+    }
 
     // 3. Else: Return string using separator
     $table_str = convert_table_to_string($table->header, $table->body, $separator);
@@ -133,13 +143,11 @@ function get_body(array $data_matrix): array
     $body   = $data_matrix;
     array_shift($body);
 
-    // $decorate_row   = fn ($row) => array_combine($header, $row);
-    // $decorated_body = array_map($decorate_row, $body);
-
     return $body;
 }
 
-function decorate_body(array $header, array $body): array {
+function decorate_body(array $header, array $body): array
+{
 
     $decorate_row   = fn ($row) => array_combine($header, $row);
     $decorated_body = array_map($decorate_row, $body);
@@ -154,7 +162,8 @@ function decorate_body(array $header, array $body): array {
 // When using indexed arrays, remember to call array_values() after array_filter().
 // https://stackoverflow.com/questions/3401850/after-array-filter-how-can-i-reset-the-keys-to-go-in-numerical-order-starting
 // ----------------------------------------------------------------------------
-function filter_rows(Table $table, callable $filter): Table {
+function filter_rows(Table $table, callable $filter): Table
+{
 
     $header         = $table->header;
     $filtered_body  = array_values(array_filter($table->body, $filter));
@@ -251,11 +260,15 @@ class Table
 
         return $string_table;
     }
+    
+    // ----------------------------------------------------------------
 
-
-
-    //*Read a csv file
- // ----------------------------------------------------------------
+    /**
+     * Function that reads a csv file and return a Table object
+     * @param string csv filename
+     * @param string separator, by default is |
+     * @return Table
+     */
     public static function readCSV(
         string $csv_filename,
         string $separator = '|'
@@ -265,17 +278,18 @@ class Table
         return $table;
     }
 
-
-
+    /**
+     * Function that calls an auxilar funtion to write a csv fila to disk
+     * @param string csv filename
+     * @param string separator, by default is |
+     */
     public function writeCsv(string $csv_filename, string $separator = '|'): void
     {
         write_csv($this, $csv_filename, $separator);
     }
-
     // ------------------------------------------------------------------------
     public function appendRow(array $row): void
     {
-
         $decorated_row = array_combine($this->header, $row);
         array_push($this->body, $decorated_row);
     }
@@ -287,33 +301,30 @@ class Table
         $decorated_row = array_combine($this->header, $row);
         array_unshift($this->body, $decorated_row);
     }
-
-    public function deleteRow(int $row_index): void{
+    // ------------------------------------------------------------------------
+    public function deleteRow(int $row_index): void
+    {
         unset($this->body[$row_index]);
         array_values($this->body);
     }
 
-
     // $filter function recieves a single parameter: a table row
     // Returns a new Table object. Does not modify the original table.
     // ------------------------------------------------------------------------
-    public function filterRows(callable $filter): self {
+    public function filterRows(callable $filter): self
+    {
 
         $result = filter_rows($this, $filter);
         return $result;
     }
 
-    //Obtener fila
     public function getRow(int $row): array
     {
         return $this->body[$row];
     }
-    
-    //Obtener columna
+
     public function getColumn(int $col): array
     {
         return array_column($this->body, $col);
     }
 }
-
-

@@ -229,34 +229,21 @@ function add_pokemon(string $csv_filename, array $pokemon_data):void{
 
     //1. Read Pokemon data table
     $pokemon_table = read_table(get_csv_path('pokemon'), ',');
-
-    // Test code
     array_pop($pokemon_data);
+
+    //2. Add new row to $pokemons_table
     $pokemon_table->appendRow($pokemon_data);
 
-
-   //2. build new pokémon row
-//    $new_pokemon = ['#'       => $pokemon_data["#"], 'Name'          => $pokemon_data['Name'],
-//                    'Type 1'  => $pokemon_data['Type_1'], 'Type 2'   => $pokemon_data['Type_2'],
-//                    'Total'   => $pokemon_data['Total'], 'HP'        => $pokemon_data['HP'],
-//                    'Attack'  => $pokemon_data['Attack'], 'Defense'  => $pokemon_data['Defense'],
-//                    'Sp. Atk' => $pokemon_data['Sp__Atk'], 'Sp. Def' => $pokemon_data['Sp__Def'],
-//                    'Speed'   => $pokemon_data['Speed'],'Generation' => $pokemon_data['Generation'],
-//                    'Legendary' =>$pokemon_data['Legendary']
-//                 ];
-    //!Preguntar Pablo
-    // array_pop($pokemon_data);
-    // $new_pokemon = implode(',', $pokemon_data);
-    // $new_pokemon = [$new_pokemon];
-
-    //3. Add new row and write to disk
-    // $pokemon_table->appendRow($new_pokemon);
+    //3 Write updated table to disk in a csv file
     $pokemon_table->writeCSV($csv_filename, ',');
 
 }
 // ----------------------------------------------------------------------------
+
 //Function to delete a pokemon from csv file (only admins can do this)
 function delete_pokemon(string $index, Table $pokemon_table):void{
+    //1 Cast index into int and get table length
+    //If pokemon #id are note secuential, get the last index
     $index = (int) $index;
     $table_length = count($pokemon_table->body);
 
@@ -264,7 +251,10 @@ function delete_pokemon(string $index, Table $pokemon_table):void{
         $index = $table_length - 1;
     }
 
+    //2 Remove a row from table
     $pokemon_table->deleteRow($index);
+
+    //3 Write updated table to disk in a csv file
     $pokemon_table->writeCSV(get_csv_path('pokemon'));
 }
 
